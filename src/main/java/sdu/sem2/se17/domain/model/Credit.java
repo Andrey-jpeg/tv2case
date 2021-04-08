@@ -1,6 +1,6 @@
-package sdu.sem2.SE17.domain.model;
+package sdu.sem2.se17.domain.model;
 
-import sdu.sem2.SE17.dal.*;
+import sdu.sem2.se17.dal.*;
 
 public class Credit {
     int i;

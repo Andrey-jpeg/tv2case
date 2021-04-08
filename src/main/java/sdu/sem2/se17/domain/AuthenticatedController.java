@@ -1,4 +1,4 @@
-package sdu.sem2.SE17.domain;
+package sdu.sem2.se17.domain;
 
 public interface AuthenticatedController {
 }

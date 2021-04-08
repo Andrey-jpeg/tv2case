@@ -1,11 +1,10 @@
 package domain.model;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sdu.sem2.SE17.dal.Sample;
-import sdu.sem2.SE17.domain.model.Credit;
+import sdu.sem2.se17.dal.Sample;
+import sdu.sem2.se17.domain.model.Credit;
 
 import static org.junit.jupiter.api.Assertions.*;
 

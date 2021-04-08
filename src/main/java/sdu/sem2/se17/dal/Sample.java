@@ -1,4 +1,4 @@
-package sdu.sem2.SE17.dal;
+package sdu.sem2.se17.dal;
 
 public class Sample {
     int i;

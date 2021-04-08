@@ -1,10 +1,9 @@
-package sdu.sem2.SE17.consumerSystem;
+package sdu.sem2.se17.consumersystem;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import javafx.stage.Stage;
 
 public class MainFX extends Application {
@@ -14,7 +13,7 @@ public class MainFX extends Application {
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
 
-        var test = new sdu.sem2.SE17.domain.model.Credit(1);
+        var test = new sdu.sem2.se17.domain.model.Credit(1);
 
 
         Label l = new Label("Hello, this is the prototype of TV" + test.multiplyNumber(2) + "s ConsumerSystem, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");

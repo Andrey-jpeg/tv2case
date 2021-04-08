@@ -1,4 +1,4 @@
-package sdu.sem2.SE17;
+package sdu.sem2.se17;
 
 public class SystemInfo {
 
