@@ -68,9 +68,10 @@ public class CreditManagementController {
         findProduction(productionId).createCredit(new Participant(name), role);
     }
 
-    public void deleteCredit(long productionId, long creditId) {
-
+    public void deleteCredit(long productionIndex, long creditIndex) {
+        findProduction(productionIndex).removeCredit(creditIndex);
     }
+
     //Companies
     public ArrayList<ProductionCompany> getCompanies(){
         return null;
