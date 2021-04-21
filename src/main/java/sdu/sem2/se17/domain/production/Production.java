@@ -11,6 +11,7 @@ public class Production {
     private long companyId;
     private String name;
     private ArrayList<Credit> credits;
+    private Approval approval = Approval.NOT_SEEN;
 
     public Production(long companyId, String name) {
         this.companyId = companyId;
@@ -54,5 +55,13 @@ public class Production {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Approval getAproval() {
+        return approval;
+    }
+
+    public void setAproval(Approval aproval) {
+        this.approval = aproval;
     }
 }

@@ -1,7 +1,9 @@
 package sdu.sem2.se17.domain;
 import sdu.sem2.se17.domain.auth.*;
+import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.credit.Role;
+import sdu.sem2.se17.domain.production.Approval;
 import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 
@@ -14,6 +16,12 @@ public class CreditManagementController {
     private ArrayList<Production> productions;
     private ArrayList<ProductionCompany> companies;
 
+    public CreditManagementController(ArrayList<User> users, ArrayList<Production> productions, ArrayList<ProductionCompany> companies) {
+        this.users = users;
+        this.productions = productions;
+        this.companies = companies;
+    }
+
     public boolean login(String username, String password) {
         for (User user: this.users) {
             if(!username.equals(user.getUsername())) {
@@ -21,6 +29,7 @@ public class CreditManagementController {
             }
 
             if (password.equals(user.getPassword())) {
+                this.sessionUser = user;
                 return true;
             }
         }
@@ -41,8 +50,8 @@ public class CreditManagementController {
         return this.productions;
     }
 
-    public Production createProduction(String name) {
-        return null;
+    public void createProduction(long companyId, String name) {
+        productions.add(new Production(companyId, name));
     }
 
     public Production findProduction(String name) {
@@ -61,11 +70,12 @@ public class CreditManagementController {
         return this.productions.get((int)(index));
     }
 
-    public void validateProduction(long productionId) {
+    public void validateProduction(long productionIndex, Approval approval) {
+        findProduction(productionIndex).setAproval(approval);
     }
 
-    public void addCreditToProduction(long productionId, String name, Role role) {
-        findProduction(productionId).createCredit(new Participant(name), role);
+    public void addCreditToProduction(long productionIndex, String name, Role role) {
+        findProduction(productionIndex).createCredit(new Participant(name), role);
     }
 
     public void deleteCredit(long productionIndex, long creditIndex) {
