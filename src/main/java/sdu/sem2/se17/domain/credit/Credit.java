@@ -1,5 +1,6 @@
 package sdu.sem2.se17.domain.credit;
 
+/* Casper Fenger Jensen */
 public class Credit {
     private long id;
     private Participant participant;
