@@ -1,5 +1,6 @@
 package sdu.sem2.se17.domain.auth;
 
+/* Casper Fenger Jensen */
 public class Producer extends User {
     private long companyId;
 

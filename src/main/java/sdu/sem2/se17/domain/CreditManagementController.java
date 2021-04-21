@@ -1,13 +1,12 @@
 package sdu.sem2.se17.domain;
-
-import sdu.sem2.se17.domain.auth.Producer;
-import sdu.sem2.se17.domain.auth.User;
-import sdu.sem2.se17.domain.credit.Participant;
+import sdu.sem2.se17.domain.auth.*;
 import sdu.sem2.se17.domain.credit.Role;
-import sdu.sem2.se17.domain.production.*;
+import sdu.sem2.se17.domain.production.Production;
+import sdu.sem2.se17.domain.production.ProductionCompany;
 
 import java.util.ArrayList;
 
+/* Casper Fenger Jensen */
 public class CreditManagementController {
     private User sessionUser;
     private ArrayList<User> users;
@@ -28,7 +27,7 @@ public class CreditManagementController {
     }
 
     public boolean isAdmin(){
-        return false;
+        return this.sessionUser instanceof Admin;
     }
     //User
     public void createProducer(String username, String password, String email, long companyId){
