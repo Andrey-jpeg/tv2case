@@ -7,6 +7,7 @@ import sdu.sem2.se17.domain.production.*;
 
 import java.util.ArrayList;
 
+/* Casper Fenger Jensen */
 public class CreditManagementController {
     private User sessionUser;
     private ArrayList<User> users;
@@ -27,7 +28,7 @@ public class CreditManagementController {
     }
 
     public boolean isAdmin(){
-        return false;
+        return this.sessionUser.isAdmin();
     }
     //User
     public void createProducer(String username, String password, long companyId){
