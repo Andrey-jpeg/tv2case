@@ -6,7 +6,8 @@ public class Credit {
     private Role role;
 
     Credit(Participant participant, Role role){
-
+        this.participant = participant;
+        this.role = role;
     }
 
     public long getId() {
