@@ -55,7 +55,7 @@ public class CreditManagementController {
     }
 
     public Production findProduction(long index) {
-        if (index > this.productions.size()) {
+        if (index >= this.productions.size()) {
             return null;
         }
         return this.productions.get((int)(index));
@@ -74,9 +74,6 @@ public class CreditManagementController {
 
     //Companies
     public ArrayList<ProductionCompany> getCompanies(){
-        return null;
+        return this.companies;
     }
-
-
-
 }
