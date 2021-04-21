@@ -1,5 +1,6 @@
 package sdu.sem2.se17.domain;
 
+import sdu.sem2.se17.domain.auth.Producer;
 import sdu.sem2.se17.domain.auth.User;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.credit.Role;
@@ -30,8 +31,8 @@ public class CreditManagementController {
         return false;
     }
     //User
-    public void createProducer(String username, String password, long companyId){
-
+    public void createProducer(String username, String password, String email, long companyId){
+        users.add(new Producer(username, password, email, companyId));
     }
     //Production
     public ArrayList<Production> getProductions() {
