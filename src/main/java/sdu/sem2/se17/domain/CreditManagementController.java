@@ -14,8 +14,18 @@ public class CreditManagementController {
     private ArrayList<ProductionCompany> companies;
 
     public boolean login(String username, String password) {
+        for (User user: users) {
+            if(!username.equals(user.getUsername())) {
+                continue;
+            }
+
+            if (password.equals(user.getPassword())) {
+                return true;
+            }
+        }
         return false;
     }
+
     public boolean isAdmin(){
         return false;
     }
