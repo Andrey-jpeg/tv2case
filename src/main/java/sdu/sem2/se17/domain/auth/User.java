@@ -1,17 +1,15 @@
 package sdu.sem2.se17.domain.auth;
 
+/* Casper Fenger Jensen */
 public abstract class User {
-    private long id;
     private String username;
     private String password;
     private String email;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
     }
 
     public String getUsername() {
