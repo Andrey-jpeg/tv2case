@@ -12,7 +12,6 @@ public class CreditManagementController {
     private ArrayList<User> users;
     private ArrayList<Production> productions;
     private ArrayList<ProductionCompany> companies;
-    private ArrayList<Participant> participants;
 
     public boolean login(String username, String password) {
         return false;
@@ -39,23 +38,9 @@ public class CreditManagementController {
     }
     public void validateProduction(long productionId) {
     }
-
-    public void addCreditToProduction(long productionId, long participantId, Role role) {
+    public void addCreditToProduction(long productionId, String name, Role role) {
     }
     public void deleteCredit(long productionId, long creditId) {
-
-    }
-    //Participant
-    public long createParticipant(String name) {
-        return 0;
-    }
-    public ArrayList<Participant> findParticipant(String name) {
-        return null;
-    }
-    public Participant findParticipant(long id) {
-        return null;
-    }
-    public void deleteParticipant(long id){
 
     }
     //Companies
