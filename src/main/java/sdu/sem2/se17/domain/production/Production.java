@@ -6,29 +6,38 @@ import sdu.sem2.se17.domain.credit.Role;
 
 import java.util.ArrayList;
 
+/* Casper Fenger Jensen */
 public class Production {
-    private long id;
     private long companyId;
     private String name;
     private ArrayList<Credit> credits;
 
-    public void createCredit(Participant participant, Role role){
-
+    public Production(long companyId, String name) {
+        this.companyId = companyId;
+        this.name = name;
     }
+
+    public Production(long companyId, String name, ArrayList<Credit> credits) {
+        this(companyId, name);
+        for (Credit credit: credits) {
+            this.createCredit(credit);
+        }
+    }
+
+    public void createCredit(Credit credit) {
+        this.credits.add(credit);
+    }
+
+    public void createCredit(Participant participant, Role role) {
+        this.createCredit(new Credit(participant, role));
+    }
+
     public ArrayList<Credit> getCredits(){
-        return null;
-    }
-    public void removeCredit(long id){
-
+        return this.credits;
     }
 
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void removeCredit(long index){
+        this.credits.remove((int)(index));
     }
 
     public long getCompanyId() {
