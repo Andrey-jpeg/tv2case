@@ -5,7 +5,7 @@ public class Producer extends User {
     private long companyId;
 
     public Producer(String username, String password, String email, long companyId) {
-        super(false, username, password, email);
+        super(username, password, email);
         this.companyId = companyId;
     }
 
