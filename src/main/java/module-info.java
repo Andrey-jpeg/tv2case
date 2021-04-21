@@ -9,5 +9,4 @@ module sdu.sem2.SE17 {
     exports sdu.sem2.se17.domain.auth;
     exports sdu.sem2.se17.domain.credit;
     exports sdu.sem2.se17.domain.production;
-    exports sdu.sem2.se17;
 }
