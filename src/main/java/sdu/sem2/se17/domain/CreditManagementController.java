@@ -3,7 +3,7 @@ import sdu.sem2.se17.domain.auth.*;
 import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.credit.Role;
-import sdu.sem2.se17.domain.production.Aproval;
+import sdu.sem2.se17.domain.production.Approval;
 import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 
@@ -70,8 +70,8 @@ public class CreditManagementController {
         return this.productions.get((int)(index));
     }
 
-    public void validateProduction(long productionIndex, Aproval aproval) {
-        findProduction(productionIndex).setAproval(aproval);
+    public void validateProduction(long productionIndex, Approval approval) {
+        findProduction(productionIndex).setAproval(approval);
     }
 
     public void addCreditToProduction(long productionIndex, String name, Role role) {

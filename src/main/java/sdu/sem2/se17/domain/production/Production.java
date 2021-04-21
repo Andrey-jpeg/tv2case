@@ -11,12 +11,11 @@ public class Production {
     private long companyId;
     private String name;
     private ArrayList<Credit> credits;
-    private Aproval aproval;
+    private Approval approval = Approval.NOT_SEEN;
 
     public Production(long companyId, String name) {
         this.companyId = companyId;
         this.name = name;
-        this.aproval = Aproval.NOT_SEEN;
     }
 
     public Production(long companyId, String name, ArrayList<Credit> credits) {
@@ -58,11 +57,11 @@ public class Production {
         this.name = name;
     }
 
-    public Aproval getAproval() {
-        return aproval;
+    public Approval getAproval() {
+        return approval;
     }
 
-    public void setAproval(Aproval aproval) {
-        this.aproval = aproval;
+    public void setAproval(Approval aproval) {
+        this.approval = aproval;
     }
 }
