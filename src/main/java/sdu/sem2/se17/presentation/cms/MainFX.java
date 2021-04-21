@@ -1,4 +1,4 @@
-package sdu.sem2.se17.cms;
+package sdu.sem2.se17.presentation.cms;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

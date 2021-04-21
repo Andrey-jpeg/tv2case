@@ -1,4 +1,4 @@
-package sdu.sem2.se17.consumersystem;
+package sdu.sem2.se17.presentation.consumersystem;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

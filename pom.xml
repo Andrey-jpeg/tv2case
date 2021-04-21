@@ -36,13 +36,13 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <exec.mainClass>sdu.sem2.se17.cms.MainFX</exec.mainClass>
+                <exec.mainClass>sdu.sem2.se17.presentation.cms.MainFX</exec.mainClass>
             </properties>
         </profile>
         <profile>
             <id>consumersystem</id>
             <properties>
-                <exec.mainClass>sdu.sem2.se17.consumersystem.MainFX</exec.mainClass>
+                <exec.mainClass>sdu.sem2.se17.presentation.consumersystem.MainFX</exec.mainClass>
             </properties>
         </profile>
     </profiles>

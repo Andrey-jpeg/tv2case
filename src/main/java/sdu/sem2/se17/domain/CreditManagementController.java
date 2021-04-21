@@ -21,14 +21,10 @@ public class CreditManagementController {
         return false;
     }
     //User
-    public void deleteUser(long userId){
-
-    }
-    public void createUser(String username, String password){
+    public void createProducer(String username, String password, long companyId){
 
     }
     //Production
-
     public ArrayList<Production> getProductions() {
         return null;
     }
@@ -43,8 +39,7 @@ public class CreditManagementController {
     }
     public void validateProduction(long productionId) {
     }
-    public void addProducer(long productionId, long producerId) {
-    }
+
     public void addCreditToProduction(long productionId, long participantId, Role role) {
     }
     public void deleteCredit(long productionId, long creditId) {
