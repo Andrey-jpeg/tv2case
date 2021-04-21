@@ -6,7 +6,7 @@ public class Credit {
     private Participant participant;
     private Role role;
 
-    Credit(Participant participant, Role role){
+    public Credit(Participant participant, Role role){
         this.participant = participant;
         this.role = role;
     }
