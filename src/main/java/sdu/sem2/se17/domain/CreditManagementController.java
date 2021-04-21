@@ -36,7 +36,7 @@ public class CreditManagementController {
     }
     //Production
     public ArrayList<Production> getProductions() {
-        return null;
+        return this.productions;
     }
     public Production createProduction(String name) {
         return null;
