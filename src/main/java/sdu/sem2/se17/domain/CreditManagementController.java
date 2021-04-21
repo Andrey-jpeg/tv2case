@@ -1,5 +1,6 @@
 package sdu.sem2.se17.domain;
 import sdu.sem2.se17.domain.auth.*;
+import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.credit.Role;
 import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.domain.production.ProductionCompany;
@@ -49,6 +50,7 @@ public class CreditManagementController {
     public void validateProduction(long productionId) {
     }
     public void addCreditToProduction(long productionId, String name, Role role) {
+        findProduction(productionId).createCredit(new Participant(name), role);
     }
     public void deleteCredit(long productionId, long creditId) {
 
