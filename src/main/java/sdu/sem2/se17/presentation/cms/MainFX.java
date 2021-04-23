@@ -1,25 +1,43 @@
 package sdu.sem2.se17.presentation.cms;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class MainFX extends Application {
-    @Override
-    public void start(Stage stage) {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
+import java.io.IOException;
+import java.util.HashMap;
 
-        Label l = new Label("Hello, this is the CreditsManagementSystem for TV2, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        Scene scene = new Scene(new StackPane(l), 640, 480);
+public class MainFX extends Application {
+    private HashMap<String, Controller> controllers = new HashMap<>;
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        Scene scene = new Scene(loadFXML("Login"), 640, 480);
         stage.setScene(scene);
         stage.show();
+    }
+
+    /* Taget fra VOP */
+    private static Parent loadFXML(String fxml) throws IOException {
+
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setControllerFactory((aClass) -> {
+            return new this.controllers.get(fxml)();
+        });
+        loader.setLocation(MainFX.class.getResource(fxml + ".fxml"));
+        return loader.load();
     }
 
     public static void main(String[] args) {
         launch();
     }
 
+    /*Object foo(Class type) throws InstantiationException, IllegalAccessException, InvocationTargetException {
+        return type.getDeclaredConstructor().newInstance(PARAMETER);
+    }*/
 }
