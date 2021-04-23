@@ -50,7 +50,7 @@ class CreditManagementControllerTest {
     @BeforeEach
     void setUp() {
 
-        controller = new CreditManagementController(users, productions, companies);
+        controller = new CreditManagementControllerImplDomain(users, productions, companies);
     }
 
     @AfterEach
