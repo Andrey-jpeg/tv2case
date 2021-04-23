@@ -109,4 +109,13 @@ public class CreditManagementControllerImplDomain implements CreditManagementCon
     public ArrayList<ProductionCompany> getCompanies(){
         return this.companies;
     }
+
+    @Override
+    public ArrayList<String> getRoleTitles() {
+        return new ArrayList<>() {{
+            for (Role roletitle: Role.values()) {
+                add(String.valueOf(roletitle));
+            }
+        }};
+    }
 }

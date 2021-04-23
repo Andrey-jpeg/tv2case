@@ -20,15 +20,15 @@ public class MainFX extends Application {
     @Override
 
     public void start(Stage stage) throws IOException{
-        Scene scene = new Scene(loadFXML("Login", new LoginController(creditManagementController)), 640, 480);
+        /*Scene scene = new Scene(loadFXML("Login", new LoginController(creditManagementController)), 640, 480);*/
         /*Scene scene = new Scene(loadFXML("ChooseProduction", new ChooseProductionController(creditManagementController)), 640, 480);*/
-        /*Scene scene = new Scene(
+        Scene scene = new Scene(
                 loadFXML(
                         "Production",
                         new ProductionController(
                                 creditManagementController,
-                                new Production(1, "Name")))
-                , 640, 480);*/
+                                "Name"))
+                , 640, 480);
         stage.setScene(scene);
         stage.show();
     }
