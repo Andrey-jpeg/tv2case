@@ -6,9 +6,6 @@ import javafx.scene.control.TextField;
 import sdu.sem2.se17.domain.CreditManagementController;
 
 public class LoginController extends Controller {
-    public LoginController(CreditManagementController creditManagementController) {
-        super(creditManagementController);
-    }
 
     @FXML
     private Button loginButton;
@@ -18,6 +15,10 @@ public class LoginController extends Controller {
 
     @FXML
     private TextField passwordInput;
+
+    public LoginController(CreditManagementController creditManagementController) {
+        super(creditManagementController);
+    }
 
     @FXML
     public void login(ActionEvent event) {

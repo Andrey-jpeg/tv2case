@@ -38,8 +38,12 @@ public class CreditManagementController {
             add(new Producer("Producer4", "uhyes", "ddd@sdu.student.dk", 3));
         }};
 
-        this.productions = new ArrayList<>();
-        this.productions.add(new Production(1, "First movie made"));
+        this.productions = new ArrayList<>() {{
+            add(new Production(0, "A production from DR"));
+            add(new Production(1, "Another production from DR"));
+            add(new Production(2, "A movie"));
+            add(new Production(3, "Something something"));
+        }};
 
         this.companies = new ArrayList<>();
         this.companies.add(new ProductionCompany(1, "We make movies"));
