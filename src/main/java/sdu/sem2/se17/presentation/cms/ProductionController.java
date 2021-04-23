@@ -13,11 +13,7 @@ import sdu.sem2.se17.domain.production.Production;
 import java.util.ArrayList;
 
 public class ProductionController extends Controller {
-    private final ArrayList<String> rolesTitles = new ArrayList<>() {{
-        for (Role roletitle: Role.values()) {
-            add(String.valueOf(roletitle));
-        }
-    }};
+    private ArrayList<String> rolesTitles;
     private Production production;
 
     @FXML
@@ -35,16 +31,17 @@ public class ProductionController extends Controller {
     @FXML
     private Button rightButton;
 
-    public ProductionController(CreditManagementController creditManagementController, Production production) {
+    public ProductionController(CreditManagementController creditManagementController, String productionName) {
         super(creditManagementController);
-        this.production = production;
+        this.production = creditManagementController.findProduction(productionName);
+        this.rolesTitles = creditManagementController.getRoleTitles();
     }
 
     public void initialize() {
 
     }
 
-    private HBox createNewCredit (String name, Role role) {
+    private HBox createNewCredit (String name, String role) {
         return new HBox() {{
             setPrefHeight(35.0);
             setPrefWidth(268.0);
@@ -56,7 +53,7 @@ public class ProductionController extends Controller {
             getChildren().add(new ComboBox<String>() {{
                 setPrefWidth(150.0);
                 getItems().addAll(rolesTitles);
-                getSelectionModel().select(role != null ? String.valueOf(role) : null);
+                getSelectionModel().select(role);
             }});
         }};
     }

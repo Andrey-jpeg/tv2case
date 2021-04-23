@@ -10,6 +10,10 @@ import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 import java.util.ArrayList;
 
+/*
+* Hampus
+* Casper Fenger jensen
+* */
 public interface CreditManagementController {
 
     //Auth
@@ -31,4 +35,6 @@ public interface CreditManagementController {
     //Companies
     public ArrayList<ProductionCompany> getCompanies();
 
+    //Role
+    public ArrayList<String> getRoleTitles();
 }

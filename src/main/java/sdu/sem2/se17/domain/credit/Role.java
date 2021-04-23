@@ -15,7 +15,7 @@ public enum Role {
     NARRATOR("Narrator"),
     FOTOGRAFER("Fotografer"),
     PUBLISHER("PUBLISHER"),
-    GRAFISKE_DESIGNERE("Grafiske_Designere"),
+    GRAFISKE_DESIGNERE("Grafiske Designere"),
     INDTALERE("Indetalere"),
     KAPELMESTER("Kapelmester"),
     KLIPPER("Klipper"),
@@ -50,5 +50,10 @@ public enum Role {
 
     Role(String label) {
         this.label = label;
+    }
+
+    @Override
+    public String toString() {
+        return this.label;
     }
 }
