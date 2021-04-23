@@ -16,6 +16,7 @@ public class Production {
     public Production(long companyId, String name) {
         this.companyId = companyId;
         this.name = name;
+        this.credits = new ArrayList<>();
     }
 
     public Production(long companyId, String name, ArrayList<Credit> credits) {
