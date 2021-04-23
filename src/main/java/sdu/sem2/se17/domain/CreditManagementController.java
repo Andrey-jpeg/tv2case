@@ -22,6 +22,29 @@ public class CreditManagementController {
         this.companies = companies;
     }
 
+    public CreditManagementController() {
+        this.users = new ArrayList<>() {{
+            add(new Admin("SysAdmin", "password", "john@sdu.student.dk"));
+            add(new Admin("Lorem", "", "test@sdu.student.dk"));
+
+
+            add(new Producer("John", "password", "john@sdu.student.dk", 0));
+            add(new Producer("tester 123", "", "test@sdu.student.dk", 1));
+
+            add(new Admin("Ipsum", "aaaa2231", "1133@sdu.student.dk"));
+            add(new Admin("Dolem", "551231", "55123@sdu.student.dk"));
+
+            add(new Producer("AnotherUser11", "tihi123", "aa@sdu.student.dk", 2));
+            add(new Producer("Producer4", "uhyes", "ddd@sdu.student.dk", 3));
+        }};
+
+        this.productions = new ArrayList<>();
+        this.productions.add(new Production(1, "First movie made"));
+
+        this.companies = new ArrayList<>();
+        this.companies.add(new ProductionCompany(1, "We make movies"));
+    }
+
     public boolean login(String username, String password) {
         for (User user: this.users) {
             if(!username.equals(user.getUsername())) {
