@@ -5,6 +5,7 @@ import sdu.sem2.se17.domain.auth.Admin;
 import sdu.sem2.se17.domain.auth.Producer;
 import sdu.sem2.se17.domain.auth.User;
 import sdu.sem2.se17.domain.credit.Role;
+import sdu.sem2.se17.domain.production.Approval;
 import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 
@@ -33,7 +34,6 @@ class CreditManagementControllerTest {
         add(new Producer("Producer4", "uhyes", "ddd@sdu.student.dk", 3));
 
     }};
-
     private final ArrayList<ProductionCompany> companies = new ArrayList<>() { {
 
     } };
@@ -44,12 +44,8 @@ class CreditManagementControllerTest {
         add(new Production(3, "Something something"));
     } };
 
-
-
-
     @BeforeEach
     void setUp() {
-
         controller = new CreditManagementControllerImplDomain(users, productions, companies);
     }
 
@@ -100,52 +96,50 @@ class CreditManagementControllerTest {
         }
     }
 
+    @DisplayName("Manipulate production credits")
+    @Nested
+    class ProductionCredits {
+        @Test
+        void addCredit() {
+            var expectedProduction = productions.get(2);
+            var name = "John";
+            var role = Role.ANIMATION;
 
-    @Test
-    void addCreditToProduction() {
-        var expectedProduction = productions.get(2);
-        var name = "John";
-        var role = Role.ANIMATION;
+            controller.addCreditToProduction(2, name, role);
 
-        controller.addCreditToProduction(2, name, role);
+            assertAll("Credit should be added correctly",
+                    () -> assertEquals(name, expectedProduction.getCredits().get(0).getParticipant().getName()),
+                    () -> assertEquals(role, expectedProduction.getCredits().get(0).getRole())
+            );
+        }
 
-        assertAll("Credit should be added correctly",
-                () -> assertEquals(name, expectedProduction.getCredits().get(0).getParticipant().getName()),
-                () -> assertEquals(role, expectedProduction.getCredits().get(0).getRole())
-                );
-    }
+        @Test
+        void deleteCredit() {
+            var expectedProduction = productions.get(2);
+            var name = "John";
+            var role = Role.ANIMATION;
 
-    @Test
-    void deleteCredit() {
-        var expectedProduction = productions.get(2);
-        var name = "John";
-        var role = Role.ANIMATION;
+            controller.addCreditToProduction(2, name, role);
+            var oldSize = expectedProduction.getCredits().size();
 
-        controller.addCreditToProduction(2, name, role);
-        var oldSize = expectedProduction.getCredits().size();
+            controller.deleteCredit(2, 0);
 
-        controller.deleteCredit(2, 0);
+            assertEquals(oldSize - 1, expectedProduction.getCredits().size());
 
-        assertEquals(oldSize - 1, expectedProduction.getCredits().size());
-
-    }
-
-
-
-    /*
-
-    May not be relevant to test
-
-
-    @Test
-    void getCompanies() {
+        }
     }
 
 
     @Test
-    void validateProduction() {
-    }
+    void createProduction() {
+        var oldLength = productions.size();
+        var name = "NewProduction11";
+        long companyId = 1;
 
+        controller.createProduction(companyId, name);
+        assertEquals(oldLength + 1, productions.size());
+        assertEquals(name, productions.get(productions.size() -1).getName());
+    }
 
     @Test
     void createProducer() {
@@ -160,23 +154,35 @@ class CreditManagementControllerTest {
         assertEquals(username, users.get(users.size() -1).getUsername());
     }
 
+
     @Test
     void getProductions() {
         assertEquals(productions, controller.getProductions());
     }
 
     @Test
-    void createProduction() {
-        var oldLength = productions.size();
-        var name = "NewProduction11";
+    void getCompanies() {
+        assertEquals(companies, controller.getCompanies());
+    }
+
+
+    @Test
+    void validateProduction() {
+        var name = "validateProductionTest";
         long companyId = 1;
 
         controller.createProduction(companyId, name);
-        assertEquals(oldLength + 1, productions.size());
-        assertEquals(name, productions.get(productions.size() -1).getName());
+
+        var production = controller.findProduction(name);
+        var id = controller.getProductions().indexOf(production);
+
+        assertEquals(Approval.NOT_SEEN, production.getAproval());
+        controller.validateProduction(id, Approval.APROVED);
+        assertEquals(Approval.APROVED, production.getAproval());
+
     }
 
-    */
+
 
 
 }
