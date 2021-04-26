@@ -94,4 +94,16 @@ public class ChooseProductionController extends Controller {
         }
     }
 
+    public void logout(ActionEvent actionEvent) {
+        try {
+            comboBoxProductions.getScene().setRoot(
+                    MainFX.loadFXML(
+                            "Login",
+                            new LoginController(
+                                    creditManagementController))
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

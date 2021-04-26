@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import sdu.sem2.se17.domain.CreditManagementControllerImplDomain;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /*
@@ -17,13 +18,10 @@ Casper B. Andresen
  */
 
 public class CreateAccountController extends Controller {
-    public CreateAccountController(CreditManagementController creditManagementController) {
-        super(creditManagementController);
-        this.productionCompanies = creditManagementController.getCompanies();
-    }
+
         private ArrayList<ProductionCompany> productionCompanies;
 
-    @FXML
+        @FXML
         private TextField userNameInput;
 
         @FXML
@@ -38,6 +36,19 @@ public class CreateAccountController extends Controller {
         @FXML
         private Button createAccountButton;
 
+        public CreateAccountController(CreditManagementController creditManagementController) {
+            super(creditManagementController);
+            this.productionCompanies = creditManagementController.getCompanies();
+        }
+
+        public void initialize(){
+            for (ProductionCompany productionCompany:
+                    productionCompanies
+            ) {
+               productionCompanySelector.getItems().add(productionCompany.getName());
+            }
+        }
+
         @FXML
         void createAccount(ActionEvent event) {
             Long selectedItemIndex = null;
@@ -51,14 +62,21 @@ public class CreateAccountController extends Controller {
             if (selectedItemIndex != null) {
                 creditManagementController.createProducer(userNameInput.getText(),passwordInput.getText(),emailInput.getText(),
                         selectedItemIndex);
+                returnToChooseProduction();
             }
         }
 
-        public void initialize(){
-            for (ProductionCompany productionCompany:
-                    productionCompanies
-                 ) {
-                productionCompanySelector.getItems().add(productionCompany.getName());
+        private void returnToChooseProduction() {
+            try {
+                userNameInput.getScene().setRoot(
+                        MainFX.loadFXML(
+                                "ChooseProduction",
+                                new ChooseProductionController(
+                                        creditManagementController)
+                        ));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+
     }
