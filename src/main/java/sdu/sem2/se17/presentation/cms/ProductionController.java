@@ -99,6 +99,7 @@ public class ProductionController extends Controller {
             }
 
 
+            returnToChooseProduction();
         }
     }
     private long getProductionId(){
