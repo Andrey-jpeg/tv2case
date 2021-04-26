@@ -12,6 +12,7 @@ import sdu.sem2.se17.domain.production.ProductionCompany;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,6 +84,14 @@ class CreditManagementControllerTest {
     @DisplayName("findProduction methods")
     @Nested
     class FindProduction {
+
+        @BeforeEach
+        void login(){
+            var user = users.get(2);
+            assertTrue(user instanceof Producer);
+            controller.login(user.getUsername(), user.getPassword());
+        }
+
         @Test
         void findByName() {
             var expectedProduction = productions.get(2);
@@ -101,6 +110,10 @@ class CreditManagementControllerTest {
     class ProductionCredits {
         @Test
         void addCredit() {
+            var user = users.get(2);
+            assertTrue(user instanceof Producer);
+            controller.login(user.getUsername(), user.getPassword());
+
             var expectedProduction = productions.get(2);
             var name = "John";
             var role = Role.ANIMATION;
@@ -115,6 +128,11 @@ class CreditManagementControllerTest {
 
         @Test
         void deleteCredit() {
+            var user = users.get(2);
+            assertTrue(user instanceof Producer);
+            controller.login(user.getUsername(), user.getPassword());
+
+
             var expectedProduction = productions.get(2);
             var name = "John";
             var role = Role.ANIMATION;
@@ -155,10 +173,38 @@ class CreditManagementControllerTest {
     }
 
 
-    @Test
-    void getProductions() {
-        assertEquals(productions, controller.getProductions());
+    @DisplayName("Get productions for user")
+    @Nested
+    class GetProductions{
+        @Test
+        void notAuthenticated() {
+            var aa = controller.getProductions();
+            assertNull(controller.getProductions());
+        }
+
+        @Test
+        void getForProducer() {
+            var user = users.get(2);
+            assertTrue(user instanceof Producer);
+            controller.login(user.getUsername(), user.getPassword());
+
+            var userProductions = productions
+                    .stream()
+                    .filter(c -> c.getCompanyId() == ((Producer) user).getCompanyId())
+                    .collect(Collectors.toList());
+            assertTrue(controller.getProductions().containsAll(userProductions));
+        }
+
+        @Test
+        void getForAdmin() {
+            var user = users.get(1);
+            controller.login(user.getUsername(), user.getPassword());
+
+            assertEquals(productions, controller.getProductions());
+        }
+
     }
+
 
     @Test
     void getCompanies() {
@@ -169,9 +215,14 @@ class CreditManagementControllerTest {
     @Test
     void validateProduction() {
         var name = "validateProductionTest";
-        long companyId = 1;
 
-        controller.createProduction(companyId, name);
+        var user = users.get(2);
+        assertTrue(user instanceof Producer);
+        controller.login(user.getUsername(), user.getPassword());
+
+
+
+        controller.createProduction(((Producer) user).getCompanyId(), name);
 
         var production = controller.findProduction(name);
         var id = controller.getProductions().indexOf(production);
