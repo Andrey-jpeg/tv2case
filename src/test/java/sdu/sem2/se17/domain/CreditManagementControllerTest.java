@@ -120,7 +120,7 @@ class CreditManagementControllerTest {
 
             assertAll("Credit should be added correctly",
                     () -> assertEquals(name, expectedProduction.getCredits().get(0).getParticipant().getName()),
-                    () -> assertEquals(role, expectedProduction.getCredits().get(0).getRole())
+                    () -> assertEquals(Role.ANIMATION, expectedProduction.getCredits().get(0).getRole())
             );
         }
 
