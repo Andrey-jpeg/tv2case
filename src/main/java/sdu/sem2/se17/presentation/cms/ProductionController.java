@@ -89,15 +89,16 @@ public class ProductionController extends Controller {
             for (Node i: credits.getChildren()) {
                 String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
                 String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
-                if (!name.isBlank() && (role != null)){
+                if (name != null && (role != null)){
                     creditManagementController.addCreditToProduction(pIndex, name, role);
-
                 }
             }
 
             for (var i: c){
                 System.out.println(i.toString());
             }
+
+
         }
     }
     private long getProductionId(){
