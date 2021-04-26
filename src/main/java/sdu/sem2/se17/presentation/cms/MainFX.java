@@ -15,22 +15,11 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class MainFX extends Application {
-    private static CreditManagementController creditManagementController = new CreditManagementControllerImplDomain();
+    private static final CreditManagementController creditManagementController = new CreditManagementControllerImplDomain();
 
     @Override
-
     public void start(Stage stage) throws IOException{
-        /*Scene scene = new Scene(loadFXML("Login", new LoginController(creditManagementController)), 640, 480);*/
-        Scene scene = new Scene(loadFXML("ChooseProduction", new ChooseProductionController(creditManagementController)), 640, 480);
-        /*
-        Scene scene = new Scene(
-                loadFXML(
-                        "Production",
-                        new ProductionController(
-                                creditManagementController,
-                                "Name"))
-                , 640, 480);
-        */
+        Scene scene = new Scene(loadFXML("Login", new LoginController(creditManagementController)), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
