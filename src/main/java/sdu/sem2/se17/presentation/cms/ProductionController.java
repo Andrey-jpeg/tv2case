@@ -14,13 +14,13 @@ import java.util.ArrayList;
 
 public class ProductionController extends Controller {
     private ArrayList<String> rolesTitles;
-    private Production production;
+    private String productionName;
 
     @FXML
     public VBox credits;
 
     @FXML
-    private Label productionName;
+    private Label productionLabel;
 
     @FXML
     private Button addNewCreditButton;
@@ -33,12 +33,12 @@ public class ProductionController extends Controller {
 
     public ProductionController(CreditManagementController creditManagementController, String productionName) {
         super(creditManagementController);
-        this.production = creditManagementController.findProduction(productionName);
+        this.productionName = productionName;
         this.rolesTitles = creditManagementController.getRoleTitles();
     }
 
     public void initialize() {
-
+        productionLabel.setText(productionName);
     }
 
     private HBox createNewCredit (String name, String role) {

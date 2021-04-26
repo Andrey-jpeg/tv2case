@@ -21,7 +21,8 @@ public class MainFX extends Application {
 
     public void start(Stage stage) throws IOException{
         /*Scene scene = new Scene(loadFXML("Login", new LoginController(creditManagementController)), 640, 480);*/
-        /*Scene scene = new Scene(loadFXML("ChooseProduction", new ChooseProductionController(creditManagementController)), 640, 480);*/
+        Scene scene = new Scene(loadFXML("ChooseProduction", new ChooseProductionController(creditManagementController)), 640, 480);
+        /*
         Scene scene = new Scene(
                 loadFXML(
                         "Production",
@@ -29,11 +30,12 @@ public class MainFX extends Application {
                                 creditManagementController,
                                 "Name"))
                 , 640, 480);
+        */
         stage.setScene(scene);
         stage.show();
     }
 
-    private static Parent loadFXML(String fxml, Controller controller) throws IOException {
+    public static Parent loadFXML(String fxml, Controller controller) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setControllerFactory((aClass) -> {
             return controller;
