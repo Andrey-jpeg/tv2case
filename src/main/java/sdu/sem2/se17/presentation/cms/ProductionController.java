@@ -56,6 +56,9 @@ public class ProductionController extends Controller {
             addNewCreditButton.setVisible(true);
         }
 
+        System.out.println(productionName);
+        System.out.println(getProductionId());
+
         creditManagementController.findProduction(getProductionId()).getCredits().forEach(x -> {
             System.out.println(x.getParticipant().getName());
             this.credits.getChildren().add(createNewCredit(x.getParticipant().getName(), x.getRole().toString()));
