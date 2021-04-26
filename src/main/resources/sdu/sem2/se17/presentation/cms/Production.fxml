@@ -24,7 +24,7 @@
       </ScrollPane>
       <Label layoutX="207.0" layoutY="73.0" text="Name" />
       <Label layoutX="361.0" layoutY="73.0" text="Role" />
-      <Label fx:id="productionName" layoutX="249.0" layoutY="40.0" text="Production" />
+      <Label fx:id="productionLabel" layoutX="249.0" layoutY="40.0" text="Production" />
       <Button fx:id="addNewCreditButton" layoutX="489.0" layoutY="14.0" mnemonicParsing="false" onAction="#addNewCredit" text="Add new credit" />
       <Button fx:id="sendButton" layoutX="278.0" layoutY="360.0" mnemonicParsing="false" onAction="#send" text="Send" />
       <TextArea layoutX="156.0" layoutY="245.0" prefHeight="110.0" prefWidth="294.0" />

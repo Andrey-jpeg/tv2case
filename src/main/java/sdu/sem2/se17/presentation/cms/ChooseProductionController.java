@@ -7,7 +7,9 @@ import javafx.scene.control.ComboBox;
 import sdu.sem2.se17.domain.CreditManagementController;
 import sdu.sem2.se17.domain.production.Production;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ChooseProductionController extends Controller {
 
@@ -30,6 +32,7 @@ public class ChooseProductionController extends Controller {
         for (Production production: productions) {
             comboBoxProductions.getItems().add(production.getName());
         }
+
     }
 
     @FXML
@@ -39,7 +42,20 @@ public class ChooseProductionController extends Controller {
 
     @FXML
     void select(ActionEvent event) {
-
+        var selectedName = comboBoxProductions.getSelectionModel().getSelectedItem();
+        if(selectedName != null && !selectedName.isEmpty()){
+            try {
+                comboBoxProductions.getScene().setRoot(
+                        MainFX.loadFXML(
+                                "Production",
+                                new ProductionController(
+                                        creditManagementController,
+                                        selectedName))
+                );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
