@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdu.sem2.se17.presentation.cms.ProductionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdu.sem2.se17.presentation.cms.ProductionController">
    <children>
       <ScrollPane layoutX="156.0" layoutY="100.0" prefHeight="122.0" prefWidth="294.0">
         <content>
@@ -25,11 +20,11 @@
       <Label layoutX="207.0" layoutY="73.0" text="Name" />
       <Label layoutX="361.0" layoutY="73.0" text="Role" />
       <Label fx:id="productionLabel" layoutX="249.0" layoutY="40.0" text="Production" />
-      <Button fx:id="addNewCreditButton" layoutX="489.0" layoutY="14.0" mnemonicParsing="false" onAction="#addNewCredit" text="Add new credit" />
-      <Button fx:id="sendButton" layoutX="278.0" layoutY="360.0" mnemonicParsing="false" onAction="#send" text="Send" />
+      <Button fx:id="addNewCreditButton" layoutX="489.0" layoutY="14.0" mnemonicParsing="false" onAction="#addNewCredit" text="Add new credit" visible="false" />
+      <Button fx:id="sendButton" layoutX="278.0" layoutY="360.0" mnemonicParsing="false" onAction="#send" text="Send" visible="false" />
       <TextArea layoutX="156.0" layoutY="245.0" prefHeight="110.0" prefWidth="294.0" />
       <Label layoutX="270.0" layoutY="227.0" text="Comments" />
-      <Button layoutX="156.0" layoutY="360.0" mnemonicParsing="false" text="Button" />
-      <Button fx:id="rightButton" layoutX="399.0" layoutY="360.0" mnemonicParsing="false" text="right" />
+      <Button fx:id="approveButton"  layoutX="156.0" layoutY="360.0" mnemonicParsing="false" onAction="#approve" text="Approve" visible="false" />
+      <Button fx:id="denyButton" layoutX="399.0" layoutY="360.0" mnemonicParsing="false" onAction="#deny" text="Deny" visible="false" />
    </children>
 </AnchorPane>
