@@ -12,24 +12,24 @@ import java.util.ArrayList;
 public interface CreditManagementController {
 
     //Auth
-    public boolean login(String username, String password);
-    public boolean isAdmin();
+    boolean login(String username, String password);
+    boolean isAdmin();
 
     //User
-    public void createProducer(String username, String password, String email, long companyId);
+    void createProducer(String username, String password, String email, long companyId);
     //Production
-    public ArrayList<Production> getProductions();
-    public void createProduction(String name);
-    public void createProduction(long companyId, String name);
-    public Production findProduction(String name);
-    public Production findProduction(long index);
-    public void validateProduction(long productionIndex, Approval approval);
-    public void addCreditToProduction(long productionIndex, String name, String role);
-    public void deleteCredit(long productionIndex, long creditIndex);
+    ArrayList<Production> getProductions();
+    void createProduction(String name);
+    void createProduction(long companyId, String name);
+    Production findProduction(String name);
+    Production findProduction(long index);
+    void validateProduction(long productionIndex, Approval approval);
+    void addCreditToProduction(long productionIndex, String name, String role);
+    void deleteCredit(long productionIndex, long creditIndex);
 
     //Companies
-    public ArrayList<ProductionCompany> getCompanies();
+    ArrayList<ProductionCompany> getCompanies();
 
     //Role
-    public ArrayList<String> getRoleTitles();
+    ArrayList<String> getRoleTitles();
 }
