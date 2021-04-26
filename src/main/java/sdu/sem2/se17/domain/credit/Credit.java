@@ -26,4 +26,10 @@ public class Credit {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    /*
+    public String toString(){
+        return this.participant.getName() + ", " + this.role.label;
+    }
+     */
 }

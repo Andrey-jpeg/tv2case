@@ -116,7 +116,7 @@ class CreditManagementControllerTest {
 
             var expectedProduction = productions.get(2);
             var name = "John";
-            var role = Role.ANIMATION;
+            var role = Role.ANIMATION.toString();
 
             controller.addCreditToProduction(2, name, role);
 
@@ -135,7 +135,7 @@ class CreditManagementControllerTest {
 
             var expectedProduction = productions.get(2);
             var name = "John";
-            var role = Role.ANIMATION;
+            var role = Role.ANIMATION.toString();
 
             controller.addCreditToProduction(2, name, role);
             var oldSize = expectedProduction.getCredits().size();

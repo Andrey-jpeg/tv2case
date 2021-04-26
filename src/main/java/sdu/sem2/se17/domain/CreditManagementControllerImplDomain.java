@@ -70,7 +70,9 @@ public class CreditManagementControllerImplDomain implements CreditManagementCon
 
     //Production
     public ArrayList<Production> getProductions() {
-        if (this.isAdmin()) {
+        if (this.sessionUser == null) {
+            return null;
+        } else if (this.isAdmin()) {
             return this.productions;
         } else {
             ArrayList<Production> tempArray = new ArrayList<>();
@@ -110,8 +112,8 @@ public class CreditManagementControllerImplDomain implements CreditManagementCon
         findProduction(productionIndex).setAproval(approval);
     }
 
-    public void addCreditToProduction(long productionIndex, String name, Role role) {
-        findProduction(productionIndex).createCredit(new Participant(name), role);
+    public void addCreditToProduction(long productionIndex, String name, String role) {
+        findProduction(productionIndex).createCredit(new Participant(name), Role.getRole(role));
     }
 
     public void deleteCredit(long productionIndex, long creditIndex) {
