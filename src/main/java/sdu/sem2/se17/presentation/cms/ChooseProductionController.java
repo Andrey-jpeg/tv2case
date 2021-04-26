@@ -48,11 +48,19 @@ public class ChooseProductionController extends Controller {
         } else {
             createProduction();
         }
-
     }
 
     private void createProduction() {
-
+        try {
+            comboBoxProductions.getScene().setRoot(
+                    MainFX.loadFXML(
+                            "CreateProduction",
+                            new CreateProductionController(
+                                    creditManagementController))
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createUser() {

@@ -86,6 +86,13 @@ public class CreditManagementControllerImplDomain implements CreditManagementCon
 
     }
 
+    @Override
+    public void createProduction(String name) {
+        if(this.sessionUser != null && !isAdmin()){
+            createProduction(((Producer) sessionUser).getCompanyId(), name);
+        }
+    }
+
     public void createProduction(long companyId, String name) {
         productions.add(new Production(companyId, name));
     }

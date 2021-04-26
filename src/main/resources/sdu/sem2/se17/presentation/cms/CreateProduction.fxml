@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdu.sem2.se17.presentation.cms.CreateProductionController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="470.0" spacing="5.0">
+         <children>
+            <Label text="Production name" />
+            <TextField fx:id="productionTextField" alignment="CENTER" maxWidth="200.0" prefHeight="25.0" prefWidth="434.0" />
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+                  <Button mnemonicParsing="false" onAction="#create" text="Create" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</StackPane>
