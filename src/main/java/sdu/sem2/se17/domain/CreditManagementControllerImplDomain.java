@@ -1,6 +1,5 @@
 package sdu.sem2.se17.domain;
 import sdu.sem2.se17.domain.auth.*;
-import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.credit.Role;
 import sdu.sem2.se17.domain.production.Approval;
@@ -70,7 +69,10 @@ public class CreditManagementControllerImplDomain implements CreditManagementCon
 
     //Production
     public ArrayList<Production> getProductions() {
-        if (this.isAdmin()) {
+        if(this.sessionUser == null){
+            return null;
+        }
+        else if (this.isAdmin()) {
             return this.productions;
         } else {
             ArrayList<Production> tempArray = new ArrayList<>();
@@ -107,7 +109,7 @@ public class CreditManagementControllerImplDomain implements CreditManagementCon
     }
 
     public void validateProduction(long productionIndex, Approval approval) {
-        findProduction(productionIndex).setAproval(approval);
+       getProductions().get((int) productionIndex).setApproval(approval);
     }
 
     public void addCreditToProduction(long productionIndex, String name, Role role) {

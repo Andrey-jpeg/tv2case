@@ -58,11 +58,11 @@ public class Production {
         this.name = name;
     }
 
-    public Approval getAproval() {
+    public Approval getApproval() {
         return approval;
     }
 
-    public void setAproval(Approval aproval) {
+    public void setApproval(Approval aproval) {
         this.approval = aproval;
     }
 }

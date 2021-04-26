@@ -2,9 +2,9 @@ package sdu.sem2.se17.domain.production;
 
 /* Casper Fenger Jensen */
 public enum Approval {
-    NOT_SEEN(null),
-    NOT_APROVED(false),
-    APROVED(true);
+    NOT_SEEN(false),
+    NOT_APPROVED(false),
+    APPROVED(true);
 
     private final Boolean approved;
 
