@@ -25,6 +25,7 @@ public interface CreditManagementController {
 
     //Production
     public ArrayList<Production> getProductions();
+    public void createProduction(String name);
     public void createProduction(long companyId, String name);
     public Production findProduction(String name);
     public Production findProduction(long index);
