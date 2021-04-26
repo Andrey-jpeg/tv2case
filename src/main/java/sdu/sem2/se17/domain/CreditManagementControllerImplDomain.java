@@ -70,7 +70,18 @@ public class CreditManagementControllerImplDomain implements CreditManagementCon
 
     //Production
     public ArrayList<Production> getProductions() {
-        return this.productions;
+        if (this.isAdmin()) {
+            return this.productions;
+        } else {
+            ArrayList<Production> tempArray = new ArrayList<>();
+            for (Production i: this.productions) {
+                if (((Producer)sessionUser).getCompanyId() == i.getCompanyId()) {
+                    tempArray.add(i);
+                }
+            }
+            return tempArray;
+        }
+
     }
 
     public void createProduction(long companyId, String name) {
