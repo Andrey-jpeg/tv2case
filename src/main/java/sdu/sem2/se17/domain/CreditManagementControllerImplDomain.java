@@ -111,7 +111,7 @@ public class CreditManagementControllerImplDomain implements CreditManagementCon
         } else if (index >= this.productions.size()) {
             return null;
         }
-        return this.productions.get((int)(index));
+        return this.getProductions().get((int)(index));
     }
 
     public void validateProduction(long productionIndex, Approval approval) {

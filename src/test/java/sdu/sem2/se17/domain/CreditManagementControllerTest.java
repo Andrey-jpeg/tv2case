@@ -39,6 +39,8 @@ class CreditManagementControllerTest {
     private final ArrayList<Production> productions = new ArrayList<>() { {
         add(new Production(0, "A production from DR"));
         add(new Production(0, "Another production from DR"));
+        add(new Production(0, "Another prosasdasdduction from DR"));
+        add(new Production(0, "Another producasdasdtion from DR"));
         add(new Production(2, "A movie"));
         add(new Production(3, "Something something"));
     } };
@@ -98,8 +100,8 @@ class CreditManagementControllerTest {
 
         @Test
         void findByIndex() {
-            var expectedProduction = productions.get(2);
-            assertEquals(expectedProduction, controller.findProduction(2));
+            var expectedProduction = controller.getProductions().get(1);
+            assertEquals(expectedProduction, controller.findProduction(1));
         }
     }
 
@@ -112,11 +114,11 @@ class CreditManagementControllerTest {
             assertTrue(user instanceof Producer);
             controller.login(user.getUsername(), user.getPassword());
 
-            var expectedProduction = productions.get(2);
+            var expectedProduction = controller.getProductions().get(1);
             var name = "John";
             var role = Role.ANIMATION.toString();
 
-            controller.addCreditToProduction(2, name, role);
+            controller.addCreditToProduction(1, name, role);
 
             assertAll("Credit should be added correctly",
                     () -> assertEquals(name, expectedProduction.getCredits().get(0).getParticipant().getName()),
@@ -131,14 +133,14 @@ class CreditManagementControllerTest {
             controller.login(user.getUsername(), user.getPassword());
 
 
-            var expectedProduction = productions.get(2);
+            var expectedProduction = controller.getProductions().get(1);
             var name = "John";
             var role = Role.ANIMATION.toString();
 
-            controller.addCreditToProduction(2, name, role);
+            controller.addCreditToProduction(1, name, role);
             var oldSize = expectedProduction.getCredits().size();
 
-            controller.deleteCredit(2, 0);
+            controller.deleteCredit(1, 0);
 
             assertEquals(oldSize - 1, expectedProduction.getCredits().size());
 
