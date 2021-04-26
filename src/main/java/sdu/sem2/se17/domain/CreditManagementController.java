@@ -22,7 +22,6 @@ public interface CreditManagementController {
 
     //User
     public void createProducer(String username, String password, String email, long companyId);
-
     //Production
     public ArrayList<Production> getProductions();
     public void createProduction(String name);

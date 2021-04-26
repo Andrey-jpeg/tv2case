@@ -8,4 +8,12 @@ public class ProductionCompany {
         this.id = id;
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public long getId() {
+        return id;
+    }
 }
