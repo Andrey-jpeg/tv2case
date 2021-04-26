@@ -27,7 +27,6 @@ public class LoginController extends Controller {
 
     @FXML
     public void login(ActionEvent event) {
-
         var username = usernameInput.getText();
         var password = passwordInput.getText();
         if(!username.isBlank()  && !password.isEmpty()){

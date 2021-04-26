@@ -17,9 +17,9 @@ public interface CreditManagementController {
 
     //User
     public void createProducer(String username, String password, String email, long companyId);
-
     //Production
     public ArrayList<Production> getProductions();
+    public void createProduction(String name);
     public void createProduction(long companyId, String name);
     public Production findProduction(String name);
     public Production findProduction(long index);

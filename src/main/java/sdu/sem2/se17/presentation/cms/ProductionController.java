@@ -9,6 +9,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import sdu.sem2.se17.domain.CreditManagementController;
 
+import sdu.sem2.se17.domain.credit.Role;
+import sdu.sem2.se17.domain.production.Approval;
+import sdu.sem2.se17.domain.production.Production;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ProductionController extends Controller {
@@ -28,16 +33,28 @@ public class ProductionController extends Controller {
     private Button sendButton;
 
     @FXML
-    private Button rightButton;
+    private Button denyButton;
+
+    @FXML
+    private Button approveButton;
 
     public ProductionController(CreditManagementController creditManagementController, String productionName) {
         super(creditManagementController);
         this.productionName = productionName;
         this.rolesTitles = creditManagementController.getRoleTitles();
+
     }
 
     public void initialize() {
         productionLabel.setText(productionName);
+
+        if(creditManagementController.isAdmin()){
+            denyButton.setVisible(true);
+            approveButton.setVisible(true);
+        } else {
+            sendButton.setVisible(true);
+            addNewCreditButton.setVisible(true);
+        }
     }
 
     private HBox createNewCredit (String name, String role) {
@@ -83,4 +100,32 @@ public class ProductionController extends Controller {
             }
         }
     }
+    private long getProductionId(){
+        return creditManagementController.getProductions().indexOf(creditManagementController.findProduction(productionName));
+    }
+
+    public void approve(ActionEvent actionEvent) {
+        creditManagementController.validateProduction(getProductionId(), Approval.APPROVED);
+        returnToChooseProduction();
+    }
+
+    public void deny(ActionEvent actionEvent) {
+        creditManagementController.validateProduction(getProductionId(), Approval.NOT_APPROVED);
+        returnToChooseProduction();
+
+    }
+
+    private void returnToChooseProduction() {
+        try {
+            approveButton.getScene().setRoot(
+                    MainFX.loadFXML(
+                            "ChooseProduction",
+                            new ChooseProductionController(
+                                    creditManagementController)
+                    ));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

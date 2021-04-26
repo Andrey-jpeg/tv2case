@@ -33,11 +33,47 @@ public class ChooseProductionController extends Controller {
             comboBoxProductions.getItems().add(production.getName());
         }
 
+        //Admin
+        if (creditManagementController.isAdmin()){
+            createButton.setText(createButton.getText() + " new user");
+        } else {
+            createButton.setText(createButton.getText() + " new production");
+        }
     }
 
     @FXML
     void create(ActionEvent event) {
+        if(creditManagementController.isAdmin()){
+            createUser();
+        } else {
+            createProduction();
+        }
+    }
 
+    private void createProduction() {
+        try {
+            comboBoxProductions.getScene().setRoot(
+                    MainFX.loadFXML(
+                            "CreateProduction",
+                            new CreateProductionController(
+                                    creditManagementController))
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createUser() {
+        try {
+            comboBoxProductions.getScene().setRoot(
+                    MainFX.loadFXML(
+                            "CreateAccount",
+                            new CreateAccountController(
+                                    creditManagementController))
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -58,4 +94,16 @@ public class ChooseProductionController extends Controller {
         }
     }
 
+    public void logout(ActionEvent actionEvent) {
+        try {
+            comboBoxProductions.getScene().setRoot(
+                    MainFX.loadFXML(
+                            "Login",
+                            new LoginController(
+                                    creditManagementController))
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
