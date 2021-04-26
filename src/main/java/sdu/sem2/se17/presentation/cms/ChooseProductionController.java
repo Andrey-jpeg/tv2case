@@ -33,11 +33,39 @@ public class ChooseProductionController extends Controller {
             comboBoxProductions.getItems().add(production.getName());
         }
 
+        //Admin
+        if (creditManagementController.isAdmin()){
+            createButton.setText(createButton.getText() + " new user");
+        } else {
+            createButton.setText(createButton.getText() + " new production");
+        }
     }
 
     @FXML
     void create(ActionEvent event) {
+        if(creditManagementController.isAdmin()){
+            createUser();
+        } else {
+            createProduction();
+        }
 
+    }
+
+    private void createProduction() {
+
+    }
+
+    private void createUser() {
+        try {
+            comboBoxProductions.getScene().setRoot(
+                    MainFX.loadFXML(
+                            "CreateAccount",
+                            new CreateAccountController(
+                                    creditManagementController))
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
