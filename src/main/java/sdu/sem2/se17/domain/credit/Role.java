@@ -56,4 +56,11 @@ public enum Role {
     public String toString() {
         return this.label;
     }
+
+    public static Role getRole(String label) {
+        for (Role i: Role.values()) {
+            if (i.label == label) {return i;}
+        }
+        return null;
+    }
 }

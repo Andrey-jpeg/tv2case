@@ -3,10 +3,12 @@ package sdu.sem2.se17.presentation.cms;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import sdu.sem2.se17.domain.CreditManagementController;
+
 import sdu.sem2.se17.domain.credit.Role;
 import sdu.sem2.se17.domain.production.Approval;
 import sdu.sem2.se17.domain.production.Production;
@@ -80,9 +82,24 @@ public class ProductionController extends Controller {
 
     @FXML
     void send(ActionEvent event) {
+        if (event.getSource() == sendButton) {
+            long pIndex = creditManagementController.getProductions().indexOf(creditManagementController.findProduction(productionName));
+            var c = creditManagementController.findProduction(pIndex).getCredits();
+            c.removeAll(c);
+            for (Node i: credits.getChildren()) {
+                String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
+                String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
+                if (!name.isBlank() && (role != null)){
+                    creditManagementController.addCreditToProduction(pIndex, name, role);
 
+                }
+            }
+
+            for (var i: c){
+                System.out.println(i.toString());
+            }
+        }
     }
-
     private long getProductionId(){
         return creditManagementController.getProductions().indexOf(creditManagementController.findProduction(productionName));
     }

@@ -114,13 +114,13 @@ class CreditManagementControllerTest {
 
             var expectedProduction = productions.get(2);
             var name = "John";
-            var role = Role.ANIMATION;
+            var role = Role.ANIMATION.toString();
 
             controller.addCreditToProduction(2, name, role);
 
             assertAll("Credit should be added correctly",
                     () -> assertEquals(name, expectedProduction.getCredits().get(0).getParticipant().getName()),
-                    () -> assertEquals(role, expectedProduction.getCredits().get(0).getRole())
+                    () -> assertEquals(Role.ANIMATION, expectedProduction.getCredits().get(0).getRole())
             );
         }
 
@@ -133,7 +133,7 @@ class CreditManagementControllerTest {
 
             var expectedProduction = productions.get(2);
             var name = "John";
-            var role = Role.ANIMATION;
+            var role = Role.ANIMATION.toString();
 
             controller.addCreditToProduction(2, name, role);
             var oldSize = expectedProduction.getCredits().size();

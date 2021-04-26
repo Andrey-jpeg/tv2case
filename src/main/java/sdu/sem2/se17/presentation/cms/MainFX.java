@@ -4,15 +4,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import sdu.sem2.se17.domain.CreditManagementController;
 import sdu.sem2.se17.domain.CreditManagementControllerImplDomain;
-import sdu.sem2.se17.domain.production.Production;
+
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class MainFX extends Application {
     private static final CreditManagementController creditManagementController = new CreditManagementControllerImplDomain();
