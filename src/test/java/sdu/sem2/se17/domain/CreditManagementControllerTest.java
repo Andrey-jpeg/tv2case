@@ -10,8 +10,6 @@ import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -220,16 +218,15 @@ class CreditManagementControllerTest {
         assertTrue(user instanceof Producer);
         controller.login(user.getUsername(), user.getPassword());
 
-
-
         controller.createProduction(((Producer) user).getCompanyId(), name);
-
         var production = controller.findProduction(name);
         var id = controller.getProductions().indexOf(production);
 
-        assertEquals(Approval.NOT_SEEN, production.getAproval());
-        controller.validateProduction(id, Approval.APROVED);
-        assertEquals(Approval.APROVED, production.getAproval());
+        assertFalse(production.getApproval().isApproved());
+
+        controller.validateProduction(id, Approval.APPROVED);
+
+        assertTrue(production.getApproval().isApproved());
 
     }
 
