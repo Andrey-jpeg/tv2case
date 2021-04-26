@@ -55,6 +55,11 @@ public class ProductionController extends Controller {
             sendButton.setVisible(true);
             addNewCreditButton.setVisible(true);
         }
+
+        creditManagementController.findProduction(getProductionId()).getCredits().forEach(x -> {
+            System.out.println(x.getParticipant().getName());
+            this.credits.getChildren().add(createNewCredit(x.getParticipant().getName(), x.getRole().toString()));
+        });
     }
 
     private HBox createNewCredit (String name, String role) {
@@ -89,7 +94,9 @@ public class ProductionController extends Controller {
             for (Node i: credits.getChildren()) {
                 String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
                 String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
+                System.out.println("ddddd");
                 if (name != null && (role != null)){
+                    System.out.println("aaaa");
                     creditManagementController.addCreditToProduction(pIndex, name, role);
                 }
             }
