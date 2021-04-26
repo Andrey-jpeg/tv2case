@@ -98,7 +98,9 @@ public class CreditManagementControllerImplDomain implements CreditManagementCon
     }
 
     public Production findProduction(long index) {
-        if (index >= this.productions.size()) {
+        if (sessionUser == null) {
+            return null;
+        } else if (index >= this.productions.size()) {
             return null;
         }
         return this.productions.get((int)(index));
