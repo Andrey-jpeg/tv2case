@@ -94,10 +94,7 @@ public class ProductionController extends Controller {
 
                 }
             }
-
-            for (var i: c){
-                System.out.println(i.toString());
-            }
+            returnToChooseProduction();
         }
     }
     private long getProductionId(){
