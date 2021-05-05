@@ -144,8 +144,11 @@ public class ProductionController extends Controller {
     @FXML
     void convertToJson(ActionEvent event) throws IOException {
         Writer writer = new FileWriter( productionName + ".json", StandardCharsets.UTF_8);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        gson.toJson( creditManagementController.findProduction(productionName).getCredits(), writer);
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
+        gson.toJson( creditManagementController.findProduction(productionName), writer);
         writer.flush();
         writer.close();
     }

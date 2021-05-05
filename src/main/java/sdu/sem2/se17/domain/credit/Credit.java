@@ -1,9 +1,14 @@
 package sdu.sem2.se17.domain.credit;
 
+import com.google.gson.annotations.Expose;
+
 /* Casper Fenger Jensen */
+/* + Casper Andresen */
 public class Credit {
 
+    @Expose
     private Participant participant;
+    @Expose
     private Role role;
 
     public Credit(Participant participant, Role role){

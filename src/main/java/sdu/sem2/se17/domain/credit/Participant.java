@@ -1,6 +1,9 @@
 package sdu.sem2.se17.domain.credit;
 
+import com.google.gson.annotations.Expose;
+
 public class Participant {
+    @Expose
     private String name;
 
     public String getName() {
