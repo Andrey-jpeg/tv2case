@@ -1,5 +1,6 @@
 package sdu.sem2.se17.domain.production;
 
+import com.google.gson.annotations.Expose;
 import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.credit.Role;
@@ -9,7 +10,9 @@ import java.util.ArrayList;
 /* Casper Fenger Jensen */
 public class Production {
     private long companyId;
+    @Expose
     private String name;
+    @Expose
     private ArrayList<Credit> credits;
     private Approval approval = Approval.NOT_SEEN;
 
