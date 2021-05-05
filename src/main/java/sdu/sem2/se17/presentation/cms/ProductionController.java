@@ -98,7 +98,7 @@ public class ProductionController extends Controller {
     @FXML
     void send(ActionEvent event) {
         if (event.getSource() == sendButton) {
-            long pIndex = creditManagementController.getProductions().indexOf(creditManagementController.findProduction(productionName));
+            long pIndex = getProductionId();
             var c = creditManagementController.findProduction(pIndex).getCredits();
             c.removeAll(c);
             for (Node i: credits.getChildren()) {

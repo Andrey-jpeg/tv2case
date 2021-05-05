@@ -4,8 +4,8 @@ module sdu.sem2.SE17 {
     requires javafx.fxml;
     requires gson;
     requires java.sql;
+    requires org.postgresql.jdbc;
 
-    opens sdu.sem2.se17.presentation.cms;
     opens sdu.sem2.se17.presentation.consumersystem;
     opens sdu.sem2.se17.domain;
     opens sdu.sem2.se17.domain.auth;
