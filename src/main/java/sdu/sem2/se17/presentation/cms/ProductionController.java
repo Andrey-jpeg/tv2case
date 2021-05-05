@@ -1,5 +1,6 @@
 package sdu.sem2.se17.presentation.cms;
 
+import com.google.gson.GsonBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -9,12 +10,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import sdu.sem2.se17.domain.CreditManagementController;
 
+import sdu.sem2.se17.domain.CreditManagementControllerImplDomain;
 import sdu.sem2.se17.domain.credit.Role;
 import sdu.sem2.se17.domain.production.Approval;
 import sdu.sem2.se17.domain.production.Production;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import com.google.gson.Gson;
 
 public class ProductionController extends Controller {
     private ArrayList<String> rolesTitles;
@@ -38,6 +44,9 @@ public class ProductionController extends Controller {
     @FXML
     private Button approveButton;
 
+    @FXML
+    private Button jsonButton;
+
     public ProductionController(CreditManagementController creditManagementController, String productionName) {
         super(creditManagementController);
         this.productionName = productionName;
@@ -51,16 +60,14 @@ public class ProductionController extends Controller {
         if(creditManagementController.isAdmin()){
             denyButton.setVisible(true);
             approveButton.setVisible(true);
+            jsonButton.setVisible(true);
         } else {
             sendButton.setVisible(true);
             addNewCreditButton.setVisible(true);
         }
 
-        System.out.println(productionName);
-        System.out.println(getProductionId());
 
         creditManagementController.findProduction(getProductionId()).getCredits().forEach(x -> {
-            System.out.println(x.getParticipant().getName());
             this.credits.getChildren().add(createNewCredit(x.getParticipant().getName(), x.getRole().toString()));
         });
     }
@@ -97,17 +104,10 @@ public class ProductionController extends Controller {
             for (Node i: credits.getChildren()) {
                 String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
                 String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
-                System.out.println("ddddd");
                 if (name != null && (role != null)){
-                    System.out.println("aaaa");
                     creditManagementController.addCreditToProduction(pIndex, name, role);
                 }
             }
-
-            for (var i: c){
-                System.out.println(i.toString());
-            }
-
 
             returnToChooseProduction();
         }
@@ -140,4 +140,13 @@ public class ProductionController extends Controller {
         }
     }
 
+    /* <-- Casper Brøchner Andresen --> */
+    @FXML
+    void convertToJson(ActionEvent event) throws IOException {
+        Writer writer = new FileWriter( productionName + ".json", StandardCharsets.UTF_8);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        gson.toJson( creditManagementController.findProduction(productionName).getCredits(), writer);
+        writer.flush();
+        writer.close();
+    }
 }
