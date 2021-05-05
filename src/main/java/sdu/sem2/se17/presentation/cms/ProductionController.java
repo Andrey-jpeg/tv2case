@@ -94,7 +94,7 @@ public class ProductionController extends Controller {
 
     @FXML
     void send(ActionEvent event) {
-        var c = creditManagementController.findProduction(getProductionId()).getCredits();
+        ArrayList c = creditManagementController.findProduction(getProductionId()).getCredits();
         c.removeAll(c);
         for (Node i: credits.getChildren()) {
             String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
