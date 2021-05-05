@@ -24,7 +24,8 @@
       <Button fx:id="sendButton" layoutX="278.0" layoutY="360.0" mnemonicParsing="false" onAction="#send" text="Send" visible="false" />
       <TextArea layoutX="156.0" layoutY="245.0" prefHeight="110.0" prefWidth="294.0" />
       <Label layoutX="270.0" layoutY="227.0" text="Comments" />
-      <Button fx:id="approveButton"  layoutX="156.0" layoutY="360.0" mnemonicParsing="false" onAction="#approve" text="Approve" visible="false" />
+      <Button fx:id="approveButton" layoutX="156.0" layoutY="360.0" mnemonicParsing="false" onAction="#approve" text="Approve" visible="false" />
       <Button fx:id="denyButton" layoutX="399.0" layoutY="360.0" mnemonicParsing="false" onAction="#deny" text="Deny" visible="false" />
+      <Button fx:id="jsonButton" layoutX="479.0" layoutY="27.0" mnemonicParsing="false" onAction="#convertToJson" text="Convert To Json" visible="false"/>
    </children>
 </AnchorPane>
