@@ -10,10 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import sdu.sem2.se17.domain.CreditManagementController;
 
-import sdu.sem2.se17.domain.CreditManagementControllerImplDomain;
-import sdu.sem2.se17.domain.credit.Role;
 import sdu.sem2.se17.domain.production.Approval;
-import sdu.sem2.se17.domain.production.Production;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -97,21 +94,19 @@ public class ProductionController extends Controller {
 
     @FXML
     void send(ActionEvent event) {
-        if (event.getSource() == sendButton) {
-            long pIndex = creditManagementController.getProductions().indexOf(creditManagementController.findProduction(productionName));
-            var c = creditManagementController.findProduction(pIndex).getCredits();
-            c.removeAll(c);
-            for (Node i: credits.getChildren()) {
-                String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
-                String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
-                if (name != null && (role != null)){
-                    creditManagementController.addCreditToProduction(pIndex, name, role);
-                }
+        ArrayList c = creditManagementController.findProduction(getProductionId()).getCredits();
+        c.removeAll(c);
+        for (Node i: credits.getChildren()) {
+            String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
+            String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
+            if (name != null && (role != null)){
+                creditManagementController.addCreditToProduction(getProductionId(), name, role);
             }
-
-            returnToChooseProduction();
         }
+
+        returnToChooseProduction();
     }
+
     private long getProductionId(){
         return creditManagementController.getProductions().indexOf(creditManagementController.findProduction(productionName));
     }
