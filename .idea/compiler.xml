@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="tv2Case" target="11" />
+      <module name="tv2Case" target="15" />
     </bytecodeTargetLevel>
   </component>
 </project>

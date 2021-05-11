@@ -34,6 +34,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.4.5</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <version>2.19.1</version>
@@ -65,6 +70,12 @@
                 <exec.mainClass>sdu.sem2.se17.presentation.consumersystem.MainFX</exec.mainClass>
             </properties>
         </profile>
+        <profile>
+            <id>generateDatabse</id>
+            <properties>
+                <exec.mainClass>sdu.sem2.se17.persistence.db.DbCreator</exec.mainClass>
+            </properties>
+        </profile>
     </profiles>
     <build>
         <plugins>
@@ -84,6 +95,21 @@
                         <version>5.1.0</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>sdu.sem2.se17.persistence.db.DbCreator</mainClass>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
