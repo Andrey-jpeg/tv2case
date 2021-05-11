@@ -52,14 +52,10 @@ public class DataSource {
         }
         statement.executeUpdate("CREATE DATABASE tv2");
         this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tv2", "postgres", "" );
-        /* PreparedStatement preparedStatement = this.connection.prepareStatement("CREATE TABLE \"user\"(id int primary key)");
-        preparedStatement.execute();
-         */
         ScriptRunner sr = new ScriptRunner(this.connection);
-        //Creating a reader object
         Reader reader = null;
         try {
-            reader = new BufferedReader(new FileReader("/Users/casperandresen/Documents/SDU/sem2/Semesterprojekt/tv2case-main/src/main/resources/sql/sampleScript.sql"));
+            reader = new BufferedReader(new FileReader(DataSource.class.getResource("sampleScript.sql").getFile()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
