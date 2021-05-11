@@ -74,10 +74,10 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                UPDATE Participant
-                SET (total_cost, user_id) =
-                (?, ?)
-                WHERE id = ?
+                    UPDATE Participant
+                    SET (name) =
+                    (?)
+                    WHERE id = ?
                 """
                 )
         ) {
@@ -113,7 +113,7 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
             statement.setString(1, name);
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
+                if (resultSet.next()) {
                     participants.add(map(resultSet));
                 }
             }
@@ -122,6 +122,34 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
         }
 
         return participants;
+    }
+
+    @Override
+    public Optional<Participant> findByCredit(long id) {
+        Optional<Participant> result = Optional.empty();
+
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement("""
+                    SELECT *
+                    FROM Participant
+                    INNER JOIN Credit
+                    ON Participant.id = Credit.id_participant;
+                    WHERE Credit.id_participant = ?
+                """);
+        ) {
+            statement.setLong(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    result = Optional.of(map(resultSet));
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return result;
     }
 
     private void configureStatement(Participant participant, PreparedStatement statement) throws SQLException {
