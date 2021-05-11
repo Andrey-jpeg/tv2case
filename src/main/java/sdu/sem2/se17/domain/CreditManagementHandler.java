@@ -12,6 +12,7 @@ public interface CreditManagementHandler {
     boolean isAdmin();
 
     void deleteUser(long userId);
+    void createUser(String username, String password, String email);
     void createUser(String username, String password, String email, long companyId);
 
     ArrayList<Production> getProductions();

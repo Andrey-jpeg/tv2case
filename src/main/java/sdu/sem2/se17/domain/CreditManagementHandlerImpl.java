@@ -1,5 +1,7 @@
 package sdu.sem2.se17.domain;
 
+import sdu.sem2.se17.domain.auth.Admin;
+import sdu.sem2.se17.domain.auth.Producer;
 import sdu.sem2.se17.domain.auth.User;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.persistenceinterface.*;
@@ -34,22 +36,30 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
 
     @Override
     public boolean login(String username, String password) {
-        return false;
+        return userHandler
+                .findByUsername(username)
+                .map(value -> value.getPassword().equals(password))
+                .orElse(false);
     }
 
     @Override
     public boolean isAdmin() {
-        return false;
+        return this.sessionUser instanceof Admin;
     }
 
     @Override
     public void deleteUser(long userId) {
+        userHandler.delete(userId);
+    }
 
+    @Override
+    public void createUser(String username, String password, String email) {
+        userHandler.create(new Admin(username, password, email));
     }
 
     @Override
     public void createUser(String username, String password, String email, long companyId) {
-
+        userHandler.create(new Producer(username, password, email, companyId));
     }
 
     @Override
