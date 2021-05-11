@@ -33,9 +33,12 @@ public class DataSource {
         }
     }
 
-    /* Casper Jensen */
-    private boolean existDatabase(Statement statement, String dbname) throws SQLException {
-        ResultSet resultSet = statement.executeQuery("SELECT 1 FROM pg_database WHERE datname='" + dbname + "'");
+    /*
+    * Casper Jensen
+    * Casper Andresen
+    * */
+    private boolean existDatabase(Statement statement) throws SQLException {
+        ResultSet resultSet = statement.executeQuery("SELECT 1 FROM pg_database WHERE datname='tv2'");
         int count = 0;
         while (resultSet.next()) {
             count += 1;
@@ -47,7 +50,7 @@ public class DataSource {
     /* Casper Brøchner Andresen */
     public void generateDatabase() throws SQLException {
         Statement statement = getConnection().createStatement();
-        if( existDatabase(statement, "tv2")) {
+        if( existDatabase(statement)) {
             statement.executeUpdate("DROP DATABASE tv2");
         }
         statement.executeUpdate("CREATE DATABASE tv2");
@@ -59,7 +62,6 @@ public class DataSource {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        //Running the script
         sr.runScript(reader);
         close();
     }

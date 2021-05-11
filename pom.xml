@@ -73,7 +73,7 @@
         <profile>
             <id>generateDatabse</id>
             <properties>
-                <exec.mainClass>sdu.sem2.se17.persistence.db.dbCreator</exec.mainClass>
+                <exec.mainClass>sdu.sem2.se17.persistence.db.DbCreator</exec.mainClass>
             </properties>
         </profile>
     </profiles>
@@ -108,7 +108,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>sdu.sem2.se17.persistence.db.dbCreator</mainClass>
+                    <mainClass>sdu.sem2.se17.persistence.db.DbCreator</mainClass>
                 </configuration>
             </plugin>
             <plugin>
