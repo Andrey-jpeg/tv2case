@@ -5,6 +5,14 @@ import com.google.gson.annotations.Expose;
 public class Participant {
     @Expose
     private String name;
+    private long id;
+
+    public Participant(String name){
+        this.setName(name);
+    }
+    public Participant(){
+
+    }
 
     public String getName() {
         return name;
@@ -14,7 +22,10 @@ public class Participant {
         this.name = name;
     }
 
-    public Participant(String name){
-        this.setName(name);
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
     }
 }
