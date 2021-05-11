@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ParticipantHandler extends GenericCrud<Participant> {
     ArrayList<Participant> findByName(String name);
+    Optional<Participant> findByCredit(long id);
 }
