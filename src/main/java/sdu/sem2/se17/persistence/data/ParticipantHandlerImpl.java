@@ -108,7 +108,7 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
 
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Participant WHERE name = ?");
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Participant WHERE name = ?")
         ) {
             statement.setString(1, name);
 
@@ -136,7 +136,7 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
                     INNER JOIN Credit
                     ON Participant.id = Credit.id_participant;
                     WHERE Credit.id_participant = ?
-                """);
+                """)
         ) {
             statement.setLong(1, id);
 
