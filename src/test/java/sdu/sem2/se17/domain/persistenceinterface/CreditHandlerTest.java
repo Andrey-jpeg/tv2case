@@ -5,6 +5,9 @@ import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.credit.Role;
 import sdu.sem2.se17.domain.production.Production;
+import sdu.sem2.se17.persistence.data.CreditHandlerImpl;
+import sdu.sem2.se17.persistence.data.ParticipantHandlerImpl;
+import sdu.sem2.se17.persistence.db.DataSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,9 +15,16 @@ class CreditHandlerTest {
 
     private CreditHandler handler;
 
+    private final boolean connectToDb = true;
+
     @BeforeEach
     void setUp() {
-        handler = new CreditHandlerImplSample();
+        if (connectToDb){
+            var ds = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "n98256416");
+            handler = new CreditHandlerImpl(ds, new ParticipantHandlerImpl(ds));
+        } else {
+            handler = new CreditHandlerImplSample();
+        }
     }
 
     @DisplayName("CRUD operations")

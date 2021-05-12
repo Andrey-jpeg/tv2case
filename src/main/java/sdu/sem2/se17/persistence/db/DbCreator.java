@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class DbCreator {
     public static void main(String[] args) throws SQLException {
-        DataSource ds = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "password");
+        DataSource ds = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "n98256416");
         ds.generateDatabase();
     }
 }

@@ -27,7 +27,7 @@ public class CreditHandlerImpl implements CreditHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
                     SELECT * FROM Credit
-                    WHERE production_id = ?
+                    WHERE productionId = ?
                     RETURNING *
                 """)
         ) {
@@ -52,16 +52,16 @@ public class CreditHandlerImpl implements CreditHandler {
     @Override
     public Optional<Credit> create(Credit credit) {
         Optional<Credit> result = Optional.empty();
-        long id_participant = participantHandler.create(credit.getParticipant()).get().getId();
+        long participantId = participantHandler.create(credit.getParticipant()).get().getId();
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                    INSERT INTO Credit (id_participant, role)
+                    INSERT INTO Credit (participantId, role)
                     VALUES (?, ?)
                     RETURNING *
                 """)
         ) {
-            configureStatement(credit, id_participant, statement);
+            configureStatement(credit, participantId, statement);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()){
@@ -106,7 +106,7 @@ public class CreditHandlerImpl implements CreditHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
                     UPDATE Credit
-                    SET (id_participant, role) =
+                    SET (participantId, role) =
                     (?, ?)
                     WHERE id = ?
                 """
@@ -133,8 +133,8 @@ public class CreditHandlerImpl implements CreditHandler {
         }
     }
 
-    private void configureStatement(Credit credit, long id_participant,PreparedStatement statement) throws SQLException {
-        statement.setLong(1, id_participant);
+    private void configureStatement(Credit credit, long participantId,PreparedStatement statement) throws SQLException {
+        statement.setLong(1, participantId);
         statement.setString(2, credit.getRole().toString());
     }
 
@@ -151,7 +151,7 @@ public class CreditHandlerImpl implements CreditHandler {
     enum CreditHandlerColumn{
         ID("id"),
         ROLE("role"),
-        ID_PARTICIPANT("id_participant");
+        PARTICIPANTID("participantId");
 
         final String label;
 
