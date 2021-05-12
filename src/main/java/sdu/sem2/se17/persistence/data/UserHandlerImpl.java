@@ -23,8 +23,8 @@ public class UserHandlerImpl implements UserHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                    INSERT INTO User (customer_id)
-                    VALUES (?)
+                    INSERT INTO User (username, email, password, usertype)
+                    VALUES (?, ?, ?, ?)
                     RETURNING *
                 """)
         ) {
@@ -48,7 +48,7 @@ public class UserHandlerImpl implements UserHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                    SELECT * FROM User
+                    SELECT * FROM \"User\"
                     WHERE id = ?
                     RETURNING *
                 """)
@@ -73,7 +73,7 @@ public class UserHandlerImpl implements UserHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
                     UPDATE User
-                    SET (name) =
+                    SET (name) = (username, password, email)
                     (?)
                     WHERE id = ?
                 """
@@ -108,11 +108,11 @@ public class UserHandlerImpl implements UserHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement("""
                     SELECT *
-                    FROM User
+                    FROM username
                     INNER JOIN Credit
                     ON User.id = Credit.id_user;
                     WHERE Credit.id_user = ?
-                """);
+                """)
         ) {
             statement.setString(1, username);
 
@@ -130,7 +130,10 @@ public class UserHandlerImpl implements UserHandler {
 
     private void configureStatement(User user, PreparedStatement statement) throws SQLException {
         statement.setString(1, user.getUsername());
+        statement.setString(2, user.getEmail());
+        statement.setString(3, user.getPassword());
     }
+
 
     private User map(ResultSet resultSet) throws SQLException {
         var user = new User();
@@ -140,17 +143,5 @@ public class UserHandlerImpl implements UserHandler {
 
         return user;
     }
-
-    enum UserHandlerColumn{
-        ID("id"),
-        NAME("name");
-
-        final String label;
-
-        UserHandlerColumn(String label){
-            this.label = label;
-        }
-    }
-
 }
 
