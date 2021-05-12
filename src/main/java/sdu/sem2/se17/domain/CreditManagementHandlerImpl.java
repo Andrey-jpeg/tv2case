@@ -25,8 +25,8 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
     public CreditManagementHandlerImpl() {
         var dataSource = new DataSource(null, null, null);
 
-        creditHandler = new CreditHandlerImpl(dataSource);
         participantHandler = new ParticipantHandlerImpl(dataSource);
+        creditHandler = new CreditHandlerImpl(dataSource, (ParticipantHandlerImpl)participantHandler);
         productionCompanyHandler = new ProductionCompanyHandlerImpl(dataSource);
         productionHandler = new ProductionHandlerImpl(dataSource);
         userHandler = new UserHandlerImpl(dataSource);

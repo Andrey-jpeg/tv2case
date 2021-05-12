@@ -1,7 +1,6 @@
 package sdu.sem2.se17.persistence.data;
 
 import sdu.sem2.se17.domain.credit.Credit;
-import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.persistenceinterface.CreditHandler;
 import sdu.sem2.se17.persistence.db.DataSource;
 
@@ -14,19 +13,46 @@ import java.util.Optional;
 
 public class CreditHandlerImpl implements CreditHandler {
     private final DataSource dataSource;
+    private ParticipantHandlerImpl participantHandler;
 
-    public CreditHandlerImpl(DataSource dataSource) {
+    public CreditHandlerImpl(DataSource dataSource, ParticipantHandlerImpl participantHandler) {
         this.dataSource = dataSource;
+        this.participantHandler = participantHandler;
     }
 
     @Override
-    public ArrayList<Credit> findByProductionId(long id) {
-        return null;
+    public ArrayList<Credit> findByProductionId(long id) { // jwliuw
+        ArrayList<Credit> result = new ArrayList<>();
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement(""" 
+                    SELECT * FROM Credit
+                    WHERE production_id = ?
+                    RETURNING *
+                """)
+        ) {
+            statement.setLong(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Credit credit = map(resultSet);
+                    result.add(credit);
+                }
+            } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            }
+            return result;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
     }
+
 
     @Override
     public Optional<Credit> create(Credit credit) {
         Optional<Credit> result = Optional.empty();
+        long id_participant = participantHandler.create(credit.getParticipant()).get().getId();
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
@@ -35,7 +61,7 @@ public class CreditHandlerImpl implements CreditHandler {
                     RETURNING *
                 """)
         ) {
-            configureStatement(credit, statement);
+            configureStatement(credit, id_participant, statement);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()){
@@ -51,7 +77,27 @@ public class CreditHandlerImpl implements CreditHandler {
 
     @Override
     public Optional<Credit> read(long id) {
-        return Optional.empty();
+        Optional<Credit> result = Optional.empty();
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement(""" 
+                    SELECT * FROM Credit
+                    WHERE id = ?
+                    RETURNING *
+                """)
+        ) {
+            statement.setLong(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()){
+                    result = Optional.of(map(resultSet));
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
@@ -66,7 +112,7 @@ public class CreditHandlerImpl implements CreditHandler {
                 """
                 )
         ) {
-            configureStatement(credit, statement);
+            configureStatement(credit, credit.getParticipant().getId(), statement);
             statement.setLong(2, credit.getId());
             statement.execute();
         } catch (SQLException throwables) {
@@ -87,22 +133,25 @@ public class CreditHandlerImpl implements CreditHandler {
         }
     }
 
-    private void configureStatement(Credit credit, PreparedStatement statement) throws SQLException {
-        statement.setString(1, participant.getName()); // obv needs to be questioned
+    private void configureStatement(Credit credit, long id_participant,PreparedStatement statement) throws SQLException {
+        statement.setLong(1, id_participant);
+        statement.setString(2, credit.getRole().toString());
     }
 
     private Credit map(ResultSet resultSet) throws SQLException {
-        var credit = new Credit();
+            var credit = new Credit();
 
-        credit.setId(resultSet.getLong(CreditHandlerColumn.ID.label));
-        credit.setRole(resultSet.getString(CreditHandlerColumn.ROLE.label));
+            credit.setId(resultSet.getLong(CreditHandlerColumn.ID.label));
+            credit.setParticipant(participantHandler.findByCredit(credit.getId()).get());
+            credit.setRole(resultSet.getString(CreditHandlerColumn.ROLE.label));
 
-        return credit;
-    }
+            return credit;
+        }
 
     enum CreditHandlerColumn{
         ID("id"),
-        ROLE("role");
+        ROLE("role"),
+        ID_PARTICIPANT("id_participant");
 
         final String label;
 
