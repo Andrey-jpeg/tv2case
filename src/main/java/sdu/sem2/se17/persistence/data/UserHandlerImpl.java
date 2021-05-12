@@ -4,6 +4,10 @@ import sdu.sem2.se17.domain.auth.User;
 import sdu.sem2.se17.domain.persistenceinterface.UserHandler;
 import sdu.sem2.se17.persistence.db.DataSource;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class UserHandlerImpl implements UserHandler {
@@ -15,26 +19,138 @@ public class UserHandlerImpl implements UserHandler {
 
     @Override
     public Optional<User> create(User user) {
-        return Optional.empty();
+         Optional<User> result = Optional.empty();
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement(""" 
+                    INSERT INTO User (customer_id)
+                    VALUES (?)
+                    RETURNING *
+                """)
+        ) {
+            configureStatement(user, statement);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()){
+                    result = Optional.of(map(resultSet));
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
     public Optional<User> read(long id) {
-        return Optional.empty();
+        Optional<User> result = Optional.empty();
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement(""" 
+                    SELECT * FROM User
+                    WHERE id = ?
+                    RETURNING *
+                """)
+        ) {
+            statement.setLong(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()){
+                    result = Optional.of(map(resultSet));
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
     public void update(User user) {
-
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement(""" 
+                    UPDATE User
+                    SET (name) =
+                    (?)
+                    WHERE id = ?
+                """
+                )
+        ) {
+            configureStatement(user, statement);
+            statement.setLong(2, user.getId());
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
     public void delete(long id) {
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM User WHERE id = ?")
+        ) {
+            statement.setLong(1, id);
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.empty();
+           Optional<User> result = Optional.empty();
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement("""
+                    SELECT *
+                    FROM User
+                    INNER JOIN Credit
+                    ON User.id = Credit.id_user;
+                    WHERE Credit.id_user = ?
+                """);
+        ) {
+            statement.setString(1, username);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    result = Optional.of(map(resultSet));
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return result;
     }
+
+    private void configureStatement(User user, PreparedStatement statement) throws SQLException {
+        statement.setString(1, user.getUsername());
+    }
+
+    private User map(ResultSet resultSet) throws SQLException {
+        var user = new User();
+
+        user.setId(resultSet.getLong(ParticipantHandlerImpl.ParticipantHandlerColumn.ID.label));
+        user.setUsername(resultSet.getString(ParticipantHandlerImpl.ParticipantHandlerColumn.NAME.label));
+
+        return user;
+    }
+
+    enum UserHandlerColumn{
+        ID("id"),
+        NAME("name");
+
+        final String label;
+
+        UserHandlerColumn(String label){
+            this.label = label;
+        }
+    }
+
 }
+
