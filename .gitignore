@@ -48,3 +48,5 @@ hs_err_pid*
 # json files uses for testing
 *.json
 
+# untrack weird mac filesystem thingies
+.DS_Store
