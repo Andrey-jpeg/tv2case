@@ -58,7 +58,7 @@ public class DataSource {
         ScriptRunner sr = new ScriptRunner(this.connection);
         Reader reader = null;
         try {
-            reader = new BufferedReader(new FileReader(DataSource.class.getResource("sampleScript.sql").getFile()));
+            reader = new BufferedReader(new FileReader(DataSource.class.getResource("databaseCreateScript.sql").getFile()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
