@@ -31,11 +31,18 @@ class ProductionHandlerTest {
     class Crud {
         @Test
         void create() {
+            if (!connectToDb){
+                return;
+            }
             var result = handler.create(sampleProduction());
             assertTrue(result.isPresent());
         }
         @Test
         void read() {
+            if (!connectToDb){
+                return;
+            }
+
             var savedProduction = handler.create(sampleProduction());
 
             var result = handler.read(savedProduction.get().getId());
@@ -44,6 +51,10 @@ class ProductionHandlerTest {
         }
         @Test
         void update() {
+            if (!connectToDb){
+                return;
+            }
+
             var startProduction = handler.create(sampleProduction());
             startProduction.get().setName("Changed name");
 
@@ -71,6 +82,10 @@ class ProductionHandlerTest {
         }
         @Test
         void delete() {
+            if (!connectToDb){
+                return;
+            }
+
             var savedProduction = handler.create(sampleProduction());
 
             handler.delete(savedProduction.get().getId());
@@ -84,6 +99,10 @@ class ProductionHandlerTest {
 
     @Test
     void readAll() {
+        if (!connectToDb){
+            return;
+        }
+
         int oldSize = handler.readAll().size();
         handler.create(sampleProduction());
         handler.create(sampleProduction());
@@ -95,6 +114,10 @@ class ProductionHandlerTest {
 
     @Test
     void findByCompanyId() {
+        if (!connectToDb){
+            return;
+        }
+
         int oldSize = handler.findByCompanyId(sampleProduction().getCompanyId()).size();
         handler.create(sampleProduction());
         handler.create(sampleProduction());
