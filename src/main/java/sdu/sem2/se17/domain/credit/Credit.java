@@ -11,10 +11,13 @@ public class Credit {
     @Expose
     private Role role;
 
+    private long id;
+
     public Credit(Participant participant, Role role){
         this.participant = participant;
         this.role = role;
     }
+    public Credit(){}
 
     public Participant getParticipant() {
         return participant;
@@ -34,5 +37,13 @@ public class Credit {
 
     public String toString(){
         return this.participant.getName() + ", " + this.role.label;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

@@ -13,14 +13,19 @@ public class Production {
     @Expose
     private String name;
     @Expose
-    private ArrayList<Credit> credits;
+    private ArrayList<Credit> credits = new ArrayList<>();
     private Approval approval = Approval.NOT_SEEN;
+    private long id;
 
+    public Production(){
+
+    }
     public Production(long companyId, String name) {
         this.companyId = companyId;
         this.name = name;
-        this.credits = new ArrayList<>();
     }
+
+
 
     public Production(long companyId, String name, ArrayList<Credit> credits) {
         this(companyId, name);
@@ -67,5 +72,17 @@ public class Production {
 
     public void setApproval(Approval aproval) {
         this.approval = aproval;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setCredits(ArrayList<Credit> credits) {
+        this.credits = credits;
     }
 }
