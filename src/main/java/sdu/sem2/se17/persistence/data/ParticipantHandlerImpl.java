@@ -25,12 +25,13 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                    INSERT INTO Participant (customer_id)
+                    INSERT INTO Participant (name)
                     VALUES (?)
                     RETURNING *
                 """)
         ) {
             configureStatement(participant, statement);
+
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()){
@@ -39,6 +40,8 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            var lmao = throwables.getMessage();
+            var aa = lmao;
         }
 
         return result;
