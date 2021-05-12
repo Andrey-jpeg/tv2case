@@ -66,6 +66,11 @@ public class CreditHandlerImplSample implements CreditHandler {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Optional<Credit> create(Credit credit, long productionId) {
+        return Optional.empty();
+    }
+
     public void sampleUpdateProductionWithCredits(Production production) {
         if(!creditAssociations.containsKey(production.getId())){
             creditAssociations.put(production.getId(), new ArrayList<>());
