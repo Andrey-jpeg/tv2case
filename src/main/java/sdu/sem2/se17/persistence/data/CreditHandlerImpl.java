@@ -50,6 +50,11 @@ public class CreditHandlerImpl implements CreditHandler {
 
 
     @Override
+    public Optional<Credit> create(Credit credit, long productionId) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<Credit> create(Credit credit) {
         Optional<Credit> result = Optional.empty();
         long participantId = participantHandler.create(credit.getParticipant()).get().getId();
