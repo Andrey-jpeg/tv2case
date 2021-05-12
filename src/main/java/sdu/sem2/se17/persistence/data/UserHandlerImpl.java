@@ -1,5 +1,7 @@
 package sdu.sem2.se17.persistence.data;
 
+import sdu.sem2.se17.domain.auth.Admin;
+import sdu.sem2.se17.domain.auth.Producer;
 import sdu.sem2.se17.domain.auth.User;
 import sdu.sem2.se17.domain.persistenceinterface.UserHandler;
 import sdu.sem2.se17.persistence.db.DataSource;
@@ -74,13 +76,13 @@ public class UserHandlerImpl implements UserHandler {
                 PreparedStatement statement = connection.prepareStatement(""" 
                     UPDATE User
                     SET (name) = (username, password, email)
-                    (?)
+                    (?, ?, ?)
                     WHERE id = ?
                 """
                 )
         ) {
             configureStatement(user, statement);
-            statement.setLong(2, user.getId());
+            statement.setLong(1, user.getId());
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -91,7 +93,7 @@ public class UserHandlerImpl implements UserHandler {
     public void delete(long id) {
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM User WHERE id = ?")
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM Username")
         ) {
             statement.setLong(1, id);
             statement.execute();
@@ -108,10 +110,8 @@ public class UserHandlerImpl implements UserHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement("""
                     SELECT *
-                    FROM username
-                    INNER JOIN Credit
-                    ON User.id = Credit.id_user;
-                    WHERE Credit.id_user = ?
+                    FROM User
+                    WHERE username = ?
                 """)
         ) {
             statement.setString(1, username);
@@ -136,10 +136,18 @@ public class UserHandlerImpl implements UserHandler {
 
 
     private User map(ResultSet resultSet) throws SQLException {
-        var user = new User();
+        User user;
 
-        user.setId(resultSet.getLong(ParticipantHandlerImpl.ParticipantHandlerColumn.ID.label));
-        user.setUsername(resultSet.getString(ParticipantHandlerImpl.ParticipantHandlerColumn.NAME.label));
+
+        var userType = resultSet.getString("user_type");
+
+        if (userType.equals("admin")) {
+            user = new Admin(resultSet.getString("username"),"password","email");
+        } else
+            user = new Producer(resultSet.getString("username"),"password","email");
+
+        user.setId(resultSet.getLong("id"));
+        user.setUsername(resultSet.getString("username"));
 
         return user;
     }
