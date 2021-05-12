@@ -55,7 +55,6 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
                 PreparedStatement statement = connection.prepareStatement(""" 
                     SELECT * FROM Participant
                     WHERE id = ?
-                    RETURNING *
                 """)
         ) {
             statement.setLong(1, id);
@@ -78,8 +77,7 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
                     UPDATE Participant
-                    SET (name) =
-                    (?)
+                    SET name = ?
                     WHERE id = ?
                 """
                 )
@@ -137,8 +135,8 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
                     SELECT *
                     FROM Participant
                     INNER JOIN Credit
-                    ON Participant.id = Credit.id_participant;
-                    WHERE Credit.id_participant = ?
+                    ON Participant.id = Credit.participantId
+                    WHERE Credit.participantId = ?
                 """);
         ) {
             statement.setLong(1, id);
