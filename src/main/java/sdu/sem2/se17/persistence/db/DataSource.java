@@ -54,7 +54,7 @@ public class DataSource {
             statement.executeUpdate("DROP DATABASE tv2");
         }
         statement.executeUpdate("CREATE DATABASE tv2");
-        this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tv2", "postgres", "n98256416" );
+        this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres" );
         ScriptRunner sr = new ScriptRunner(this.connection);
         Reader reader = null;
         try {

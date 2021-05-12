@@ -1,5 +1,6 @@
 package sdu.sem2.se17.persistence.data;
 
+import sdu.sem2.se17.domain.persistenceinterface.CreditHandler;
 import sdu.sem2.se17.domain.persistenceinterface.ProductionHandler;
 import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.persistence.db.DataSource;
@@ -10,9 +11,15 @@ import java.util.Optional;
 public class ProductionHandlerImpl implements ProductionHandler {
 
     private final DataSource dataSource;
+    private final CreditHandler creditHandler;
 
     public ProductionHandlerImpl(DataSource dataSource) {
+        this(dataSource, new CreditHandlerImpl(dataSource));
+    }
+
+    public ProductionHandlerImpl(DataSource dataSource, CreditHandler creditHandler) {
         this.dataSource = dataSource;
+        this.creditHandler = creditHandler;
     }
 
     @Override
