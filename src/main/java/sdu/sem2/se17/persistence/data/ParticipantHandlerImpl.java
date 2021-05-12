@@ -25,12 +25,13 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                    INSERT INTO Participant (customer_id)
+                    INSERT INTO Participant (name)
                     VALUES (?)
                     RETURNING *
                 """)
         ) {
             configureStatement(participant, statement);
+
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()){
@@ -39,6 +40,8 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            var lmao = throwables.getMessage();
+            var aa = lmao;
         }
 
         return result;
@@ -52,7 +55,6 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
                 PreparedStatement statement = connection.prepareStatement(""" 
                     SELECT * FROM Participant
                     WHERE id = ?
-                    RETURNING *
                 """)
         ) {
             statement.setLong(1, id);
@@ -75,8 +77,7 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
                     UPDATE Participant
-                    SET (name) =
-                    (?)
+                    SET name = ?
                     WHERE id = ?
                 """
                 )
@@ -134,8 +135,8 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
                     SELECT *
                     FROM Participant
                     INNER JOIN Credit
-                    ON Participant.id = Credit.id_participant;
-                    WHERE Credit.id_participant = ?
+                    ON Participant.id = Credit.participantId
+                    WHERE Credit.participantId = ?
                 """);
         ) {
             statement.setLong(1, id);
