@@ -9,6 +9,10 @@ public class ProductionCompany {
         this.name = name;
     }
 
+    public ProductionCompany() {
+
+    }
+
     public String getName() {
         return name;
     }
