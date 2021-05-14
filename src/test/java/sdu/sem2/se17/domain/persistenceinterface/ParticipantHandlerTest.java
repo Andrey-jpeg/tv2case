@@ -16,16 +16,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParticipantHandlerTest {
 
     private ParticipantHandler handler;
-    private final boolean connectToDb = false;
+    private final boolean connectToDb = true;
     private DataSource dataSource;
 
     @BeforeEach
     void setUp() {
         if (connectToDb){
-            dataSource = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres");
+            dataSource = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "n98256416");
             handler = new ParticipantHandlerImpl(dataSource);
+            System.out.println("yeet");
         } else {
             handler = new ParticipantHandlerImplSample();
+            System.out.println("badabing");
         }
     }
 
@@ -92,7 +94,7 @@ class ParticipantHandlerTest {
     void findByCredit() {
         if (!connectToDb){
             var participant = handler.create(new Participant("Sample")).get();
-            var credit = new Credit();
+            var credit = new Credit(0);
             credit.setParticipant(participant);
 
             var castedHandler = (ParticipantHandlerImplSample) handler;
@@ -101,10 +103,10 @@ class ParticipantHandlerTest {
             var result = handler.findByCredit(credit.getId());
             assertTrue(result.isPresent());
         } else {
-            CreditHandler creditHandler = new CreditHandlerImpl(dataSource);
+            CreditHandler creditHandler = new CreditHandlerImpl(dataSource, (ParticipantHandlerImpl)handler);
 
             var participant = handler.create(new Participant("Sampler"));
-            var credit = creditHandler.create(new Credit(){{
+            var credit = creditHandler.create(new Credit(1){{
                 setRole(Role.ANIMATION);
                 setParticipant(participant.get());
             }});

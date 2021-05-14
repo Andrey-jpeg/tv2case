@@ -28,7 +28,7 @@ public enum Role {
     MEDVIRKENDE("Medvirkende"),
     MUSIKERE("Musikere"),
     MUSIKALSK_ARRANGEMENT("Musikalsk_Arrangement"),
-    BNAD("Band"),
+    BAND("Band"),
     TRANSLATORS("Translator"),
     PRODUCENT("Producent"),
     PRODUCER("Producer"),

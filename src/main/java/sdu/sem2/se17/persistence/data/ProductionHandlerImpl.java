@@ -17,10 +17,10 @@ public class ProductionHandlerImpl implements ProductionHandler {
     private final CreditHandler creditHandler;
 
     public ProductionHandlerImpl(DataSource dataSource) {
-        this(dataSource, new CreditHandlerImpl(dataSource));
+        this(dataSource, new CreditHandlerImpl(dataSource, new ParticipantHandlerImpl(dataSource)));
     }
 
-    public ProductionHandlerImpl(DataSource dataSource, CreditHandler creditHandler) {
+    public ProductionHandlerImpl(DataSource dataSource, CreditHandlerImpl creditHandler) {
         this.dataSource = dataSource;
         this.creditHandler = creditHandler;
     }
@@ -161,7 +161,7 @@ public class ProductionHandlerImpl implements ProductionHandler {
         if (oldProduction.getCredits() != null){
             for (Credit credit: oldProduction.getCredits()){
                 if (credit.getId() == 0){
-                    creditHandler.create(credit, newProduction.getId());
+                    creditHandler.create(credit);
                 }
             }
         }

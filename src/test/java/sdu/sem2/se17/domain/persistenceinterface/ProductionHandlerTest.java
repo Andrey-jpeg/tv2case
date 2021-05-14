@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import sdu.sem2.se17.domain.production.Approval;
 import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.persistence.data.CreditHandlerImpl;
+import sdu.sem2.se17.persistence.data.ParticipantHandlerImpl;
 import sdu.sem2.se17.persistence.data.ProductionHandlerImpl;
 import sdu.sem2.se17.persistence.db.DataSource;
 
@@ -22,7 +23,7 @@ class ProductionHandlerTest {
     void setUp() {
         if (connectToDb){
             dataSource = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres");
-            handler = new ProductionHandlerImpl(dataSource, new CreditHandlerImpl(dataSource));
+            handler = new ProductionHandlerImpl(dataSource, new CreditHandlerImpl(dataSource, new ParticipantHandlerImpl(dataSource)));
         }
     }
 

@@ -40,7 +40,7 @@ public class Production {
     }
 
     public void createCredit(Participant participant, Role role) {
-        this.createCredit(new Credit(participant, role));
+        this.createCredit(new Credit(participant, role, this.id));
     }
 
     public ArrayList<Credit> getCredits(){

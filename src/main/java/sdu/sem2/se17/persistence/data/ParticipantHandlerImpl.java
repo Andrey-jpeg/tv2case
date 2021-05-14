@@ -43,6 +43,7 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
             var lmao = throwables.getMessage();
             var aa = lmao;
         }
+        System.out.println("dickballs");
 
         return result;
     }
@@ -136,7 +137,7 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
                     FROM Participant
                     INNER JOIN Credit
                     ON Participant.id = Credit.participantId
-                    WHERE Credit.participantId = ?
+                    WHERE Credit.id = ?
                 """);
         ) {
             statement.setLong(1, id);
@@ -162,6 +163,8 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
 
         participant.setId(resultSet.getLong(ParticipantHandlerColumn.ID.label));
         participant.setName(resultSet.getString(ParticipantHandlerColumn.NAME.label));
+
+        System.out.println("pId "+resultSet.getLong(ParticipantHandlerColumn.ID.label));
 
         return participant;
     }

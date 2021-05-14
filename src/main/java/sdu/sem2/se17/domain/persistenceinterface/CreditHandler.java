@@ -8,5 +8,4 @@ import java.util.Optional;
 
 public interface CreditHandler extends GenericCrud<Credit> {
     ArrayList<Credit> findByProductionId(long id);
-    Optional<Credit> create(Credit credit, long productionId);
 }

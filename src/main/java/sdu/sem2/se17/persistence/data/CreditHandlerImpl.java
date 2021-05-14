@@ -21,7 +21,7 @@ public class CreditHandlerImpl implements CreditHandler {
     }
 
     @Override
-    public ArrayList<Credit> findByProductionId(long id) { // jwliuw
+    public ArrayList<Credit> findByProductionId(long id) {
         ArrayList<Credit> result = new ArrayList<>();
         try (
                 Connection connection = dataSource.getConnection();
@@ -48,12 +48,6 @@ public class CreditHandlerImpl implements CreditHandler {
         return result;
     }
 
-
-    @Override
-    public Optional<Credit> create(Credit credit, long productionId) {
-        return Optional.empty();
-    }
-
     @Override
     public Optional<Credit> create(Credit credit) {
         Optional<Credit> result = Optional.empty();
@@ -61,18 +55,21 @@ public class CreditHandlerImpl implements CreditHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                    INSERT INTO Credit (participantId, role)
-                    VALUES (?, ?)
+                    INSERT INTO Credit (participantId, role, productionId)
+                    VALUES (?, ?::creditrole, ?)
                     RETURNING *
                 """)
         ) {
             configureStatement(credit, participantId, statement);
+            statement.setLong(3, credit.getProductionId());
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()){
                     result = Optional.of(map(resultSet));
                 }
             }
+
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -88,7 +85,6 @@ public class CreditHandlerImpl implements CreditHandler {
                 PreparedStatement statement = connection.prepareStatement(""" 
                     SELECT * FROM Credit
                     WHERE id = ?
-                    RETURNING *
                 """)
         ) {
             statement.setLong(1, id);
@@ -107,22 +103,25 @@ public class CreditHandlerImpl implements CreditHandler {
 
     @Override
     public void update(Credit credit) {
+
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
                     UPDATE Credit
-                    SET (participantId, role) =
-                    (?, ?)
+                    SET role = ?::creditrole
                     WHERE id = ?
                 """
                 )
         ) {
-            configureStatement(credit, credit.getParticipant().getId(), statement);
+            statement.setString(1, credit.getRole().toString().toUpperCase());
             statement.setLong(2, credit.getId());
+
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        participantHandler.update(credit.getParticipant());
     }
 
     @Override
@@ -138,25 +137,25 @@ public class CreditHandlerImpl implements CreditHandler {
         }
     }
 
-    private void configureStatement(Credit credit, long participantId,PreparedStatement statement) throws SQLException {
+    private void configureStatement(Credit credit, long participantId,  PreparedStatement statement) throws SQLException {
         statement.setLong(1, participantId);
-        statement.setString(2, credit.getRole().toString());
+        statement.setString(2, credit.getRole().toString().toUpperCase());
     }
 
     private Credit map(ResultSet resultSet) throws SQLException {
-            var credit = new Credit();
+        var credit = new Credit(resultSet.getLong(CreditHandlerColumn.PRODUCTIONID.label));
 
-            credit.setId(resultSet.getLong(CreditHandlerColumn.ID.label));
-            credit.setParticipant(participantHandler.findByCredit(credit.getId()).get());
-            credit.setRole(resultSet.getString(CreditHandlerColumn.ROLE.label));
+        credit.setId(resultSet.getLong(CreditHandlerColumn.ID.label));
+        credit.setParticipant(participantHandler.findByCredit(credit.getId()).get());
+        credit.setRole(resultSet.getString(CreditHandlerColumn.ROLE.label));
 
-            return credit;
+        return credit;
         }
 
     enum CreditHandlerColumn{
         ID("id"),
         ROLE("role"),
-        PARTICIPANTID("participantId");
+        PRODUCTIONID("productionId");
 
         final String label;
 

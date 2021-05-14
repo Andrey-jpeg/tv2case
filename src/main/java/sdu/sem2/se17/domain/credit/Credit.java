@@ -12,12 +12,14 @@ public class Credit {
     private Role role;
 
     private long id;
+    private long productionId;
 
-    public Credit(Participant participant, Role role){
+    public Credit(Participant participant, Role role, long productionId){
         this.participant = participant;
         this.role = role;
+        this.productionId = productionId;
     }
-    public Credit(){}
+    public Credit(long productionId){this.productionId = productionId;}
 
     public Participant getParticipant() {
         return participant;
@@ -49,5 +51,9 @@ public class Credit {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getProductionId() {
+        return productionId;
     }
 }
