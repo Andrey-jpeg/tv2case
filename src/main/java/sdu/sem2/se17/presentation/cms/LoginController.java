@@ -39,8 +39,6 @@ public class LoginController extends Controller {
                 alert.showAndWait();
             }
         }
-
-        System.out.println();
     }
 
     private void displayChooseProduction(){

@@ -10,6 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import sdu.sem2.se17.domain.CreditManagementHandler;
+import sdu.sem2.se17.domain.credit.Credit;
+import sdu.sem2.se17.domain.credit.Participant;
+import sdu.sem2.se17.domain.credit.Role;
 import sdu.sem2.se17.domain.production.Approval;
 
 import java.io.FileWriter;
@@ -17,11 +20,15 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import com.google.gson.Gson;
+import sdu.sem2.se17.domain.production.Production;
 
 public class ProductionController extends Controller {
-    private ArrayList<String> rolesTitles;
-    private String productionName;
+    private final ArrayList<String> rolesTitles;
+    private final Production production;
 
     @FXML
     public VBox credits;
@@ -46,13 +53,19 @@ public class ProductionController extends Controller {
 
     public ProductionController(CreditManagementHandler creditManagementHandler, String productionName) {
         super(creditManagementHandler);
-        this.productionName = productionName;
-        //this.rolesTitles = creditManagementHandler.getRoleTitles();
+        this.production = creditManagementHandler
+                .findProduction(productionName)
+                .stream()
+                .findFirst().get();
+        this.rolesTitles = (ArrayList<String>) Arrays
+                .stream(Role.class.getEnumConstants())
+                .map(Role::toString)
+                .collect(Collectors.toList());
 
     }
 
     public void initialize() {
-        productionLabel.setText(productionName);
+        productionLabel.setText(production.getName());
 
         if(creditManagementHandler.isAdmin()){
             denyButton.setVisible(true);
@@ -63,9 +76,10 @@ public class ProductionController extends Controller {
             addNewCreditButton.setVisible(true);
         }
 
-
-        creditManagementHandler.findProduction(getProductionId()).getCredits().forEach(x -> {
-            this.credits.getChildren().add(createNewCredit(x.getParticipant().getName(), x.getRole().toString()));
+        production.getCredits().forEach(x -> {
+            this.credits
+                    .getChildren()
+                    .add(createNewCredit(x.getParticipant().getName(), x.getRole().toString()));
         });
     }
 
@@ -94,30 +108,35 @@ public class ProductionController extends Controller {
 
     @FXML
     void send(ActionEvent event) {
-        ArrayList c = creditManagementHandler.findProduction(getProductionId()).getCredits();
-        c.removeAll(c);
+        ArrayList<Credit> productionCredits = production.getCredits();
+        productionCredits.clear();
+
         for (Node i: credits.getChildren()) {
             String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
             String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
             if (name != null && (role != null)){
-               // creditManagementHandler.addCreditToProduction(getProductionId(), name, role);
+                productionCredits.add(new Credit(){{
+                    setParticipant(new Participant(name));
+                    setRole(Role.getRole(role));
+                }});
             }
         }
+
+        creditManagementHandler.updateProduction(production);
 
         returnToChooseProduction();
     }
 
-    private long getProductionId(){
-        return creditManagementHandler.getProductions().indexOf(creditManagementHandler.findProduction(productionName));
-    }
 
     public void approve(ActionEvent actionEvent) {
-       // creditManagementHandler.validateProduction(getProductionId(), Approval.APPROVED);
+        production.setApproval(Approval.APPROVED);
+        creditManagementHandler.updateProduction(production);
         returnToChooseProduction();
     }
 
     public void deny(ActionEvent actionEvent) {
-        //creditManagementHandler.validateProduction(getProductionId(), Approval.NOT_APPROVED);
+        production.setApproval(Approval.NOT_APPROVED);
+        creditManagementHandler.updateProduction(production);
         returnToChooseProduction();
 
     }
@@ -138,12 +157,12 @@ public class ProductionController extends Controller {
     /* <-- Casper Brøchner Andresen --> */
     @FXML
     void convertToJson(ActionEvent event) throws IOException {
-        Writer writer = new FileWriter( productionName + ".json", StandardCharsets.UTF_8);
+        Writer writer = new FileWriter( production.getName() + ".json", StandardCharsets.UTF_8);
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
-        gson.toJson( creditManagementHandler.findProduction(productionName), writer);
+        gson.toJson(production, writer);
         writer.flush();
         writer.close();
     }
