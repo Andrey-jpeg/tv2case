@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import sdu.sem2.se17.domain.CreditManagementHandler;
+import sdu.sem2.se17.domain.auth.Producer;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ Casper B. Andresen
 
 public class CreateAccountController extends Controller {
 
-        private ArrayList<ProductionCompany> productionCompanies;
+        private final ArrayList<ProductionCompany> productionCompanies;
 
         @FXML
         private TextField userNameInput;
@@ -58,9 +59,7 @@ public class CreateAccountController extends Controller {
                 }
             }
             if (selectedItemIndex != null) {
-                /*creditManagementHandler.createProducer(userNameInput.getText(),passwordInput.getText(),emailInput.getText(),
-                        selectedItemIndex);
-                */
+                creditManagementHandler.createUser(userNameInput.getText(),passwordInput.getText(),emailInput.getText(), selectedItemIndex);
                 returnToChooseProduction();
             }
         }
