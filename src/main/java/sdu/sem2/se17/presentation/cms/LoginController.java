@@ -1,12 +1,11 @@
 package sdu.sem2.se17.presentation.cms;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import sdu.sem2.se17.domain.CreditManagementController;
+import sdu.sem2.se17.domain.CreditManagementHandler;
 
 import java.io.IOException;
 
@@ -21,8 +20,8 @@ public class LoginController extends Controller {
     @FXML
     private TextField passwordInput;
 
-    public LoginController(CreditManagementController creditManagementController) {
-        super(creditManagementController);
+    public LoginController(CreditManagementHandler creditManagementHandler) {
+        super(creditManagementHandler);
     }
 
     @FXML
@@ -30,7 +29,7 @@ public class LoginController extends Controller {
         var username = usernameInput.getText();
         var password = passwordInput.getText();
         if(!username.isBlank()  && !password.isEmpty()){
-            var loginResult = this.creditManagementController.login(usernameInput.getText(), passwordInput.getText());
+            var loginResult = this.creditManagementHandler.login(usernameInput.getText(), passwordInput.getText());
 
             if(loginResult){
                 displayChooseProduction();
@@ -50,7 +49,7 @@ public class LoginController extends Controller {
                         MainFX.loadFXML(
                                 "ChooseProduction",
                                 new ChooseProductionController(
-                                        creditManagementController)
+                                        creditManagementHandler)
                         ));
             } catch (IOException e) {
                 e.printStackTrace();

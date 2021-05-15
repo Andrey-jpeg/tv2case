@@ -8,8 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import sdu.sem2.se17.domain.CreditManagementController;
 
+import sdu.sem2.se17.domain.CreditManagementHandler;
 import sdu.sem2.se17.domain.production.Approval;
 
 import java.io.FileWriter;
@@ -44,17 +44,17 @@ public class ProductionController extends Controller {
     @FXML
     private Button jsonButton;
 
-    public ProductionController(CreditManagementController creditManagementController, String productionName) {
-        super(creditManagementController);
+    public ProductionController(CreditManagementHandler creditManagementHandler, String productionName) {
+        super(creditManagementHandler);
         this.productionName = productionName;
-        this.rolesTitles = creditManagementController.getRoleTitles();
+        //this.rolesTitles = creditManagementHandler.getRoleTitles();
 
     }
 
     public void initialize() {
         productionLabel.setText(productionName);
 
-        if(creditManagementController.isAdmin()){
+        if(creditManagementHandler.isAdmin()){
             denyButton.setVisible(true);
             approveButton.setVisible(true);
             jsonButton.setVisible(true);
@@ -64,7 +64,7 @@ public class ProductionController extends Controller {
         }
 
 
-        creditManagementController.findProduction(getProductionId()).getCredits().forEach(x -> {
+        creditManagementHandler.findProduction(getProductionId()).getCredits().forEach(x -> {
             this.credits.getChildren().add(createNewCredit(x.getParticipant().getName(), x.getRole().toString()));
         });
     }
@@ -94,13 +94,13 @@ public class ProductionController extends Controller {
 
     @FXML
     void send(ActionEvent event) {
-        ArrayList c = creditManagementController.findProduction(getProductionId()).getCredits();
+        ArrayList c = creditManagementHandler.findProduction(getProductionId()).getCredits();
         c.removeAll(c);
         for (Node i: credits.getChildren()) {
             String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
             String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
             if (name != null && (role != null)){
-                creditManagementController.addCreditToProduction(getProductionId(), name, role);
+               // creditManagementHandler.addCreditToProduction(getProductionId(), name, role);
             }
         }
 
@@ -108,16 +108,16 @@ public class ProductionController extends Controller {
     }
 
     private long getProductionId(){
-        return creditManagementController.getProductions().indexOf(creditManagementController.findProduction(productionName));
+        return creditManagementHandler.getProductions().indexOf(creditManagementHandler.findProduction(productionName));
     }
 
     public void approve(ActionEvent actionEvent) {
-        creditManagementController.validateProduction(getProductionId(), Approval.APPROVED);
+       // creditManagementHandler.validateProduction(getProductionId(), Approval.APPROVED);
         returnToChooseProduction();
     }
 
     public void deny(ActionEvent actionEvent) {
-        creditManagementController.validateProduction(getProductionId(), Approval.NOT_APPROVED);
+        //creditManagementHandler.validateProduction(getProductionId(), Approval.NOT_APPROVED);
         returnToChooseProduction();
 
     }
@@ -128,7 +128,7 @@ public class ProductionController extends Controller {
                     MainFX.loadFXML(
                             "ChooseProduction",
                             new ChooseProductionController(
-                                    creditManagementController)
+                                    creditManagementHandler)
                     ));
         } catch (IOException e) {
             e.printStackTrace();
@@ -143,7 +143,7 @@ public class ProductionController extends Controller {
                 .setPrettyPrinting()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
-        gson.toJson( creditManagementController.findProduction(productionName), writer);
+        gson.toJson( creditManagementHandler.findProduction(productionName), writer);
         writer.flush();
         writer.close();
     }
