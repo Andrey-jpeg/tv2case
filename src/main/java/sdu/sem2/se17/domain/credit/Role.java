@@ -1,5 +1,8 @@
 package sdu.sem2.se17.domain.credit;
 
+
+import java.util.Locale;
+
 /* Mikkel Nielsen
 Casper Fenger Jensen */
 public enum Role {
@@ -59,7 +62,7 @@ public enum Role {
 
     public static Role getRole(String label) {
         for (Role i: Role.values()) {
-            if (i.label == label) {return i;}
+            if (i.label.equalsIgnoreCase(label)) {return i;}
         }
         return null;
     }

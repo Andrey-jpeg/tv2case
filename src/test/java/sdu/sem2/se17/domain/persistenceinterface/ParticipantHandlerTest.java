@@ -16,18 +16,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParticipantHandlerTest {
 
     private ParticipantHandler handler;
-    private final boolean connectToDb = true;
+    private final boolean connectToDb = false;
     private DataSource dataSource;
 
     @BeforeEach
     void setUp() {
         if (connectToDb){
-            dataSource = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "n98256416");
+            dataSource = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres");
             handler = new ParticipantHandlerImpl(dataSource);
-            System.out.println("yeet");
         } else {
             handler = new ParticipantHandlerImplSample();
-            System.out.println("badabing");
         }
     }
 
