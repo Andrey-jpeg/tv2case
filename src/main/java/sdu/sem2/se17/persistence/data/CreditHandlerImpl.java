@@ -20,6 +20,11 @@ public class CreditHandlerImpl implements CreditHandler {
     }
 
     @Override
+    public Optional<Credit> create(Credit credit, long productionId) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<Credit> create(Credit credit) {
         return Optional.empty();
     }
