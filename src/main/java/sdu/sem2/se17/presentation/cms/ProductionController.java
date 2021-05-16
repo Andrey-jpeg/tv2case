@@ -34,6 +34,9 @@ public class ProductionController extends Controller {
     public VBox credits;
 
     @FXML
+    private TextArea comments;
+
+    @FXML
     private Label productionLabel;
 
     @FXML
@@ -121,9 +124,9 @@ public class ProductionController extends Controller {
                 }});
             }
         }
+        production.setComments(comments.getText());
 
         creditManagementHandler.updateProduction(production);
-
         returnToChooseProduction();
     }
 
