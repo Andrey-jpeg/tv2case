@@ -11,7 +11,6 @@ import sdu.sem2.se17.persistence.data.*;
 import sdu.sem2.se17.persistence.db.DataSource;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class CreditManagementHandlerImpl implements CreditManagementHandler {
 
@@ -24,8 +23,8 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
     private final UserHandler userHandler;
 
     public CreditManagementHandlerImpl(DataSource dataSource) {
-        creditHandler = new CreditHandlerImpl(dataSource);
         participantHandler = new ParticipantHandlerImpl(dataSource);
+        creditHandler = new CreditHandlerImpl(dataSource, (ParticipantHandlerImpl)participantHandler);
         productionCompanyHandler = new ProductionCompanyHandlerImpl(dataSource);
         productionHandler = new ProductionHandlerImpl(dataSource);
         userHandler = new UserHandlerImpl(dataSource);

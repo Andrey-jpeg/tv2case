@@ -5,6 +5,9 @@ import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.credit.Role;
 import sdu.sem2.se17.domain.production.Production;
+import sdu.sem2.se17.persistence.data.CreditHandlerImpl;
+import sdu.sem2.se17.persistence.data.ParticipantHandlerImpl;
+import sdu.sem2.se17.persistence.db.DataSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,9 +15,16 @@ class CreditHandlerTest {
 
     private CreditHandler handler;
 
+    private final boolean connectToDb = false;
+
     @BeforeEach
     void setUp() {
-        handler = new CreditHandlerImplSample();
+        if (connectToDb){
+            var ds = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
+            handler = new CreditHandlerImpl(ds, new ParticipantHandlerImpl(ds));
+        } else {
+            handler = new CreditHandlerImplSample();
+        }
     }
 
     @DisplayName("CRUD operations")
@@ -22,14 +32,14 @@ class CreditHandlerTest {
     class Crud {
         @Test
         void create() {
-            var credit = new Credit(new Participant("Sample"), Role.ANIMATION);
+            var credit = new Credit(new Participant("Sample"), Role.ANIMATION, 1);
             var result = handler.create(credit);
 
             assertTrue(result.isPresent());
         }
         @Test
         void read() {
-            var credit = new Credit(new Participant("Sample"), Role.ANIMATION);
+            var credit = new Credit(new Participant("Sample"), Role.ANIMATION, 1);
             var savedCredit = handler.create(credit);
 
             var result = handler.read(savedCredit.get().getId());
@@ -38,11 +48,19 @@ class CreditHandlerTest {
         }
         @Test
         void update() {
-            var tempCredit = new Credit(new Participant("Sample"), Role.ANIMATION);
+            if(!connectToDb){
+                return;
+            }
+
+            var tempCredit = new Credit(new Participant("Sample"), Role.ANIMATION, 1);
             var startCredit = handler.create(tempCredit);
 
+            var tempId = startCredit.get().getParticipant().getId();
             startCredit.get().setParticipant(new Participant("New"));
+            startCredit.get().getParticipant().setId(tempId);
             startCredit.get().setRole(Role.BILLEDKUNSTNERE);
+
+            System.out.print(startCredit.get().getRole().toString());
 
             handler.update(startCredit.get());
 
@@ -59,7 +77,7 @@ class CreditHandlerTest {
         }
         @Test
         void delete() {
-            var credit = new Credit(new Participant("Sample"), Role.ANIMATION);
+            var credit = new Credit(new Participant("Sample"), Role.ANIMATION, 1);
             var savedCredit = handler.create(credit);
 
             handler.delete(savedCredit.get().getId());
@@ -72,12 +90,12 @@ class CreditHandlerTest {
 
     @Test
     void findByProductionId() {
-        var credit1 = handler.create(new Credit(new Participant("Sample1"), Role.ANIMATION)).get();
-        var credit2 = handler.create(new Credit(new Participant("Sample2"), Role.EDITOR)).get();
-        var credit3 = new Credit(new Participant("Sample3"), Role.DIRIGENTER);
-        var credit4 = new Credit(new Participant("Sample4"), Role.DUKKESKABER);
+        var credit1 = handler.create(new Credit(new Participant("Sample1"), Role.ANIMATION, 1)).get();
+        var credit2 = handler.create(new Credit(new Participant("Sample2"), Role.EDITOR, 1)).get();
+        var credit3 = new Credit(new Participant("Sample3"), Role.DIRIGENTER, 1);
+        var credit4 = new Credit(new Participant("Sample4"), Role.DUKKESKABER, 1);
 
-        var production = new Production(){{
+        var production = new Production() {{
             setName("SampleProduction");
             createCredit(credit1);
             createCredit(credit2);
@@ -85,12 +103,12 @@ class CreditHandlerTest {
             createCredit(credit4);
         }};
 
-
         var castedHandler = (CreditHandlerImplSample) handler;
         castedHandler.sampleUpdateProductionWithCredits(production);
 
         assertEquals(
                 4,
                 handler.findByProductionId(production.getId()).size());
+
     }
 }

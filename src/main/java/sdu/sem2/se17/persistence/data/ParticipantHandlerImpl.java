@@ -136,7 +136,7 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
                     FROM Participant
                     INNER JOIN Credit
                     ON Participant.id = Credit.participantId
-                    WHERE Credit.participantId = ?
+                    WHERE Credit.id = ?
                 """);
         ) {
             statement.setLong(1, id);

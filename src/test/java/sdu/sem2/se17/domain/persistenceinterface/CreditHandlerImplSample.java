@@ -20,7 +20,7 @@ public class CreditHandlerImplSample implements CreditHandler {
 
         credit.setId(creditIdCounter++);
 
-        var newCredit = new Credit(){{
+        var newCredit = new Credit(credit.getProductionId()){{
             setId(credit.getId());
             setRole(credit.getRole());
             setParticipant(getParticipant());
@@ -64,11 +64,6 @@ public class CreditHandlerImplSample implements CreditHandler {
                 .stream()
                 .filter(c -> creditIds.contains(c.getId()))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public Optional<Credit> create(Credit credit, long productionId) {
-        return Optional.empty();
     }
 
     public void sampleUpdateProductionWithCredits(Production production) {

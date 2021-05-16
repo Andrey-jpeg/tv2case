@@ -1,6 +1,6 @@
 package sdu.sem2.se17.domain.persistenceinterface;
 
-import org.junit.Ignore;
+
 import org.junit.jupiter.api.*;
 import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;
@@ -92,7 +92,7 @@ class ParticipantHandlerTest {
     void findByCredit() {
         if (!connectToDb){
             var participant = handler.create(new Participant("Sample")).get();
-            var credit = new Credit();
+            var credit = new Credit(0);
             credit.setParticipant(participant);
 
             var castedHandler = (ParticipantHandlerImplSample) handler;
@@ -101,10 +101,10 @@ class ParticipantHandlerTest {
             var result = handler.findByCredit(credit.getId());
             assertTrue(result.isPresent());
         } else {
-            CreditHandler creditHandler = new CreditHandlerImpl(dataSource);
+            CreditHandler creditHandler = new CreditHandlerImpl(dataSource, (ParticipantHandlerImpl)handler);
 
             var participant = handler.create(new Participant("Sampler"));
-            var credit = creditHandler.create(new Credit(){{
+            var credit = creditHandler.create(new Credit(1){{
                 setRole(Role.ANIMATION);
                 setParticipant(participant.get());
             }});

@@ -1,5 +1,6 @@
 package sdu.sem2.se17.presentation.cms;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,12 +9,12 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import sdu.sem2.se17.domain.CreditManagementHandler;
 import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.credit.Role;
 import sdu.sem2.se17.domain.production.Approval;
+import sdu.sem2.se17.domain.production.Production;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,9 +23,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
-import com.google.gson.Gson;
-import sdu.sem2.se17.domain.production.Production;
 
 public class ProductionController extends Controller {
     private final ArrayList<String> rolesTitles;
@@ -118,7 +116,7 @@ public class ProductionController extends Controller {
             String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
             String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
             if (name != null && (role != null)){
-                productionCredits.add(new Credit(){{
+                productionCredits.add(new Credit(production.getId()){{
                     setParticipant(new Participant(name));
                     setRole(Role.getRole(role));
                 }});
