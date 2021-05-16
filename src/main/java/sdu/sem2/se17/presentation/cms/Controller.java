@@ -1,11 +1,11 @@
 package sdu.sem2.se17.presentation.cms;
 
-import sdu.sem2.se17.domain.CreditManagementController;
+import sdu.sem2.se17.domain.CreditManagementHandler;
 
 public abstract class Controller {
-    public CreditManagementController creditManagementController;
+    public CreditManagementHandler creditManagementHandler;
 
-    public Controller(CreditManagementController creditManagementController) {
-        this.creditManagementController = creditManagementController;
+    public Controller(CreditManagementHandler creditManagementHandler) {
+        this.creditManagementHandler = creditManagementHandler;
     }
 }

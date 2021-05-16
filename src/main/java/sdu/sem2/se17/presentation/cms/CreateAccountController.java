@@ -1,13 +1,12 @@
 package sdu.sem2.se17.presentation.cms;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.SelectionModel;
-import sdu.sem2.se17.domain.CreditManagementController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import sdu.sem2.se17.domain.CreditManagementControllerImplDomain;
+import sdu.sem2.se17.domain.CreditManagementHandler;
+import sdu.sem2.se17.domain.auth.Producer;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 
 import java.io.IOException;
@@ -19,7 +18,7 @@ Casper B. Andresen
 
 public class CreateAccountController extends Controller {
 
-        private ArrayList<ProductionCompany> productionCompanies;
+        private final ArrayList<ProductionCompany> productionCompanies;
 
         @FXML
         private TextField userNameInput;
@@ -36,9 +35,9 @@ public class CreateAccountController extends Controller {
         @FXML
         private Button createAccountButton;
 
-        public CreateAccountController(CreditManagementController creditManagementController) {
-            super(creditManagementController);
-            this.productionCompanies = creditManagementController.getCompanies();
+        public CreateAccountController(CreditManagementHandler creditManagementHandler) {
+            super(creditManagementHandler);
+            this.productionCompanies = creditManagementHandler.getCompanies();
         }
 
         public void initialize(){
@@ -60,8 +59,7 @@ public class CreateAccountController extends Controller {
                 }
             }
             if (selectedItemIndex != null) {
-                creditManagementController.createProducer(userNameInput.getText(),passwordInput.getText(),emailInput.getText(),
-                        selectedItemIndex);
+                creditManagementHandler.createUser(userNameInput.getText(),passwordInput.getText(),emailInput.getText(), selectedItemIndex);
                 returnToChooseProduction();
             }
         }
@@ -72,7 +70,7 @@ public class CreateAccountController extends Controller {
                         MainFX.loadFXML(
                                 "ChooseProduction",
                                 new ChooseProductionController(
-                                        creditManagementController)
+                                        creditManagementHandler)
                         ));
             } catch (IOException e) {
                 e.printStackTrace();

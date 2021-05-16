@@ -1,9 +1,7 @@
 package sdu.sem2.se17.domain.persistenceinterface;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.Ignore;
+import org.junit.jupiter.api.*;
 import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.credit.Role;
@@ -22,7 +20,7 @@ class ParticipantHandlerTest {
     @BeforeEach
     void setUp() {
         if (connectToDb){
-            dataSource = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres");
+            dataSource = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
             handler = new ParticipantHandlerImpl(dataSource);
         } else {
             handler = new ParticipantHandlerImplSample();
@@ -88,7 +86,9 @@ class ParticipantHandlerTest {
         assertEquals(participant2.getName(), result.get(0).getName());
     }
 
+    //Currently not working due to creditHandler not being implemented.
     @Test
+    @Disabled
     void findByCredit() {
         if (!connectToDb){
             var participant = handler.create(new Participant("Sample")).get();
