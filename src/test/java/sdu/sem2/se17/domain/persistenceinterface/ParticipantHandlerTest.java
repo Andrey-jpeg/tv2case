@@ -1,6 +1,6 @@
 package sdu.sem2.se17.domain.persistenceinterface;
 
-import org.junit.Ignore;
+
 import org.junit.jupiter.api.*;
 import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;

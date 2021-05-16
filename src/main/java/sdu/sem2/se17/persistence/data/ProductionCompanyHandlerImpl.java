@@ -1,6 +1,5 @@
 package sdu.sem2.se17.persistence.data;
 
-import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.persistenceinterface.ProductionCompanyHandler;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 import sdu.sem2.se17.persistence.db.DataSource;

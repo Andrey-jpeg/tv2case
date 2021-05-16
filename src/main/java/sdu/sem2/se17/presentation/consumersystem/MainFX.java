@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import sdu.sem2.se17.persistence.db.DataSource;
 
 import java.sql.SQLException;
 

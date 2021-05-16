@@ -48,6 +48,10 @@ class CreditHandlerTest {
         }
         @Test
         void update() {
+            if(!connectToDb){
+                return;
+            }
+
             var tempCredit = new Credit(new Participant("Sample"), Role.ANIMATION, 1);
             var startCredit = handler.create(tempCredit);
 
