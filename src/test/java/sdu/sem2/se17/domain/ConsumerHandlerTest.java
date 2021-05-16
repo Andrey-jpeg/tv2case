@@ -19,7 +19,7 @@ class ConsumerHandlerTest {
     @BeforeEach
     void setUp() {
         if (connectToDb){
-            DataSource dataSource = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres");
+            DataSource dataSource = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
             handler = new ConsumerHandlerImpl(dataSource);
             productionHandler = new ProductionHandlerImpl(dataSource);
         }
