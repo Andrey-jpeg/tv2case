@@ -2,6 +2,7 @@ package sdu.sem2.se17.persistence.data;
 
 import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.persistenceinterface.CreditHandler;
+import sdu.sem2.se17.domain.persistenceinterface.ParticipantHandler;
 import sdu.sem2.se17.persistence.db.DataSource;
 
 import java.sql.Connection;
@@ -13,9 +14,9 @@ import java.util.Optional;
 
 public class CreditHandlerImpl implements CreditHandler {
     private final DataSource dataSource;
-    private ParticipantHandlerImpl participantHandler;
+    private ParticipantHandler participantHandler;
 
-    public CreditHandlerImpl(DataSource dataSource, ParticipantHandlerImpl participantHandler) {
+    public CreditHandlerImpl(DataSource dataSource, ParticipantHandler participantHandler) {
         this.dataSource = dataSource;
         this.participantHandler = participantHandler;
     }
@@ -28,7 +29,6 @@ public class CreditHandlerImpl implements CreditHandler {
                 PreparedStatement statement = connection.prepareStatement(""" 
                     SELECT * FROM Credit
                     WHERE productionId = ?
-                    RETURNING *
                 """)
         ) {
             statement.setLong(1, id);

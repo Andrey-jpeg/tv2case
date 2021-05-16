@@ -20,7 +20,7 @@ class CreditHandlerTest {
     @BeforeEach
     void setUp() {
         if (connectToDb){
-            var ds = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres");
+            var ds = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
             handler = new CreditHandlerImpl(ds, new ParticipantHandlerImpl(ds));
         } else {
             handler = new CreditHandlerImplSample();
@@ -44,7 +44,6 @@ class CreditHandlerTest {
 
             var result = handler.read(savedCredit.get().getId());
 
-            System.out.println(result.get().getRole().toString());
             assertTrue(result.isPresent());
         }
         @Test
@@ -92,12 +91,12 @@ class CreditHandlerTest {
         var credit3 = new Credit(new Participant("Sample3"), Role.DIRIGENTER, 1);
         var credit4 = new Credit(new Participant("Sample4"), Role.DUKKESKABER, 1);
 
-        var production = new Production(){{
-                setName("SampleProduction");
-                createCredit(credit1);
-                createCredit(credit2);
-                createCredit(credit3);
-                createCredit(credit4);
+        var production = new Production() {{
+            setName("SampleProduction");
+            createCredit(credit1);
+            createCredit(credit2);
+            createCredit(credit3);
+            createCredit(credit4);
         }};
 
         var castedHandler = (CreditHandlerImplSample) handler;
@@ -106,5 +105,6 @@ class CreditHandlerTest {
         assertEquals(
                 4,
                 handler.findByProductionId(production.getId()).size());
+
     }
 }

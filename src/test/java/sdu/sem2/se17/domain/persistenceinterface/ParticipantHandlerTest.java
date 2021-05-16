@@ -22,7 +22,7 @@ class ParticipantHandlerTest {
     @BeforeEach
     void setUp() {
         if (connectToDb){
-            dataSource = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres");
+            dataSource = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
             handler = new ParticipantHandlerImpl(dataSource);
         } else {
             handler = new ParticipantHandlerImplSample();
