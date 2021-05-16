@@ -4,12 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import sdu.sem2.se17.domain.CreditManagementController;
+import sdu.sem2.se17.domain.CreditManagementHandler;
 import sdu.sem2.se17.domain.production.Production;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class ChooseProductionController extends Controller {
 
@@ -22,19 +21,19 @@ public class ChooseProductionController extends Controller {
     @FXML
     private Button createButton;
 
-    public ChooseProductionController(CreditManagementController creditManagementController) {
-        super(creditManagementController);
+    public ChooseProductionController(CreditManagementHandler creditManagementHandler) {
+        super(creditManagementHandler);
     }
 
     public void initialize() {
-        ArrayList<Production> productions = this.creditManagementController.getProductions();
+        ArrayList<Production> productions = this.creditManagementHandler.getProductions();
 
         for (Production production: productions) {
             comboBoxProductions.getItems().add(production.getName());
         }
 
         //Admin
-        if (creditManagementController.isAdmin()){
+        if (creditManagementHandler.isAdmin()){
             createButton.setText(createButton.getText() + " new user");
         } else {
             createButton.setText(createButton.getText() + " new production");
@@ -43,7 +42,7 @@ public class ChooseProductionController extends Controller {
 
     @FXML
     void create(ActionEvent event) {
-        if(creditManagementController.isAdmin()){
+        if(creditManagementHandler.isAdmin()){
             createUser();
         } else {
             createProduction();
@@ -56,7 +55,7 @@ public class ChooseProductionController extends Controller {
                     MainFX.loadFXML(
                             "CreateProduction",
                             new CreateProductionController(
-                                    creditManagementController))
+                                    creditManagementHandler))
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,7 +68,7 @@ public class ChooseProductionController extends Controller {
                     MainFX.loadFXML(
                             "CreateAccount",
                             new CreateAccountController(
-                                    creditManagementController))
+                                    creditManagementHandler))
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,7 +84,7 @@ public class ChooseProductionController extends Controller {
                         MainFX.loadFXML(
                                 "Production",
                                 new ProductionController(
-                                        creditManagementController,
+                                        creditManagementHandler,
                                         selectedName))
                 );
             } catch (IOException e) {
@@ -100,7 +99,7 @@ public class ChooseProductionController extends Controller {
                     MainFX.loadFXML(
                             "Login",
                             new LoginController(
-                                    creditManagementController))
+                                    creditManagementHandler))
             );
         } catch (IOException e) {
             e.printStackTrace();

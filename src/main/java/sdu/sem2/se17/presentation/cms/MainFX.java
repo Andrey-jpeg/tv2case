@@ -5,18 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sdu.sem2.se17.domain.CreditManagementController;
-import sdu.sem2.se17.domain.CreditManagementControllerImplDomain;
+import sdu.sem2.se17.domain.CreditManagementHandler;
+import sdu.sem2.se17.domain.CreditManagementHandlerImpl;
 
 
 import java.io.IOException;
 
 public class MainFX extends Application {
-    private static final CreditManagementController creditManagementController = new CreditManagementControllerImplDomain();
+    private static final CreditManagementHandler creditManagementHandler = new CreditManagementHandlerImpl();
 
     @Override
     public void start(Stage stage) throws IOException{
-        Scene scene = new Scene(loadFXML("Login", new LoginController(creditManagementController)), 640, 480);
+        Scene scene = new Scene(loadFXML("Login", new LoginController(creditManagementHandler)), 640, 480);
         stage.setScene(scene);
         stage.show();
     }

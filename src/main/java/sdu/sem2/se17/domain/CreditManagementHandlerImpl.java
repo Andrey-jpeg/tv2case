@@ -11,6 +11,7 @@ import sdu.sem2.se17.persistence.data.*;
 import sdu.sem2.se17.persistence.db.DataSource;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class CreditManagementHandlerImpl implements CreditManagementHandler {
 
@@ -30,14 +31,24 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
         userHandler = new UserHandlerImpl(dataSource);
     }
 
+    public CreditManagementHandlerImpl() {
+        this(new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres"));
+    }
+
 
 
     @Override
     public boolean login(String username, String password) {
-        return userHandler
-                .findByUsername(username)
-                .map(value -> value.getPassword().equals(password))
-                .orElse(false);
+         var foundUser =   userHandler.findByUsername(username);
+         if (foundUser.isPresent()){
+             var passwordCorrect = foundUser.map(value -> value.getPassword().equals(password)).get();
+
+             if (passwordCorrect){
+                 sessionUser = foundUser.get();
+                 return true;
+             }
+         }
+         return false;
     }
 
     @Override

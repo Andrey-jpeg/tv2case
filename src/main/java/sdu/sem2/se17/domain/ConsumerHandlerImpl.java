@@ -12,8 +12,7 @@ public class ConsumerHandlerImpl implements ConsumerHandler {
 
     private final ProductionHandler productionHandler;
 
-    public ConsumerHandlerImpl() {
-        var dataSource = new DataSource(null, null, null);
+    public ConsumerHandlerImpl(DataSource dataSource) {
         productionHandler = new ProductionHandlerImpl(dataSource);
     }
 
