@@ -81,7 +81,7 @@ public class UserHandlerImpl implements UserHandler {
                 )
         ) {
             configureStatement(user, statement);
-            statement.setLong(1, user.getId());
+            statement.setLong(4, user.getId());
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -142,11 +142,13 @@ public class UserHandlerImpl implements UserHandler {
 
         if (userType.equals("admin")) {
             user = new Admin(resultSet.getString("username"),"password","email");
-        } else
-            user = new Producer(resultSet.getString("username"),"password","email");
-
+        } else {
+            user = new Producer(resultSet.getString("username"), "password", "email");
+        }
         user.setId(resultSet.getLong("id"));
         user.setUsername(resultSet.getString("username"));
+        user.setPassword(resultSet.getString("password"));
+        user.setEmail(resultSet.getString("email"));
 
         return user;
     }
