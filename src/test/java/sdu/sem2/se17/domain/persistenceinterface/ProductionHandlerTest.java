@@ -141,7 +141,7 @@ class ProductionHandlerTest {
             setName("Sample");
             setComments("Comments");
             createCredit(new Credit(new Participant("P1"), Role.ANIMATION, 0));
-            createCredit(new Credit(new Participant("P2"), Role.BAND, 0));
+            createCredit(new Credit(new Participant("P2"), Role.KAPELMESTER, 0));
             createCredit(new Credit(new Participant("P3"), Role.DIRIGENTER, 0));
             createCredit(new Credit(new Participant("P4"), Role.FOTOGRAFER, 0));
         }};
