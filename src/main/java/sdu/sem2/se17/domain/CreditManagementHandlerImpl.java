@@ -11,6 +11,7 @@ import sdu.sem2.se17.persistence.data.*;
 import sdu.sem2.se17.persistence.db.DataSource;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class CreditManagementHandlerImpl implements CreditManagementHandler {
 
@@ -36,9 +37,9 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
 
     @Override
     public boolean login(String username, String password) {
-         var foundUser =   userHandler.findByUsername(username);
+         Optional<User> foundUser = userHandler.findByUsername(username);
          if (foundUser.isPresent()){
-             var passwordCorrect = foundUser.map(value -> value.getPassword().equals(password)).get();
+             Boolean passwordCorrect = foundUser.map(value -> value.getPassword().equals(password)).get();
 
              if (passwordCorrect){
                  sessionUser = foundUser.get();
@@ -88,7 +89,7 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
     @Override
     public Production createProduction(String name) {
         return this.productionHandler
-                .create(new Production(name))
+                .create(new Production(((Producer)(sessionUser)).getCompanyId(), name))
                 .orElse(null);
     }
 

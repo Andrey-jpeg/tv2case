@@ -52,10 +52,10 @@ public class ProductionController extends Controller {
     @FXML
     private Button jsonButton;
 
-    public ProductionController(CreditManagementHandler creditManagementHandler, String productionName) {
+    public ProductionController(CreditManagementHandler creditManagementHandler, long productionId) {
         super(creditManagementHandler);
         this.production = creditManagementHandler
-                .findProduction(1);
+                .findProduction(productionId);
         this.rolesTitles = (ArrayList<String>) Arrays
                 .stream(Role.class.getEnumConstants())
                 .map(Role::toString)

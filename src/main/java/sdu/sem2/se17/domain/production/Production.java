@@ -22,12 +22,8 @@ public class Production {
 
     }
 
-    public Production(String name){
-        this.name = name;
-    }
-
     public Production(long companyId, String name) {
-        this(name);
+        this.name = name;
         this.companyId = companyId;
     }
 
@@ -96,5 +92,10 @@ public class Production {
 
     public void setCredits(ArrayList<Credit> credits) {
         this.credits = credits;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }
