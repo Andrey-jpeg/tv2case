@@ -7,6 +7,7 @@ module sdu.sem2.SE17 {
     requires org.postgresql.jdbc;
     requires java.naming;
     requires mybatis;
+    requires javafx.web;
 
 
     opens sdu.sem2.se17.presentation.cms;

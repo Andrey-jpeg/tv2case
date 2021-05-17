@@ -53,6 +53,11 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.18</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>11.0.1</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
