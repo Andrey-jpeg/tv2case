@@ -46,7 +46,7 @@ class ConsumerHandlerTest {
 
         var savedProduction = productionHandler.create(sampleProduction()).get();
 
-        var productions = handler.findProduction(savedProduction.getName());
+        var productions = handler.findProduction(savedProduction.getId());
 
         boolean foundSavedProduction = productions.stream().anyMatch(c -> c.getId() == savedProduction.getId());
         boolean onlyFoundMatching = productions.stream().anyMatch(c -> !c.getName().equals(savedProduction.getName()));

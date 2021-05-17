@@ -18,16 +18,14 @@ public class ConsumerHandlerImpl implements ConsumerHandler {
 
     @Override
     public Optional<Production> findProduction(long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public ArrayList<Production> findProduction(String name) {
-        return null;
+        if(productionHandler.read(id).isPresent()) {
+            return productionHandler.read(id);
+        }
+        else return Optional.empty();
     }
 
     @Override
     public ArrayList<Production> allProductions() {
-        return null;
+        return productionHandler.readAll();
     }
 }

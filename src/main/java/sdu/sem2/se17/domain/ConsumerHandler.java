@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface ConsumerHandler {
     Optional<Production> findProduction(long id);
-    ArrayList<Production> findProduction(String name);
     ArrayList<Production> allProductions();
 }
