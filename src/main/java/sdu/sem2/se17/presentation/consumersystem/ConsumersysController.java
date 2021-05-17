@@ -87,7 +87,6 @@ public class ConsumersysController {
             alert.setHeaderText("Kreditteringerne tilhørende " + predictionTable.getSelectionModel().getSelectedItem().getName() + " er følgende: " );
             alert.setContentText( predictionTable.getSelectionModel().getSelectedItem().getCredits().toString() );
         }
-
         alert.showAndWait();
     }
 }
