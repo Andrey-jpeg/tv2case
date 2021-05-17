@@ -127,7 +127,13 @@ public class ProductionHandlerImpl implements ProductionHandler {
         ) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    productions.add(map(resultSet));
+
+                    var production = map(resultSet);
+                    production
+                            .setCredits(creditHandler
+                                    .findByProductionId(production.getId()));
+
+                    productions.add(production);
                 }
             }
         } catch (SQLException throwables) {
