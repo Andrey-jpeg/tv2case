@@ -1,5 +1,6 @@
 package sdu.sem2.se17.domain.credit;
 
+
 /* Mikkel Nielsen
 Casper Fenger Jensen */
 public enum Role {
@@ -28,7 +29,7 @@ public enum Role {
     MEDVIRKENDE("Medvirkende"),
     MUSIKERE("Musikere"),
     MUSIKALSK_ARRANGEMENT("Musikalsk_Arrangement"),
-    BNAD("Band"),
+    BAND("Band"),
     TRANSLATORS("Translator"),
     PRODUCENT("Producent"),
     PRODUCER("Producer"),
@@ -59,7 +60,7 @@ public enum Role {
 
     public static Role getRole(String label) {
         for (Role i: Role.values()) {
-            if (i.label == label) {return i;}
+            if (i.label.equalsIgnoreCase(label)) {return i;}
         }
         return null;
     }

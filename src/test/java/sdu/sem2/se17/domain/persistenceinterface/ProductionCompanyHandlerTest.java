@@ -5,16 +5,26 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import sdu.sem2.se17.domain.production.ProductionCompany;
+import sdu.sem2.se17.persistence.data.ParticipantHandlerImpl;
+import sdu.sem2.se17.persistence.data.ProductionCompanyHandlerImpl;
+import sdu.sem2.se17.persistence.db.DataSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductionCompanyHandlerTest {
 
     private ProductionCompanyHandler handler;
+    private final boolean connectToDb = false;
+    private DataSource dataSource;
 
     @BeforeEach
     void setUp() {
-        handler = new ProductionCompanyHandlerImplSample();
+        if (connectToDb){
+            dataSource = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
+            handler = new ProductionCompanyHandlerImpl(dataSource);
+        } else {
+            handler = new ProductionCompanyHandlerImplSample();
+        }
     }
 
     @DisplayName("CRUD operations")
@@ -66,11 +76,14 @@ class ProductionCompanyHandlerTest {
     
     @Test
     void readAll() {
+
+        int startSize = handler.readAll().size();
+
         handler.create(new ProductionCompany(0, "Sample1"));
         handler.create(new ProductionCompany(0, "Sample2"));
         handler.create(new ProductionCompany(0, "Sample3"));
         handler.create(new ProductionCompany(0, "Sample4"));
 
-        assertEquals(4, handler.readAll().size());
+        assertEquals(startSize+4, handler.readAll().size());
     }
 }
