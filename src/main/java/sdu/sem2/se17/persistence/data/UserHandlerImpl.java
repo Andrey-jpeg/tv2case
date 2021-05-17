@@ -180,7 +180,10 @@ public class UserHandlerImpl implements UserHandler {
         if (userType.equals("admin")) {
             user = new Admin(resultSet.getString("username"),"password","email");
         } else {
-            user = new Producer(resultSet.getString("username"), "password", "email");
+            user = new Producer(resultSet.getString("username"), "password", "email"){{
+                setCompanyId(resultSet.getLong("companyid"));
+            }};
+
         }
 
         user.setUsername(resultSet.getString("username"));
