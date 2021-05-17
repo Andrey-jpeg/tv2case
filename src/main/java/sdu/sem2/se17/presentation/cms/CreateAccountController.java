@@ -5,11 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import sdu.sem2.se17.domain.CreditManagementHandler;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 /*
 Casper B. Andresen
@@ -17,7 +19,7 @@ Casper B. Andresen
 
 public class CreateAccountController extends Controller {
 
-        private final ArrayList<ProductionCompany> productionCompanies;
+        private ArrayList<ProductionCompany> productionCompanies;
 
         @FXML
         private TextField userNameInput;
@@ -36,14 +38,20 @@ public class CreateAccountController extends Controller {
 
         public CreateAccountController(CreditManagementHandler creditManagementHandler) {
             super(creditManagementHandler);
-            this.productionCompanies = creditManagementHandler.getCompanies();
         }
 
         public void initialize(){
+            fetchProductionCompanies();
+        }
+
+        private void fetchProductionCompanies(){
+            this.productionCompanies = creditManagementHandler.getCompanies();
+            productionCompanySelector.getItems().clear();
+
             for (ProductionCompany productionCompany:
                     productionCompanies
             ) {
-               productionCompanySelector.getItems().add(productionCompany.getName());
+                productionCompanySelector.getItems().add(productionCompany.getName());
             }
         }
 
@@ -75,5 +83,18 @@ public class CreateAccountController extends Controller {
                 e.printStackTrace();
             }
         }
+
+    public void newCompany(ActionEvent actionEvent) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("CMS Dialog");
+        dialog.setHeaderText("Nyt produktions selskab");
+        dialog.setContentText("Indtast navnet på selskabet:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            creditManagementHandler.createCompany(result.get());
+            fetchProductionCompanies();
+        }
+    }
 
     }

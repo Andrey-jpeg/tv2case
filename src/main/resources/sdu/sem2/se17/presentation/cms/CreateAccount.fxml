@@ -17,6 +17,7 @@
       <TextField fx:id="passwordInput" layoutX="315.0" layoutY="160.0" />
       <TextField fx:id="emailInput" layoutX="315.0" layoutY="189.0" />
       <ComboBox fx:id="productionCompanySelector" layoutX="322.0" layoutY="224.0" prefWidth="150.0" />
+      <Button onAction="#newCompany" text="Nyt selskab" layoutX="500.0" layoutY="224.0"/>
       <Button fx:id="createAccountButton" layoutX="274.0" layoutY="272.0" mnemonicParsing="false" onAction="#createAccount" text="Opret konto" />
    </children>
 </AnchorPane>
