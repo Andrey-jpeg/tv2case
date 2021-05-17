@@ -55,9 +55,7 @@ public class ProductionController extends Controller {
     public ProductionController(CreditManagementHandler creditManagementHandler, String productionName) {
         super(creditManagementHandler);
         this.production = creditManagementHandler
-                .findProduction(productionName)
-                .stream()
-                .findFirst().get();
+                .findProduction(1);
         this.rolesTitles = (ArrayList<String>) Arrays
                 .stream(Role.class.getEnumConstants())
                 .map(Role::toString)
