@@ -1,8 +1,6 @@
 package sdu.sem2.se17.domain.credit;
 
 
-import java.util.Locale;
-
 /* Mikkel Nielsen
 Casper Fenger Jensen */
 public enum Role {

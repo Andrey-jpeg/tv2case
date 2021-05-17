@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import sdu.sem2.se17.domain.CreditManagementHandler;
-import sdu.sem2.se17.domain.auth.Producer;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 
 import java.io.IOException;

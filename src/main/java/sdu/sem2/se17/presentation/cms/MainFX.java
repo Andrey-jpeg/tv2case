@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import sdu.sem2.se17.domain.CreditManagementHandler;
 import sdu.sem2.se17.domain.CreditManagementHandlerImpl;
 
-
 import java.io.IOException;
 
 public class MainFX extends Application {

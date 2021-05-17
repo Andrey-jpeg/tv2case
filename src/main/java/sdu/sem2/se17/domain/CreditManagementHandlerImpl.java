@@ -11,7 +11,6 @@ import sdu.sem2.se17.persistence.data.*;
 import sdu.sem2.se17.persistence.db.DataSource;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class CreditManagementHandlerImpl implements CreditManagementHandler {
 

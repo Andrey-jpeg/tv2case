@@ -1,8 +1,8 @@
 package sdu.sem2.se17.persistence.db;
 
 
-import org.postgresql.ds.PGSimpleDataSource;
 import org.apache.ibatis.jdbc.ScriptRunner;
+import org.postgresql.ds.PGSimpleDataSource;
 
 import java.io.*;
 import java.sql.*;
