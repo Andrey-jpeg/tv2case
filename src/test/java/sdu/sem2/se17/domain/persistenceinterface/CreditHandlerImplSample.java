@@ -20,7 +20,7 @@ public class CreditHandlerImplSample implements CreditHandler {
 
         credit.setId(creditIdCounter++);
 
-        var newCredit = new Credit(){{
+        var newCredit = new Credit(credit.getProductionId()){{
             setId(credit.getId());
             setRole(credit.getRole());
             setParticipant(getParticipant());

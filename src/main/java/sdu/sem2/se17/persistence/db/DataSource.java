@@ -1,23 +1,21 @@
 package sdu.sem2.se17.persistence.db;
 
 
-import org.postgresql.ds.PGSimpleDataSource;
 import org.apache.ibatis.jdbc.ScriptRunner;
+import org.postgresql.ds.PGSimpleDataSource;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.*;
 import java.sql.*;
 
 /* Hampus */
 public class DataSource {
     private Connection connection;
     private final PGSimpleDataSource simpleDataSource;
+    private static final String dbName = "tv2";
 
-    public DataSource(String url, String user, String password){
+    public DataSource(String pgServerUrl, String user, String password){
         simpleDataSource = new PGSimpleDataSource();
-        simpleDataSource.setUrl(url);
+        simpleDataSource.setUrl(pgServerUrl + dbName);
         simpleDataSource.setUser(user);
         simpleDataSource.setPassword(password);
     }
@@ -33,36 +31,44 @@ public class DataSource {
         }
     }
 
-    /*
-    * Casper Jensen
-    * Casper Andresen
-    * */
-    private boolean existDatabase(Statement statement) throws SQLException {
-        ResultSet resultSet = statement.executeQuery("SELECT 1 FROM pg_database WHERE datname='tv2'");
-        int count = 0;
-        while (resultSet.next()) {
-            count += 1;
-        }
-        return count == 1;
-    }
-
-
     /* Casper Brøchner Andresen */
-    public void generateDatabase() throws SQLException {
-        Statement statement = getConnection().createStatement();
-        if( existDatabase(statement)) {
-            statement.executeUpdate("DROP DATABASE tv2");
-        }
-        statement.executeUpdate("CREATE DATABASE tv2");
-        this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tv2", "postgres", "" );
-        ScriptRunner sr = new ScriptRunner(this.connection);
-        Reader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(DataSource.class.getResource("sampleScript.sql").getFile()));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        sr.runScript(reader);
-        close();
+    public void generateDatabase(){
+        var oldUrl = simpleDataSource.getURL();
+
+        simpleDataSource.setUrl(simpleDataSource.getURL().replace(dbName, ""));
+        ensureDbExists();
+
+        simpleDataSource.setUrl(oldUrl);
+        runScript();
     }
+
+    private void ensureDbExists(){
+        try (
+                Connection connection = getConnection();
+                PreparedStatement databaseExistsPst = connection.prepareStatement("SELECT 1 FROM pg_database WHERE datname=?");
+                PreparedStatement dropPst = connection.prepareStatement("DROP DATABASE " + dbName);
+                PreparedStatement createPst = connection.prepareStatement("CREATE DATABASE " + dbName);
+        ) {
+            databaseExistsPst.setString(1, dbName);
+            if(databaseExistsPst.executeQuery().next()) {
+                dropPst.execute();
+            }
+            createPst.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void runScript() {
+        try (
+                Connection connection = getConnection();
+                Reader reader = new BufferedReader(new FileReader(DataSource.class.getResource("databaseCreateScript.sql").getFile()));
+        ) {
+            ScriptRunner sr = new ScriptRunner(connection);
+            sr.runScript(reader);
+        } catch (SQLException | IOException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 }

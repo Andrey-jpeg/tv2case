@@ -22,24 +22,32 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
     private final ProductionHandler productionHandler;
     private final UserHandler userHandler;
 
-    public CreditManagementHandlerImpl() {
-        var dataSource = new DataSource(null, null, null);
-
-        creditHandler = new CreditHandlerImpl(dataSource);
+    public CreditManagementHandlerImpl(DataSource dataSource) {
         participantHandler = new ParticipantHandlerImpl(dataSource);
+        creditHandler = new CreditHandlerImpl(dataSource, (ParticipantHandlerImpl)participantHandler);
         productionCompanyHandler = new ProductionCompanyHandlerImpl(dataSource);
         productionHandler = new ProductionHandlerImpl(dataSource);
         userHandler = new UserHandlerImpl(dataSource);
+    }
+
+    public CreditManagementHandlerImpl() {
+        this(new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres"));
     }
 
 
 
     @Override
     public boolean login(String username, String password) {
-        return userHandler
-                .findByUsername(username)
-                .map(value -> value.getPassword().equals(password))
-                .orElse(false);
+         var foundUser =   userHandler.findByUsername(username);
+         if (foundUser.isPresent()){
+             var passwordCorrect = foundUser.map(value -> value.getPassword().equals(password)).get();
+
+             if (passwordCorrect){
+                 sessionUser = foundUser.get();
+                 return true;
+             }
+         }
+         return false;
     }
 
     @Override

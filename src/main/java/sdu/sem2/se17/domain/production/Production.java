@@ -16,6 +16,7 @@ public class Production {
     private ArrayList<Credit> credits = new ArrayList<>();
     private Approval approval = Approval.NOT_SEEN;
     private long id;
+    private String comments;
 
     public Production(){
 
@@ -39,7 +40,7 @@ public class Production {
     }
 
     public void createCredit(Participant participant, Role role) {
-        this.createCredit(new Credit(participant, role));
+        this.createCredit(new Credit(participant, role, this.id));
     }
 
     public ArrayList<Credit> getCredits(){
@@ -80,6 +81,14 @@ public class Production {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public void setCredits(ArrayList<Credit> credits) {

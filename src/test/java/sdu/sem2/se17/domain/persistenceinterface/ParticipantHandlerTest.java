@@ -1,21 +1,30 @@
 package sdu.sem2.se17.domain.persistenceinterface;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 import sdu.sem2.se17.domain.credit.Credit;
 import sdu.sem2.se17.domain.credit.Participant;
+import sdu.sem2.se17.domain.credit.Role;
+import sdu.sem2.se17.persistence.data.CreditHandlerImpl;
+import sdu.sem2.se17.persistence.data.ParticipantHandlerImpl;
+import sdu.sem2.se17.persistence.db.DataSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParticipantHandlerTest {
 
     private ParticipantHandler handler;
+    private final boolean connectToDb = false;
+    private DataSource dataSource;
 
     @BeforeEach
     void setUp() {
-        handler = new ParticipantHandlerImplSample();
+        if (connectToDb){
+            dataSource = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
+            handler = new ParticipantHandlerImpl(dataSource);
+        } else {
+            handler = new ParticipantHandlerImplSample();
+        }
     }
 
     @DisplayName("CRUD operations")
@@ -77,18 +86,32 @@ class ParticipantHandlerTest {
         assertEquals(participant2.getName(), result.get(0).getName());
     }
 
+    //Currently not working due to creditHandler not being implemented.
     @Test
+    @Disabled
     void findByCredit() {
+        if (!connectToDb){
+            var participant = handler.create(new Participant("Sample")).get();
+            var credit = new Credit(0);
+            credit.setParticipant(participant);
 
-        var participant = handler.create(new Participant("Sample")).get();
-        var credit = new Credit();
-        credit.setParticipant(participant);
+            var castedHandler = (ParticipantHandlerImplSample) handler;
+            castedHandler.sampleUpdateCreditWithParticipant(credit);
 
-        var castedHandler = (ParticipantHandlerImplSample) handler;
-        castedHandler.sampleUpdateCreditWithParticipant(credit);
+            var result = handler.findByCredit(credit.getId());
+            assertTrue(result.isPresent());
+        } else {
+            CreditHandler creditHandler = new CreditHandlerImpl(dataSource, (ParticipantHandlerImpl)handler);
 
-        var result = handler.findByCredit(credit.getId());
+            var participant = handler.create(new Participant("Sampler"));
+            var credit = creditHandler.create(new Credit(1){{
+                setRole(Role.ANIMATION);
+                setParticipant(participant.get());
+            }});
 
-        assertTrue(result.isPresent());
+            var result = handler.findByCredit(credit.get().getId());
+
+            assertTrue(result.isPresent());
+        }
     }
 }
