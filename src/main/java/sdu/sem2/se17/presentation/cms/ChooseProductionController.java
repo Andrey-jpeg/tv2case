@@ -14,7 +14,7 @@ public class ChooseProductionController extends Controller {
     private final ArrayList<Production> productions;
 
     @FXML
-    private ComboBox<String> comboBoxProductions;
+    private ComboBox<Production> comboBoxProductions;
 
     @FXML
     private Button selectButton;
@@ -34,7 +34,7 @@ public class ChooseProductionController extends Controller {
         deleteButton.setVisible(false);
 
         for (Production production: productions) {
-            comboBoxProductions.getItems().add(production.getName());
+            comboBoxProductions.getItems().add(production);
         }
 
         //Admin
@@ -97,15 +97,15 @@ public class ChooseProductionController extends Controller {
 
     @FXML
     void select(ActionEvent event) {
-        var selectedName = comboBoxProductions.getSelectionModel().getSelectedItem();
-        if(selectedName != null && !selectedName.isEmpty()){
+        Production selectedProduction = comboBoxProductions.getSelectionModel().getSelectedItem();
+        if(selectedProduction != null){
             try {
                 comboBoxProductions.getScene().setRoot(
                         MainFX.loadFXML(
                                 "Production",
                                 new ProductionController(
                                         creditManagementHandler,
-                                        selectedName))
+                                        selectedProduction.getId()))
                 );
             } catch (IOException e) {
                 e.printStackTrace();

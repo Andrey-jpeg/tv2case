@@ -53,7 +53,7 @@ public class DataSource {
             if(databaseExistsPst.executeQuery().next()) {
                 dropPst.execute();
             }
-            createPst.executeQuery();
+            createPst.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class DataSource {
     private void runScript() {
         try (
                 Connection connection = getConnection();
-                Reader reader = new BufferedReader(new FileReader(DataSource.class.getResource("databaseCreateScript.sql").getFile()));
+                Reader reader = new BufferedReader(new FileReader(DataSource.class.getResource("databaseCreateScript.sql").getFile().replace("%20", " ")));
         ) {
             ScriptRunner sr = new ScriptRunner(connection);
             sr.runScript(reader);
