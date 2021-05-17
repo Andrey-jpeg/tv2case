@@ -40,6 +40,11 @@ public class UserHandlerImplSample implements UserHandler {
     }
 
     @Override
+    public ArrayList<User> readAll() {
+        return users;
+    }
+
+    @Override
     public void update(User user) {
         var storedUser = users
                 .stream()
