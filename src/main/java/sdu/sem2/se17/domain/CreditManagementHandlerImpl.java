@@ -31,7 +31,7 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
     }
 
     public CreditManagementHandlerImpl() {
-        this(new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres"));
+        this(new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres"));
     }
 
     @Override

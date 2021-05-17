@@ -22,7 +22,7 @@ class ProductionHandlerTest {
     @BeforeEach
     void setUp() {
         if (connectToDb){
-            dataSource = new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres");
+            dataSource = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
             handler = new ProductionHandlerImpl(dataSource, new CreditHandlerImpl(dataSource, new ParticipantHandlerImpl(dataSource)));
         }
     }
