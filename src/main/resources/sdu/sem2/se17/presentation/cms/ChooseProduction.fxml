@@ -11,7 +11,7 @@
       <ComboBox fx:id="comboBoxProductions" layoutX="225.0" layoutY="122.0" prefWidth="150.0" />
       <Label layoutX="255.0" layoutY="80.0" text="Vælg produktion" />
       <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#logout" text="Log ud" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
-      <VBox alignment="CENTER" layoutX="250.0" layoutY="160.0" prefHeight="123.0" prefWidth="100.0" spacing="5.0">
+      <VBox alignment="CENTER" layoutX="195.0" layoutY="158.0" prefHeight="123.0" prefWidth="210.0" spacing="5.0">
          <children>
             <Button fx:id="selectButton" mnemonicParsing="false" onAction="#select" text="Vælg" />
             <Button fx:id="createButton" mnemonicParsing="false" onAction="#create" text="Opret" />
