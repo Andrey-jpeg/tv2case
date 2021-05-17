@@ -18,13 +18,9 @@ public class UserHandlerImplSample implements UserHandler {
 
         user.setId(userIdCounter++);
 
-        var newUser = new User(){{
+        User newUser = new User( user.getUsername(), user.getPassword(), user.getEmail()){{
             setId(user.getId());
-            setEmail(user.getEmail());
-            setPassword(user.getPassword());
-            setUsername(user.getUsername());
         }};
-
 
         users.add(newUser);
 

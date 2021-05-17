@@ -13,6 +13,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/*
+Hampus Fink
+Mikkel Nielsen
+Casper Andresen
+ */
 public class UserHandlerImpl implements UserHandler {
     private final DataSource dataSource;
 

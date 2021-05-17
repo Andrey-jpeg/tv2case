@@ -11,7 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
-
+/*
+Nicolas Heeks
+Hampus Fink
+ */
 public class CreditHandlerImpl implements CreditHandler {
     private final DataSource dataSource;
     private ParticipantHandler participantHandler;

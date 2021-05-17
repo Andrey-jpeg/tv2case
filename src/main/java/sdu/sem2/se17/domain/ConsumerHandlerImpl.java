@@ -8,12 +8,16 @@ import sdu.sem2.se17.persistence.db.DataSource;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/*
+Casper Andresen
+ */
 public class ConsumerHandlerImpl implements ConsumerHandler {
 
     private final ProductionHandler productionHandler;
+    DataSource dataSource = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
 
-    public ConsumerHandlerImpl(DataSource dataSource) {
-        productionHandler = new ProductionHandlerImpl(dataSource);
+    public ConsumerHandlerImpl() {
+        productionHandler = new ProductionHandlerImpl(this.dataSource);
     }
 
     @Override

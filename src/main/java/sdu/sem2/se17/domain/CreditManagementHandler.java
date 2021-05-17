@@ -7,6 +7,11 @@ import sdu.sem2.se17.domain.production.ProductionCompany;
 
 import java.util.ArrayList;
 
+/*
+Hampus Fink
+Casper Jensen
+Casper Andresen
+*/
 public interface CreditManagementHandler {
 
     boolean login(String username, String password);

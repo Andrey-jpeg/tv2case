@@ -10,6 +10,10 @@ import sdu.sem2.se17.domain.CreditManagementHandlerImpl;
 
 import java.io.IOException;
 
+/*
+Casper Jensen
+Hampus Fink
+ */
 public class MainFX extends Application {
     private static final CreditManagementHandler creditManagementHandler = new CreditManagementHandlerImpl();
 

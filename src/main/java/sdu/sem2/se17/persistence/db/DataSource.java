@@ -7,7 +7,10 @@ import org.postgresql.ds.PGSimpleDataSource;
 import java.io.*;
 import java.sql.*;
 
-/* Hampus */
+/* Hampus Fink
+*  Casper Jensen
+*  Casper Andresen
+* */
 public class DataSource {
     private Connection connection;
     private final PGSimpleDataSource simpleDataSource;

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /*
-Casper Brøchner Andresen
+Casper Andresen
  */
 public class DeleteAccountController extends Controller {
 

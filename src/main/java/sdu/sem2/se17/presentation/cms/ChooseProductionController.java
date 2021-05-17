@@ -10,6 +10,11 @@ import sdu.sem2.se17.domain.production.Production;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/*
+Hampus Fink
+Casper Jensen
+Casper Andresen
+ */
 public class ChooseProductionController extends Controller {
     private final ArrayList<Production> productions;
 

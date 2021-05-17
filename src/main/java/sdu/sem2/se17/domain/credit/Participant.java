@@ -2,6 +2,11 @@ package sdu.sem2.se17.domain.credit;
 
 import com.google.gson.annotations.Expose;
 
+/*
+Nicolas Heeks
+Casper Andresen
+Hampus Fink
+ */
 public class Participant {
     @Expose
     private String name;

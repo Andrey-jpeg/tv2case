@@ -24,7 +24,7 @@ import java.util.Locale;
 
 public class ConsumersysController {
 
-    private final ConsumerHandler consumerHandler = new ConsumerHandlerImpl(new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres"));
+    private final ConsumerHandler consumerHandler = new ConsumerHandlerImpl();
 
     private final ObservableList<Production> dataList = FXCollections.observableArrayList();
 

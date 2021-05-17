@@ -11,6 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/*
+Nicolas Heeks
+Hampus Fink
+ */
 public class ParticipantHandlerImpl implements ParticipantHandler {
 
     private final DataSource dataSource;
