@@ -112,7 +112,7 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
         ) {
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     productionCompany.add(map(resultSet));
                 }
             }
@@ -130,8 +130,8 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
     private ProductionCompany map(ResultSet resultSet) throws SQLException {
         var productionCompany = new ProductionCompany();
 
-        productionCompany.setId(resultSet.getLong(ParticipantHandlerImpl.ParticipantHandlerColumn.ID.label));
-        productionCompany.setName(resultSet.getString(ParticipantHandlerImpl.ParticipantHandlerColumn.NAME.label));
+        productionCompany.setId(resultSet.getLong("id"));
+        productionCompany.setName(resultSet.getString("name"));
 
         return productionCompany;
     }

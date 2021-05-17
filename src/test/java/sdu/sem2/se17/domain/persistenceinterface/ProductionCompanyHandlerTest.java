@@ -5,16 +5,26 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import sdu.sem2.se17.domain.production.ProductionCompany;
+import sdu.sem2.se17.persistence.data.ParticipantHandlerImpl;
+import sdu.sem2.se17.persistence.data.ProductionCompanyHandlerImpl;
+import sdu.sem2.se17.persistence.db.DataSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductionCompanyHandlerTest {
 
     private ProductionCompanyHandler handler;
+    private final boolean connectToDb = true;
+    private DataSource dataSource;
 
     @BeforeEach
     void setUp() {
-        handler = new ProductionCompanyHandlerImplSample();
+        if (connectToDb){
+            dataSource = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
+            handler = new ProductionCompanyHandlerImpl(dataSource);
+        } else {
+            handler = new ProductionCompanyHandlerImplSample();
+        }
     }
 
     @DisplayName("CRUD operations")
