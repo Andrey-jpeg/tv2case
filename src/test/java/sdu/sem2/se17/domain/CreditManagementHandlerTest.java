@@ -23,7 +23,7 @@ class CreditManagementHandlerTest {
     private ParticipantHandler participantHandler;
     private ProductionCompanyHandler companyHandler;
     private ProductionHandler productionHandler;
-    private final boolean connectToDb = true;
+    private final boolean connectToDb = false;
 
     private final static String defAdminUsername = "sysadmin";
     private final static String defAdminPassword = "1234";
