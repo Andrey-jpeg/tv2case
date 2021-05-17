@@ -129,15 +129,12 @@ public class ProductionController extends Controller {
 
     public void approve(ActionEvent actionEvent) {
         production.setApproval(Approval.APPROVED);
-        creditManagementHandler.updateProduction(production);
-        returnToChooseProduction();
+        send(null);
     }
 
     public void deny(ActionEvent actionEvent) {
         production.setApproval(Approval.NOT_APPROVED);
-        creditManagementHandler.updateProduction(production);
-        returnToChooseProduction();
-
+        send(null);
     }
 
     private void returnToChooseProduction() {
