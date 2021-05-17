@@ -16,7 +16,6 @@ public interface CreditManagementHandler {
     void createUser(String username, String password, String email, long companyId);
 
     ArrayList<Production> getProductions();
-    ArrayList<Production> findProduction(String name);
     Production findProduction(long productionId);
     Production createProduction(String name);
     void updateProduction(Production production);
@@ -24,7 +23,7 @@ public interface CreditManagementHandler {
 
     void createParticipant(String name);
     ArrayList<Participant> findParticipant(String name);
-    void findParticipant(long id);
+    Participant findParticipant(long id);
     void deleteParticipant(long id);
 
     ArrayList<ProductionCompany> getCompanies();
