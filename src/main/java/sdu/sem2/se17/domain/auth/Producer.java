@@ -10,6 +10,7 @@ public class Producer extends User {
     }
 
     public Producer(String username, String password, String email) {
+        super(username, password, email);
     }
 
     public long getCompanyId() {

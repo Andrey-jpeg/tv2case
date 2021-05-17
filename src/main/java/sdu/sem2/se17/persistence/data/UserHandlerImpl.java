@@ -25,12 +25,22 @@ public class UserHandlerImpl implements UserHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                    INSERT INTO \"User\" (username, email, password, usertype)
-                    VALUES (?, ?, ?, ?::userrole)
+                    INSERT INTO \"User\" (username, email, password, user_type, companyid)
+                    VALUES (?, ?, ?, ?::userrole, ?)
                     RETURNING *
                 """)
         ) {
             configureStatement(user, statement);
+
+            var usertype = "";
+            if(user instanceof Admin){
+                usertype = "admin";
+                statement.setObject(5, null);
+            } else {
+                usertype = "producer";
+                statement.setLong(5, ((Producer)user).getCompanyId());
+            }
+            statement.setString(4, usertype);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()){
@@ -74,7 +84,7 @@ public class UserHandlerImpl implements UserHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
                     UPDATE \"User\"
-                    SET (username, password, email) =
+                    SET (username, email, password) =
                     (?, ?, ?)
                     WHERE id = ?
                 """
@@ -92,7 +102,7 @@ public class UserHandlerImpl implements UserHandler {
     public void delete(long id) {
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM User WHERE id = ?")
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM \"User\" WHERE id = ?")
         ) {
             statement.setLong(1, id);
             statement.execute();
@@ -131,6 +141,8 @@ public class UserHandlerImpl implements UserHandler {
         statement.setString(1, user.getUsername());
         statement.setString(2, user.getEmail());
         statement.setString(3, user.getPassword());
+
+
     }
 
 
@@ -149,6 +161,7 @@ public class UserHandlerImpl implements UserHandler {
         user.setUsername(resultSet.getString("username"));
         user.setPassword(resultSet.getString("password"));
         user.setEmail(resultSet.getString("email"));
+        user.setId(resultSet.getLong("id"));
 
         return user;
     }
