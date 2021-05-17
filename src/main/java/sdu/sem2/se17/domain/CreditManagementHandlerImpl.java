@@ -12,6 +12,7 @@ import sdu.sem2.se17.persistence.db.DataSource;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CreditManagementHandlerImpl implements CreditManagementHandler {
 
@@ -76,7 +77,15 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
 
     @Override
     public ArrayList<Production> getProductions() {
-        return this.productionHandler.readAll();
+        var productions  = productionHandler.readAll();
+
+        if (isAdmin()){
+            return productions;
+        } else {
+            return (ArrayList<Production>) productions.stream()
+                    .filter(p -> p.getCompanyId() == ((Producer)sessionUser).getCompanyId())
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override
