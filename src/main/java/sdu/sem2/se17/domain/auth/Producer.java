@@ -9,6 +9,10 @@ public class Producer extends User {
         this.companyId = companyId;
     }
 
+    public Producer(String username, String password, String email) {
+        super(username, password, email);
+    }
+
     public long getCompanyId() {
         return companyId;
     }
