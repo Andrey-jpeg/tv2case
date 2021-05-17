@@ -35,7 +35,7 @@ public class LoginController extends Controller {
                 displayChooseProduction();
             }
             else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Login credentials were incorrect.", ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Brugernavn eller password var ukorrekt.", ButtonType.OK);
                 alert.showAndWait();
             }
         }

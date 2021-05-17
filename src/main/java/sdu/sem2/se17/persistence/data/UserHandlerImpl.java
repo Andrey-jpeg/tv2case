@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class UserHandlerImpl implements UserHandler {
@@ -76,6 +77,30 @@ public class UserHandlerImpl implements UserHandler {
         }
 
         return result;
+    }
+
+    /*
+    Casper Brøchner Andresen
+     */
+    @Override
+    public ArrayList<User> readAll() {
+        ArrayList<User> users = new ArrayList<>();
+        try (
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(""" 
+                    SELECT * FROM \"User\"
+                    WHERE user_type NOT IN ('admin')
+                """)
+            ) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    users.add(map(resultSet));
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return users;
     }
 
     @Override
