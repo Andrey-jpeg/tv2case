@@ -53,7 +53,6 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
                 PreparedStatement statement = connection.prepareStatement(""" 
                             SELECT * FROM ProductionCompany
                             WHERE id = ?
-                            RETURNING *
                         """)
         ) {
             statement.setLong(1, id);
@@ -76,7 +75,7 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
                             UPDATE ProductionCompany
-                            SET (name) = name
+                            SET (name) =
                             (?)
                             WHERE id = ?
                         """
@@ -109,7 +108,7 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
 
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProductionCompany");
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProductionCompany")
         ) {
 
             try (ResultSet resultSet = statement.executeQuery()) {
