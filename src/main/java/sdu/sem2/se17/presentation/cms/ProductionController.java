@@ -80,6 +80,7 @@ public class ProductionController extends Controller {
                     .getChildren()
                     .add(createNewCredit(x.getParticipant().getName(), x.getRole().toString()));
         });
+        comments.setText(production.getComments());
     }
 
     private HBox createNewCredit (String name, String role) {
