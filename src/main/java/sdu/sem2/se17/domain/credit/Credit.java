@@ -56,4 +56,8 @@ public class Credit {
     public long getProductionId() {
         return productionId;
     }
+
+    public void setProductionId(long id) {
+        this.productionId = id;
+    }
 }

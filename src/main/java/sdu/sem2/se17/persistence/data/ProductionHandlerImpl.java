@@ -161,6 +161,7 @@ public class ProductionHandlerImpl implements ProductionHandler {
         if (oldProduction.getCredits() != null){
             for (Credit credit: oldProduction.getCredits()){
                 if (credit.getId() == 0){
+                    credit.setProductionId(newProduction.getId());
                     creditHandler.create(credit);
                 }
             }

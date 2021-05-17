@@ -4,12 +4,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import sdu.sem2.se17.domain.credit.Credit;
+import sdu.sem2.se17.domain.credit.Participant;
+import sdu.sem2.se17.domain.credit.Role;
 import sdu.sem2.se17.domain.production.Approval;
 import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.persistence.data.CreditHandlerImpl;
 import sdu.sem2.se17.persistence.data.ParticipantHandlerImpl;
 import sdu.sem2.se17.persistence.data.ProductionHandlerImpl;
 import sdu.sem2.se17.persistence.db.DataSource;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -135,6 +140,10 @@ class ProductionHandlerTest {
             setApproval(Approval.APPROVED);
             setName("Sample");
             setComments("Comments");
+            createCredit(new Credit(new Participant("P1"), Role.ANIMATION, 0));
+            createCredit(new Credit(new Participant("P2"), Role.KAPELMESTER, 0));
+            createCredit(new Credit(new Participant("P3"), Role.DIRIGENTER, 0));
+            createCredit(new Credit(new Participant("P4"), Role.FOTOGRAFER, 0));
         }};
     }
 
