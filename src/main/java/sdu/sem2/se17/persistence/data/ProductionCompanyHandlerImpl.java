@@ -26,7 +26,7 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                            INSERT INTO ProductionCompany (customer_id)
+                            INSERT INTO ProductionCompany (name)
                             VALUES (?)
                             RETURNING *
                         """)
@@ -53,7 +53,6 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
                 PreparedStatement statement = connection.prepareStatement(""" 
                             SELECT * FROM ProductionCompany
                             WHERE id = ?
-                            RETURNING *
                         """)
         ) {
             statement.setLong(1, id);
@@ -75,9 +74,8 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                            UPDATE Participant
-                            SET (name) =
-                            (?)
+                            UPDATE ProductionCompany
+                            SET name = ?
                             WHERE id = ?
                         """
                 )
@@ -109,11 +107,11 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
 
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM productionCompany");
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM ProductionCompany")
         ) {
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     productionCompany.add(map(resultSet));
                 }
             }
@@ -131,11 +129,9 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
     private ProductionCompany map(ResultSet resultSet) throws SQLException {
         var productionCompany = new ProductionCompany();
 
-        productionCompany.setId(resultSet.getLong(ParticipantHandlerImpl.ParticipantHandlerColumn.ID.label));
-        productionCompany.setName(resultSet.getString(ParticipantHandlerImpl.ParticipantHandlerColumn.NAME.label));
+        productionCompany.setId(resultSet.getLong("id"));
+        productionCompany.setName(resultSet.getString("name"));
 
         return productionCompany;
     }
-        }
-
-
+}
