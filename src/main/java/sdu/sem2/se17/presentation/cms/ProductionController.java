@@ -108,7 +108,6 @@ public class ProductionController extends Controller {
     @FXML
     void send(ActionEvent event) {
         ArrayList<Credit> productionCredits = production.getCredits();
-        productionCredits.clear();
 
         for (Node i: credits.getChildren()) {
             String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
