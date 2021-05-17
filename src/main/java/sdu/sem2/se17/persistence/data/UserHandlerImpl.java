@@ -25,8 +25,8 @@ public class UserHandlerImpl implements UserHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                    INSERT INTO User (username, email, password, usertype)
-                    VALUES (?, ?, ?, ?)
+                    INSERT INTO \"User\" (username, email, password, usertype)
+                    VALUES (?, ?, ?, ?::userrole)
                     RETURNING *
                 """)
         ) {
@@ -52,7 +52,6 @@ public class UserHandlerImpl implements UserHandler {
                 PreparedStatement statement = connection.prepareStatement(""" 
                     SELECT * FROM \"User\"
                     WHERE id = ?
-                    RETURNING *
                 """)
         ) {
             statement.setLong(1, id);
@@ -74,8 +73,8 @@ public class UserHandlerImpl implements UserHandler {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
-                    UPDATE User
-                    SET (name) = (username, password, email)
+                    UPDATE \"User\"
+                    SET (username, password, email) =
                     (?, ?, ?)
                     WHERE id = ?
                 """
@@ -93,7 +92,7 @@ public class UserHandlerImpl implements UserHandler {
     public void delete(long id) {
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM Username")
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM User WHERE id = ?")
         ) {
             statement.setLong(1, id);
             statement.execute();
@@ -110,7 +109,7 @@ public class UserHandlerImpl implements UserHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement("""
                     SELECT *
-                    FROM User
+                    FROM \"User\"
                     WHERE username = ?
                 """)
         ) {
