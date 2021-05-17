@@ -59,6 +59,11 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
     }
 
     @Override
+    public ArrayList<User> getUsers(){
+        return this.userHandler.readAll();
+    }
+
+    @Override
     public void createUser(String username, String password, String email) {
         this.userHandler.create(new Admin(username, password, email));
     }

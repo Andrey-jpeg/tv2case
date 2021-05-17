@@ -23,7 +23,7 @@ public class CreateProductionController extends Controller {
             creditManagementHandler.createProduction(productionName);
             cancel(null);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Production name must not be empty.", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Produktionen skal have et navn.", ButtonType.OK);
             alert.showAndWait();
         }
     }

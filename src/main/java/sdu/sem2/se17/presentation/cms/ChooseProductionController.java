@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChooseProductionController extends Controller {
+    private final ArrayList<Production> productions;
 
     @FXML
     private ComboBox<String> comboBoxProductions;
@@ -21,12 +22,16 @@ public class ChooseProductionController extends Controller {
     @FXML
     private Button createButton;
 
+    @FXML
+    private Button deleteButton;
+
     public ChooseProductionController(CreditManagementHandler creditManagementHandler) {
         super(creditManagementHandler);
+        this.productions = creditManagementHandler.getProductions();
     }
 
     public void initialize() {
-        ArrayList<Production> productions = this.creditManagementHandler.getProductions();
+        deleteButton.setVisible(false);
 
         for (Production production: productions) {
             comboBoxProductions.getItems().add(production.getName());
@@ -34,9 +39,10 @@ public class ChooseProductionController extends Controller {
 
         //Admin
         if (creditManagementHandler.isAdmin()){
-            createButton.setText(createButton.getText() + " new user");
+            createButton.setText(createButton.getText() + " ny bruger");
+            deleteButton.setVisible(true);
         } else {
-            createButton.setText(createButton.getText() + " new production");
+            createButton.setText(createButton.getText() + " ny produktion");
         }
     }
 
@@ -68,6 +74,20 @@ public class ChooseProductionController extends Controller {
                     MainFX.loadFXML(
                             "CreateAccount",
                             new CreateAccountController(
+                                    creditManagementHandler))
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void delete() {
+        try {
+            comboBoxProductions.getScene().setRoot(
+                    MainFX.loadFXML(
+                            "DeleteAccount",
+                            new DeleteAccountController(
                                     creditManagementHandler))
             );
         } catch (IOException e) {
