@@ -24,7 +24,7 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
 
     public CreditManagementHandlerImpl(DataSource dataSource) {
         participantHandler = new ParticipantHandlerImpl(dataSource);
-        creditHandler = new CreditHandlerImpl(dataSource, (ParticipantHandlerImpl)participantHandler);
+        creditHandler = new CreditHandlerImpl(dataSource, this.participantHandler);
         productionCompanyHandler = new ProductionCompanyHandlerImpl(dataSource);
         productionHandler = new ProductionHandlerImpl(dataSource);
         userHandler = new UserHandlerImpl(dataSource);
@@ -33,8 +33,6 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
     public CreditManagementHandlerImpl() {
         this(new DataSource("jdbc:postgresql://localhost:5432/tv2", "postgres", "postgres"));
     }
-
-
 
     @Override
     public boolean login(String username, String password) {
@@ -57,76 +55,75 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
 
     @Override
     public void deleteUser(long userId) {
-        userHandler.delete(userId);
+        this.userHandler.delete(userId);
     }
 
     @Override
     public void createUser(String username, String password, String email) {
-        userHandler.create(new Admin(username, password, email));
+        this.userHandler.create(new Admin(username, password, email));
     }
 
     @Override
     public void createUser(String username, String password, String email, long companyId) {
-        userHandler.create(new Producer(username, password, email, companyId));
+        this.userHandler.create(new Producer(username, password, email, companyId));
     }
 
     @Override
     public ArrayList<Production> getProductions() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Production> findProduction(String name) {
-        return null;
+        return this.productionHandler.readAll();
     }
 
     @Override
     public Production findProduction(long productionId) {
-        return null;
+        return this.productionHandler
+                .read(productionId)
+                .orElse(null);
     }
 
     @Override
     public Production createProduction(String name) {
-        return null;
+        return this.productionHandler
+                .create(new Production(name))
+                .orElse(null);
     }
 
     @Override
     public void updateProduction(Production production) {
-
+        this.productionHandler.update(production);
     }
 
     @Override
     public void deleteProduction(long productionId) {
-
+        this.productionHandler.delete(productionId);
     }
 
     @Override
     public void createParticipant(String name) {
-
+        this.participantHandler.create(new Participant(name));
     }
 
     @Override
     public ArrayList<Participant> findParticipant(String name) {
-        return null;
+        return this.participantHandler.findByName(name);
     }
 
     @Override
-    public void findParticipant(long id) {
-
+    public Participant findParticipant(long id) {
+        return this.participantHandler.read(id).orElse(null);
     }
 
     @Override
     public void deleteParticipant(long id) {
-
+        this.participantHandler.delete(id);
     }
 
     @Override
     public ArrayList<ProductionCompany> getCompanies() {
-        return null;
+        return this.productionCompanyHandler.readAll();
     }
 
     @Override
     public void createCompany(String name) {
-
+        this.productionCompanyHandler.create(new ProductionCompany(name));
     }
 }

@@ -21,12 +21,15 @@ public class Production {
     public Production(){
 
     }
-    public Production(long companyId, String name) {
-        this.companyId = companyId;
+
+    public Production(String name){
         this.name = name;
     }
 
-
+    public Production(long companyId, String name) {
+        this(name);
+        this.companyId = companyId;
+    }
 
     public Production(long companyId, String name, ArrayList<Credit> credits) {
         this(companyId, name);
