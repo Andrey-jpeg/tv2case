@@ -3,7 +3,9 @@ package sdu.sem2.se17.domain.credit;
 import com.google.gson.annotations.Expose;
 
 /* Casper Fenger Jensen */
-/* + Casper Andresen */
+/* + Casper Andresen
+*  Nicolas Heeks */
+
 public class Credit {
 
     @Expose

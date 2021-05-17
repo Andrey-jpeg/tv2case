@@ -8,6 +8,10 @@ import sdu.sem2.se17.domain.CreditManagementHandler;
 
 import java.io.IOException;
 
+/*
+Hampus Fink
+Casper Andresen
+ */
 public class CreateProductionController extends Controller {
     public TextField productionTextField;
 

@@ -24,7 +24,7 @@ CREATE TYPE creditrole AS ENUM (
     'MEDVIRKENDE',
     'MUSIKERE',
     'MUSIKALSK_ARRANGEMENT',
-    'BNAD',
+    'BAND',
     'TRANSLATORS',
     'PRODUCENT',
     'PRODUCER',
@@ -38,7 +38,7 @@ CREATE TYPE creditrole AS ENUM (
     'SPECIAL_EFFECTS',
     'SPONSORE',
     'ANIMATION',
-    'TEkSTERE',
+    'TEKSTERE',
     'TEKST_OG_MUSIK',
     'UNPAID_AND_EXTRAORDINARY_EFFORT'
 );
@@ -94,7 +94,7 @@ values ( 'TV2'),
 INSERT INTO "User"( username, email, password, user_type, companyId)
 VALUES ( 'sysadmin', 'sysadmin@sys.dk', '1234', 'admin', NULL),
        ( 'DR1', 'dr1@dr1.dk', '2345', 'producer', 2),
-       ( 'TV2', 'tv2@tv2.dk', '3456', 'producer', 2);
+       ( 'TV2', 'tv2@tv2.dk', '3456', 'producer', 1);
 
 
 INSERT INTO Production ( companyId, approvalStatus, name, comments)

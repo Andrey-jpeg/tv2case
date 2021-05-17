@@ -9,6 +9,12 @@ import sdu.sem2.se17.domain.CreditManagementHandler;
 
 import java.io.IOException;
 
+/*
+Hampus Fink
+Casper Jensen
+Casper Andresen
+ */
+
 public class LoginController extends Controller {
 
     @FXML

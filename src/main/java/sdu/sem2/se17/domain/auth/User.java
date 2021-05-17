@@ -13,10 +13,6 @@ package sdu.sem2.se17.domain.auth;
         this.email = email;
     }
 
-    public User() {
-
-    }
-
     public String getUsername() {
         return username;
     }

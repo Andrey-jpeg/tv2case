@@ -2,7 +2,9 @@ package sdu.sem2.se17.domain.credit;
 
 
 /* Mikkel Nielsen
-Casper Fenger Jensen */
+Casper Fenger Jensen
+Nicolas Heeks
+*/
 public enum Role {
     BILLEDKUNSTNERE("Billedkunstnere"),
     BILLEDREDIGERING("Billedredigering"),
@@ -43,7 +45,7 @@ public enum Role {
     SPECIAL_EFFECTS("Special_Effects"),
     SPONSORE("Sponsore"),
     ANIMATION("Animation"),
-    TEkSTERE("Tekstere"),
+    TEKSTERE("Tekstere"),
     TEKST_OG_MUSIK("Tekst_og_musik"),
     UNPAID_AND_EXTRAORDINARY_EFFORT("Unpaid_and_extraordinary_effort");
 

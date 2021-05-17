@@ -11,6 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/*
+Hampus Fink
+Mikkel Nielsen
+ */
 public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
 
     private final DataSource dataSource;

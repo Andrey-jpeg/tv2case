@@ -4,7 +4,10 @@ import sdu.sem2.se17.domain.auth.User;
 
 import java.util.ArrayList;
 import java.util.Optional;
-
+/*
+Hampus Fink
+Casper Andresen
+ */
 public interface UserHandler extends GenericCrud<User> {
     Optional<User> findByUsername(String username);
     ArrayList<User> readAll();

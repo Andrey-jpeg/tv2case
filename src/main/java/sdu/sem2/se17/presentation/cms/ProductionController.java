@@ -23,7 +23,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
+/*
+Casper Jensen
+Hampus Fink
+Casper Andresen
+Nicolas Heeks
+ */
 public class ProductionController extends Controller {
     private final ArrayList<String> rolesTitles;
     private final Production production;

@@ -11,6 +11,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/*
+Hampus Fink
+Nicolas Heeks
+ */
 public class ProductionHandlerImpl implements ProductionHandler {
 
     private final DataSource dataSource;

@@ -5,6 +5,7 @@ import sdu.sem2.se17.domain.auth.Producer;
 import sdu.sem2.se17.domain.auth.User;
 import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.persistenceinterface.*;
+import sdu.sem2.se17.domain.production.Approval;
 import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 import sdu.sem2.se17.persistence.data.*;
@@ -14,6 +15,12 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/*
+Hampus Fink
+Nicolas Heeks
+Casper Andresen
+Casper Jensen
+ */
 public class CreditManagementHandlerImpl implements CreditManagementHandler {
 
     private User sessionUser;
@@ -84,6 +91,7 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
         } else {
             return (ArrayList<Production>) productions.stream()
                     .filter(p -> p.getCompanyId() == ((Producer)sessionUser).getCompanyId())
+                    .filter(p -> p.getApproval() != Approval.APPROVED)
                     .collect(Collectors.toList());
         }
     }

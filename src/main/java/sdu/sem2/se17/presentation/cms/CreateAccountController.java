@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 /*
-Casper B. Andresen
+Casper Andresen
+Hampus Fink
  */
 
 public class CreateAccountController extends Controller {

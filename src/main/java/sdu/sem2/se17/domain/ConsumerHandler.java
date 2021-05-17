@@ -4,7 +4,9 @@ import sdu.sem2.se17.domain.production.Production;
 
 import java.util.ArrayList;
 import java.util.Optional;
-
+/*
+Casper Andresen
+ */
 public interface ConsumerHandler {
     Optional<Production> findProduction(long id);
     ArrayList<Production> allProductions();
