@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductionHandlerTest {
 
     private ProductionHandler handler;
-    private final static boolean connectToDb = true;
+    private final static boolean connectToDb = false;
     private DataSource dataSource;
 
     @BeforeEach
