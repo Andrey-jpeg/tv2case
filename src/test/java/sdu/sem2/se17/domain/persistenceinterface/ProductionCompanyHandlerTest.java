@@ -76,11 +76,14 @@ class ProductionCompanyHandlerTest {
     
     @Test
     void readAll() {
+
+        int startSize = handler.readAll().size();
+
         handler.create(new ProductionCompany(0, "Sample1"));
         handler.create(new ProductionCompany(0, "Sample2"));
         handler.create(new ProductionCompany(0, "Sample3"));
         handler.create(new ProductionCompany(0, "Sample4"));
 
-        assertEquals(4, handler.readAll().size());
+        assertEquals(startSize+4, handler.readAll().size());
     }
 }

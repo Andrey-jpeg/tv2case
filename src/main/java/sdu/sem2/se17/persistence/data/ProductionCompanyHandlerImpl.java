@@ -75,8 +75,7 @@ public class ProductionCompanyHandlerImpl implements ProductionCompanyHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
                             UPDATE ProductionCompany
-                            SET (name) =
-                            (?)
+                            SET name = ?
                             WHERE id = ?
                         """
                 )
