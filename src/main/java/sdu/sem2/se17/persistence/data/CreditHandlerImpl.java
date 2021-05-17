@@ -130,8 +130,11 @@ public class CreditHandlerImpl implements CreditHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement("DELETE FROM Credit WHERE id = ?")
         ) {
+            var tempPId = participantHandler.findByCredit(id).get().getId();
             statement.setLong(1, id);
             statement.execute();
+            participantHandler.delete(tempPId);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
