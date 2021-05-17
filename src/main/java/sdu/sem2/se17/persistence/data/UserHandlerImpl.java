@@ -145,7 +145,7 @@ public class UserHandlerImpl implements UserHandler {
         } else {
             user = new Producer(resultSet.getString("username"), "password", "email");
         }
-        user.setId(resultSet.getLong("id"));
+
         user.setUsername(resultSet.getString("username"));
         user.setPassword(resultSet.getString("password"));
         user.setEmail(resultSet.getString("email"));
