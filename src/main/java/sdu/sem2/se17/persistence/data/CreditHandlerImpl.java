@@ -54,7 +54,13 @@ public class CreditHandlerImpl implements CreditHandler {
     @Override
     public Optional<Credit> create(Credit credit) {
         Optional<Credit> result = Optional.empty();
-        long participantId = participantHandler.create(credit.getParticipant()).get().getId();
+        long participantId = credit.getParticipant().getId();
+
+        if (credit.getParticipant().getId() == 0){
+            participantId = participantHandler.create(credit.getParticipant()).get().getId();
+        }
+
+
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(""" 
@@ -133,11 +139,8 @@ public class CreditHandlerImpl implements CreditHandler {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement("DELETE FROM Credit WHERE id = ?")
         ) {
-            var tempPId = participantHandler.findByCredit(id).get().getId();
             statement.setLong(1, id);
             statement.execute();
-            participantHandler.delete(tempPId);
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package sdu.sem2.se17.persistence.data;
 
 import sdu.sem2.se17.domain.credit.Credit;
+import sdu.sem2.se17.domain.credit.Participant;
 import sdu.sem2.se17.domain.persistenceinterface.CreditHandler;
 import sdu.sem2.se17.domain.persistenceinterface.ProductionHandler;
 import sdu.sem2.se17.domain.production.Approval;
@@ -163,6 +164,33 @@ public class ProductionHandlerImpl implements ProductionHandler {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return productions;
+    }
+
+    @Override
+    public ArrayList<Production> findByParticipantId(long id) {
+        ArrayList<Production> productions = new ArrayList<>();
+
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement("""
+                    SELECT *
+                    FROM Production
+                    INNER JOIN Credit ON Production.id = Credit.productionId
+                    WHERE Credit.participantId = ?
+                """);
+        ) {
+            statement.setLong(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    productions.add(map(resultSet));
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         return productions;
     }
 

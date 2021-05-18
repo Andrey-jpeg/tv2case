@@ -30,6 +30,7 @@ public interface CreditManagementHandler {
 
     void createParticipant(String name);
     ArrayList<Participant> findParticipant(String name);
+    ArrayList<Production> recentlyParticipatedIn(Participant participant);
     Participant findParticipant(long id);
     void deleteParticipant(long id);
 
