@@ -84,18 +84,18 @@ public class ProductionController extends Controller {
         production.getCredits().forEach(x -> {
             this.credits
                     .getChildren()
-                    .add(createNewCredit(x.getParticipant().getName(), x.getRole().toString()));
+                    .add(createNewCredit(x.getParticipant(), x.getRole().toString()));
         });
         comments.setText(production.getComments());
     }
 
-    private HBox createNewCredit (String name, String role) {
+    private HBox createNewCredit (Participant participant, String role) {
         return new HBox() {{
             setPrefHeight(35.0);
             setPrefWidth(268.0);
             setSpacing(5.0);
             setPadding(new Insets(0, 2.5, 5, 2.5));
-            var textField = new SearchTextField(name, creditManagementHandler);
+            var textField = new SearchTextField(participant, creditManagementHandler);
             getChildren().add(textField);
             getChildren().add(new ComboBox<String>() {{
                 setPrefWidth(150.0);
