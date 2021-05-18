@@ -131,6 +131,11 @@ public class CreditManagementHandlerImpl implements CreditManagementHandler {
     }
 
     @Override
+    public ArrayList<Production> recentlyParticipatedIn(Participant participant) {
+        return productionHandler.findByParticipantId(participant.getId());
+    }
+
+    @Override
     public Participant findParticipant(long id) {
         return this.participantHandler.read(id).orElse(null);
     }

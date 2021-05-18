@@ -80,23 +80,23 @@ public class ProductionController extends Controller {
             addNewCreditButton.setVisible(true);
         }
 
+
         production.getCredits().forEach(x -> {
             this.credits
                     .getChildren()
-                    .add(createNewCredit(x.getParticipant().getName(), x.getRole().toString()));
+                    .add(createNewCredit(x.getParticipant(), x.getRole().toString()));
         });
         comments.setText(production.getComments());
     }
 
-    private HBox createNewCredit (String name, String role) {
+    private HBox createNewCredit (Participant participant, String role) {
         return new HBox() {{
             setPrefHeight(35.0);
             setPrefWidth(268.0);
             setSpacing(5.0);
             setPadding(new Insets(0, 2.5, 5, 2.5));
-            getChildren().add(new TextField() {{
-                setText(name);
-            }});
+            var textField = new SearchTextField(participant, creditManagementHandler);
+            getChildren().add(textField);
             getChildren().add(new ComboBox<String>() {{
                 setPrefWidth(150.0);
                 getItems().addAll(rolesTitles);
@@ -116,11 +116,18 @@ public class ProductionController extends Controller {
         ArrayList<Credit> productionCredits = production.getCredits();
 
         for (Node i: credits.getChildren()) {
-            String name = ((TextField)((HBox)i).getChildren().get(0)).getText();
+
+            SearchTextField textField = ((SearchTextField)((HBox)i).getChildren().get(0));
+            Participant participant = textField.getSelectedParticipant();
+            String name = textField.getText();
             String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
             if (name != null && (role != null && !name.equals(""))){
                 productionCredits.add(new Credit(production.getId()){{
-                    setParticipant(new Participant(name));
+                    if (participant != null && name.equals(participant.getName())){
+                        setParticipant(participant);
+                    } else {
+                        setParticipant(new Participant(name));
+                    }
                     setRole(Role.getRole(role));
                 }});
             }

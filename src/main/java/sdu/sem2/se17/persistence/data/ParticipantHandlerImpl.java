@@ -113,12 +113,12 @@ public class ParticipantHandlerImpl implements ParticipantHandler {
 
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Participant WHERE name = ?");
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Participant WHERE name LIKE ?");
         ) {
-            statement.setString(1, name);
+            statement.setString(1, "%" + name + "%");
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     participants.add(map(resultSet));
                 }
             }

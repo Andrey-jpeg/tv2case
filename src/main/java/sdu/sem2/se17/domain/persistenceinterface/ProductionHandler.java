@@ -9,4 +9,5 @@ Hampus Fink
 public interface ProductionHandler extends GenericCrud<Production> {
     ArrayList<Production> readAll();
     ArrayList<Production> findByCompanyId(long id);
+    ArrayList<Production> findByParticipantId(long id);
 }
