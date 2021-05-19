@@ -70,7 +70,8 @@ CREATE TABLE Production
     companyId bigint NOT NULL REFERENCES ProductionCompany(id),
     approvalStatus approval NOT NULL,
     name varchar(250) NOT NULL,
-    comments varchar(500)
+    comments varchar(500) DEFAULT ""
+
 );
 
 CREATE TABLE Participant
