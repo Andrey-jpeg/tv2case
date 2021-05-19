@@ -121,7 +121,7 @@ public class ProductionController extends Controller {
             Participant participant = textField.getSelectedParticipant();
             String name = textField.getText();
             String role = (String)((ComboBox)((HBox)i).getChildren().get(1)).getSelectionModel().getSelectedItem();
-            if (name != null && (role != null && !name.equals(""))){
+            if (name != null && role != null && !name.isBlank()){
                 productionCredits.add(new Credit(production.getId()){{
                     if (participant != null && name.equals(participant.getName())){
                         setParticipant(participant);
