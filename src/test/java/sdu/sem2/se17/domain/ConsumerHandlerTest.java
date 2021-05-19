@@ -1,5 +1,6 @@
 package sdu.sem2.se17.domain;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sdu.sem2.se17.domain.persistenceinterface.ProductionHandler;
@@ -7,6 +8,9 @@ import sdu.sem2.se17.domain.production.Approval;
 import sdu.sem2.se17.domain.production.Production;
 import sdu.sem2.se17.persistence.data.ProductionHandlerImpl;
 import sdu.sem2.se17.persistence.db.DataSource;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +26,17 @@ class ConsumerHandlerTest {
             DataSource dataSource = new DataSource("jdbc:postgresql://localhost:5432/", "postgres", "postgres");
             handler = new ConsumerHandlerImpl();
             productionHandler = new ProductionHandlerImpl(dataSource);
+        }
+    }
+
+    @AfterEach
+    void tearDown() {
+        if(connectToDb){
+            productionHandler
+                    .readAll()
+                    .stream()
+                    .filter(p -> p.getName().equals("Sample"))
+                    .forEach(p -> productionHandler.delete(p.getId()));
         }
     }
     @Test
@@ -52,7 +67,7 @@ class ConsumerHandlerTest {
         boolean onlyFoundMatching = productions.stream().anyMatch(c -> !c.getName().equals(savedProduction.getName()));
 
         assertTrue(foundSavedProduction);
-        assertTrue(onlyFoundMatching);
+        assertFalse(onlyFoundMatching);
     }
 
     @Test

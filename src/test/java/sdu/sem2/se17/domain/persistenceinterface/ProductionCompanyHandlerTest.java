@@ -1,9 +1,6 @@
 package sdu.sem2.se17.domain.persistenceinterface;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import sdu.sem2.se17.domain.production.ProductionCompany;
 import sdu.sem2.se17.persistence.data.ParticipantHandlerImpl;
 import sdu.sem2.se17.persistence.data.ProductionCompanyHandlerImpl;
@@ -24,6 +21,22 @@ class ProductionCompanyHandlerTest {
             handler = new ProductionCompanyHandlerImpl(dataSource);
         } else {
             handler = new ProductionCompanyHandlerImplSample();
+        }
+    }
+    @AfterEach
+    void tearDown() {
+        if(connectToDb){
+            handler
+                    .readAll()
+                    .stream()
+                    .filter(p -> p.getName().equals("Sample") ||
+                            p.getName().equals("Sample1") ||
+                            p.getName().equals("Sample2") ||
+                            p.getName().equals("Sample3") ||
+                            p.getName().equals("Sample4") ||
+                            p.getName().equals("Changed Name")
+                    )
+                    .forEach(p -> handler.delete(p.getId()));
         }
     }
 

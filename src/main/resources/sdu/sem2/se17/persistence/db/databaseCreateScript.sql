@@ -84,7 +84,7 @@ CREATE TABLE Credit
     id BIGSERIAL PRIMARY KEY,
     role creditrole NOT NULL,
     participantId bigint NOT NULL REFERENCES Participant(id),
-    productionId bigint NOT NULL REFERENCES Production(id)
+    productionId bigint NOT NULL REFERENCES Production(id) ON DELETE CASCADE
 );
 
 INSERT INTO ProductionCompany( name )
