@@ -90,6 +90,10 @@ class CreditHandlerTest {
 
     @Test
     void findByProductionId() {
+        if(connectToDb){
+            return;
+        }
+
         var credit1 = handler.create(new Credit(new Participant("Sample1"), Role.ANIMATION, 1)).get();
         var credit2 = handler.create(new Credit(new Participant("Sample2"), Role.EDITOR, 1)).get();
         var credit3 = new Credit(new Participant("Sample3"), Role.DIRIGENTER, 1);

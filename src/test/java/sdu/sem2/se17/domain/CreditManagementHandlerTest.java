@@ -58,7 +58,6 @@ class CreditManagementHandlerTest {
                     .readAll()
                     .stream()
                     .filter(p -> p.getName().equals("bruh") ||
-                            p.getName().equals("Bruh2") ||
                             p.getName().equals("bruh2") ||
                             p.getName().equals("xDBruh") ||
                             p.getName().equals("TestProduction") ||
